@@ -1,11 +1,14 @@
 import express, { Application } from 'express'
+import { PORT } from './config'
 
 const app: Application = express()
+
+app.set('port', PORT !== '' ? PORT : 3000)
 
 app.get('/ping', (_req, res) => {
   res.send('todo piola')
 })
 
-app.listen(3000, () => {
-  console.log(`server on port ${3000}`)
+app.listen(app.get('port'), () => {
+  console.log('Server on port', app.get('port'))
 })
