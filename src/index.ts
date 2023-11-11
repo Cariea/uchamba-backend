@@ -6,7 +6,7 @@ const app: Application = express()
 app.set('port', PORT !== '' ? PORT : 3000)
 
 app.get('/ping', (_req, res) => {
-  res.status(200).json({ test: 'todo piola' })
+  res.status(200).json({ test: 'todo piola en staging' })
 })
 
 app.listen(app.get('port'), () => {
