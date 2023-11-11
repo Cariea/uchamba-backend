@@ -112,7 +112,7 @@ CREATE TABLE HAS_SKILLS (
     constraint fk_skills foreign key(skillCode) references SKILLS on update cascade on delete restrict
 );
 CREATE TABLE KNOW_TECHS (
-    userCode integer,
+    userCode character varying(9),
     techCode integer,
 
     constraint pk_knowTechs primary key(userCode,techCode),
@@ -128,7 +128,7 @@ CREATE TABLE HAS_SOCIAL_MEDIAS (
     constraint fk_social foreign key(socialCode) references SOCIAL_MEDIAS on update cascade on delete restrict
 );
 CREATE TABLE HAS_WORKED_IN (
-    userCode integer,
+    userCode character varying(9),
     orgsCode integer,
     jobTitle character varying(20) not null,
     entryDay date not null,
