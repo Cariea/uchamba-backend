@@ -7,19 +7,26 @@ export const UserSchema = z.object({
     .optional(),
   name: z
     .string()
-    .max(128, 'El nombre no puede superar los 128 carácteres'),
+    .min(1, 'Debe indicar un nombre')
+    .max(64, 'El nombre no puede superar los 64 carácteres'),
   email: z
     .string()
-    .max(64, 'El email no puede superar los 64 carácteres')
+    .min(1, 'Debe indicar un correo electrónico')
+    .max(128, 'El email no puede superar los 128 carácteres')
     .email(),
   password: z
-    .string(),
+    .string()
+    .min(1, 'Debe indicar una contraseña')
+    .max(128, 'La contraseña no puede superar los 128 carácteres'),
   aboutMe: z
     .string(),
   phoneNumber: z
     .string(),
   residenceAddress: z
     .string(),
+  isVerified: z
+    .boolean()
+    .optional(),
   role: z
     .enum([UserRole.ADMIN, UserRole.GRADUATED])
 })
