@@ -1,142 +1,193 @@
---------- schema definition  ------------
-CREATE DATABASE uchamba;
+BEGIN;
 
-CREATE TABLE USERS (
-    userCode character varying(9),
-    name character varying(50) not null,
-    email character varying(30) not null,
-    password character varying(64) not null,
-    aboutMe character varying(128),
-    residenceAddress character varying(100),
-    userRol character varying(15) not null,
-    constraint pk_users primary key(userCode),
-    constraint chk_only_letters_and_spaces CHECK (name ~ '^[A-Za-z ]*$')
+-- Domains and Types
+CREATE DOMAIN dom_name VARCHAR(64);
+CREATE DOMAIN dom_description VARCHAR(256);
+CREATE DOMAIN dom_phone_number VARCHAR(16);
+CREATE DOMAIN dom_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+CREATE TYPE dom_role AS ENUM ('admin', 'graduated');
+CREATE TYPE dom_skill AS ENUM ('blanda', 'dura');
+CREATE TYPE dom_degree AS ENUM ('pregrado', 'postgrado', 'especializacion', 'maestria', 'doctorado');
+CREATE TYPE dom_proficiency_level AS ENUM ('A1', 'A2', 'B1', 'B2', 'C1', 'C2');
+
+-- 1
+CREATE TABLE users (
+  user_id INTEGER GENERATED ALWAYS AS IDENTITY,
+  name dom_name NOT NULL,
+  email VARCHAR(128) UNIQUE NOT NULL,
+  password VARCHAR(128) NOT NULL,
+  about_me TEXT DEFAULT '',
+  residence_address TEXT DEFAULT '',
+  role dom_role NOT NULL DEFAULT 'graduated',
+  phone_number dom_phone_number,
+  CONSTRAINT pk_user_id PRIMARY KEY (user_id)
 );
 
-CREATE TABLE UNIVERSITIES  (
-    universityCode serial,
-    name character varying(50) not null,
-    address character varying(100) not null,
+-- 2
+CREATE TABLE universities (
+  university_id INTEGER GENERATED ALWAYS AS IDENTITY,
+  name dom_name UNIQUE NOT NULL,
+  address TEXT DEFAULT '',
+  CONSTRAINT pk_university_id PRIMARY KEY (university_id)
+);
 
-    constraint pk_universities primary key(universityCode),
-    constraint chk_only_letters_and_spaces CHECK (name ~ '^[A-Za-z ]*$')
+-- 3
+CREATE TABLE careers (
+  career_id INTEGER GENERATED ALWAYS AS IDENTITY,
+  name dom_name NOT NULL,
+  university_id INTEGER NOT NULL,
+  CONSTRAINT pk_career_id PRIMARY KEY (career_id),
+  CONSTRAINT fk_university_id FOREIGN KEY (university_id) REFERENCES universities
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
 );
-CREATE TABLE  CAREERS(
-    careerCode serial,
-    name character varying(30) not null,
-    universityCode integer not null,
 
-    constraint pk_careers primary key(careerCode),
-    constraint fk_universities foreign key(universityCode) references UNIVERSITIES on update cascade on delete restrict,
-    constraint chk_only_letters_and_spaces CHECK (name ~ '^[A-Za-z ]*$')
+-- 4
+CREATE TABLE languages (
+    language_id INTEGER GENERATED ALWAYS AS IDENTITY,
+    name dom_name UNIQUE NOT NULL,
+    CONSTRAINT pk_language_id PRIMARY KEY (language_id)
 );
-CREATE TABLE LANGUAGES (
-    languageCode serial,
-    name character varying(20) not null,
 
-    constraint pk_languages primary key(languageCode),
-    constraint chk_only_letters_and_spaces CHECK (name ~ '^[A-Za-z ]*$')
+-- 5
+CREATE TABLE skills (
+    skill_id INTEGER GENERATED ALWAYS AS IDENTITY,
+    description dom_name NOT NULL,
+    type character varying(1) NOT NULL,
+    CONSTRAINT pk_skill_id PRIMARY KEY (skill_id)
 );
-CREATE TABLE SKILLS (
-    skillCode serial,
-    description character varying(20) not null,
-    type  character varying(1) not null,
 
-    constraint pk_skills primary key(skillCode)
+-- 6
+CREATE TABLE technologies (
+    technology_id INTEGER GENERATED ALWAYS AS IDENTITY,
+    name dom_name UNIQUE NOT NULL,
+    CONSTRAINT pk_technology_id PRIMARY KEY (technology_id)
 );
-CREATE TABLE TECHNOLOGIES(
-    techCode serial,
-    name character varying(20) not null,
 
-    constraint pk_technologies primary key(techCode),
-    constraint chk_only_letters_and_spaces CHECK (name ~ '^[A-Za-z ]*$')
+-- 7
+CREATE TABLE social_medias (
+  social_media_id INTEGER GENERATED ALWAYS AS IDENTITY,
+  name dom_name UNIQUE NOT NULL,
+  image_link TEXT DEFAULT '',
+  CONSTRAINT pk_social_media_id PRIMARY KEY (social_media_id)
 );
-CREATE TABLE  SOCIAL_MEDIAS(
-    socialCode serial,
-    name character varying(20) not null,
-    imageLink character varying(64) not null,
 
-    constraint pk_socials primary key(socialCode),
-    constraint chk_only_letters_and_spaces CHECK (name ~ '^[A-Za-z ]*$')
+-- 8
+CREATE TABLE organizations (
+  organization_id INTEGER GENERATED ALWAYS AS IDENTITY,
+  name dom_name NOT NULL,
+  address TEXT DEFAULT '',
+  CONSTRAINT pk_organization_id PRIMARY KEY (organization_id)
 );
-CREATE TABLE ORGANIZATINOS (
-    orgsCode serial,
-    name character varying(20) not null,
-    address character varying(100) not null,
 
-    constraint pk_organizations primary key(orgsCode),
-    constraint chk_only_letters_and_spaces CHECK (name ~ '^[A-Za-z ]*$')
+-- 9
+CREATE TABLE projects (
+  project_id INTEGER GENERATED ALWAYS AS IDENTITY,
+  name dom_name NOT NULL,
+  description TEXT DEFAULT '',
+  project_link TEXT DEFAULT '',
+  user_id INTEGER NOT NULL,
+  CONSTRAINT pk_project_id PRIMARY KEY (project_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
 );
-CREATE TABLE PROJECTS (
-    projectCode serial,
-    name character varying(20) not null,
-    description character varying(20) ,
-    projectLink character varying(30) not null,
-    userCode character varying(9) not null,
 
-    constraint pk_projects primary key(projectCode),
-    constraint fk_user foreign key(userCode) references USERS on update cascade on delete restrict
+-- 10
+CREATE TABLE projects_images (
+  project_id INTEGER,
+  image_link TEXT,
+  CONSTRAINT pk_project_image_id PRIMARY KEY (project_id, image_link),
+  CONSTRAINT fk_project_id FOREIGN KEY (project_id) REFERENCES projects
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
-CREATE TABLE PROJECTS_IMAGE_LINKS (
-    projectCode integer,
-    imageLink character varying(64) not null,
 
-    constraint pk_pil primary key(projectCode,imageLink),
-    constraint fk_project foreign key(projectCode) references PROJECTS on update cascade on delete restrict
+-- 11
+CREATE TABLE users_studies (
+  user_id INTEGER,
+  career_id INTEGER,
+  degree dom_degree NOT NULL DEFAULT 'pregrado',
+  graduation_year DATE NOT NULL,
+  CONSTRAINT pk_user_career_id PRIMARY KEY (user_id, career_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT,
+  CONSTRAINT fk_career FOREIGN KEY (career_id) REFERENCES careers
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
 );
-CREATE TABLE STUDY (
-    userCode character varying(9),
-    careerCode integer,
-    degree character varying(20) not null,
-    graduationYear date,
 
-    constraint pk_study primary key(userCode,careerCode),
-    constraint fk_user foreign key(userCode) references USERS on update cascade on delete restrict,
-    constraint fk_career foreign key(careerCode) references CAREERS on update cascade on delete restrict
+-- 12
+CREATE TABLE users_languages (
+  user_id INTEGER,
+  language_id INTEGER,
+  proficient_level dom_proficiency_level NOT NULL,
+  CONSTRAINT pk_user_language_id PRIMARY KEY (user_id, language_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT,
+  CONSTRAINT fk_language_id FOREIGN KEY (language_id) REFERENCES languages
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
 );
-CREATE TABLE SPEAK (
-    userCode character varying(9),
-    languageCode integer,
-    level character varying(2),
 
-    constraint pk_speak primary key(userCode,languageCode),
-    constraint fk_user foreign key(userCode) references USERS on update cascade on delete restrict,
-    constraint fk_languages foreign key(languageCode) references LANGUAGES on update cascade on delete restrict
+-- 13
+CREATE TABLE users_skills (
+  user_id INTEGER,
+  skill_id INTEGER,
+  CONSTRAINT pk_user_skill_id PRIMARY KEY (user_id, skill_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT,
+  CONSTRAINT fk_skill_id FOREIGN KEY (skill_id) REFERENCES skills
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
 );
-CREATE TABLE HAS_SKILLS (
-    userCode character varying(9),
-    skillCode integer,
-    
-    constraint pk_hasSkills primary key(userCode,skillCode),
-    constraint fk_user foreign key(userCode) references USERS on update cascade on delete restrict,
-    constraint fk_skills foreign key(skillCode) references SKILLS on update cascade on delete restrict
-);
-CREATE TABLE KNOW_TECHS (
-    userCode character varying(9),
-    techCode integer,
 
-    constraint pk_knowTechs primary key(userCode,techCode),
-    constraint fk_user foreign key(userCode) references USERS on update cascade on delete restrict,
-    constraint fk_tech foreign key(techCode) references TECHNOLOGIES on update cascade on delete restrict
+-- 14
+CREATE TABLE users_technologies (
+  user_id INTEGER,
+  technology_id INTEGER,
+  CONSTRAINT pk_user_technology_id PRIMARY KEY (user_id, technology_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT,
+  CONSTRAINT fk_technology_id FOREIGN KEY (technology_id) REFERENCES technologies
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
 );
-CREATE TABLE HAS_SOCIAL_MEDIAS (
-    userCode character varying(9),
-    socialCode integer,
-    socialLink character varying(30) not null,
-    constraint pk_hasSM primary key(userCode,socialCode),
-    constraint fk_user foreign key(userCode) references USERS on update cascade on delete restrict,
-    constraint fk_social foreign key(socialCode) references SOCIAL_MEDIAS on update cascade on delete restrict
-);
-CREATE TABLE HAS_WORKED_IN (
-    userCode character varying(9),
-    orgsCode integer,
-    jobTitle character varying(20) not null,
-    entryDay date not null,
-    departureDay date,
-    description character varying(124) not null,
-    jobAchivements character varying(124) not null,
 
-    constraint pk_hasWI primary key(userCode,orgsCode),
-    constraint fk_user foreign key(userCode) references USERS on update cascade on delete restrict,
-    constraint fk_orgs foreign key(orgsCode) references ORGANIZATINOS on update cascade on delete restrict
+-- 15
+CREATE TABLE users_socials (
+  user_id INTEGER,
+  social_media_id INTEGER,
+  social_link TEXT NOT NULL,
+  CONSTRAINT pk_user_social_id PRIMARY KEY (user_id, social_media_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT,
+  CONSTRAINT fk_social_media_id FOREIGN KEY (social_media_id) REFERENCES social_medias
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
 );
+
+-- 16
+CREATE TABLE users_jobs (
+  user_id INTEGER,
+  organization_id INTEGER,
+  job_title dom_name NOT NULL,
+  description TEXT DEFAULT '',
+  entry_date DATE NOT NULL,
+  departure_date DATE,
+  job_achievements TEXT DEFAULT '',
+  CONSTRAINT pk_user_organization_id PRIMARY KEY (user_id, organization_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT,
+  CONSTRAINT fk_organization_id FOREIGN KEY (organization_id) REFERENCES organizations
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+COMMIT;
