@@ -28,5 +28,8 @@ export const UserSchema = z.object({
     .boolean()
     .optional(),
   role: z
-    .enum([UserRole.ADMIN, UserRole.GRADUATED])
+    .enum([UserRole.ADMIN, UserRole.GRADUATED]),
+  confirmationCode: z
+    .string()
+    .optional()
 })
