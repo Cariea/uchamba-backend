@@ -12,7 +12,7 @@ export const signUp = async (
   res: Response
 ): Promise<Response | undefined> => {
   try {
-    const { email, name, aboutMe, phoneNumber, residenceAddress, role } = req.body
+    const { email, name } = req.body
     let { password } = req.body
     const registerData = [email, password]
 
@@ -43,23 +43,15 @@ export const signUp = async (
         INSERT INTO users (
           email,
           name,
-          password,
-          phone_number,
-          about_me,
-          residence_address,
-          role
+          password
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        VALUES ($1, $2, $3)
         RETURNING
           user_id,
           email,
-          name,
-          phone_number,
-          about_me,
-          residence_address,
-          role
+          name
       `,
-      values: [email, name, password, phoneNumber, aboutMe, residenceAddress, role]
+      values: [email, name, password]
     })
 
     return res.status(STATUS.CREATED).json(camelizeObject(response.rows[0]))
