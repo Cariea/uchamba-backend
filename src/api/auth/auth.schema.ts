@@ -14,7 +14,7 @@ export const LoginSchema = z.object({
 
 export const RegisterSchema = UserSchema
 
-export const VerifySchema = z.object({
+export const VerifyAccountSchema = z.object({
   confirmationCode: z
     .number(),
   email: z
