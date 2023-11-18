@@ -29,10 +29,7 @@ export const UserSchema = z.object({
     .boolean()
     .optional(),
   role: z
-    .enum([UserRole.ADMIN, UserRole.GRADUATED]),
-  confirmationCode: z
-    .string()
-    .optional()
+    .enum([UserRole.ADMIN, UserRole.GRADUATED])
 })
 
 export const RegisterUserPayload = z.object({
