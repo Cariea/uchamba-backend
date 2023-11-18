@@ -22,6 +22,7 @@ CREATE TABLE users (
   residence_address TEXT DEFAULT '',
   is_verified BOOLEAN NOT NULL DEFAULT FALSE,
   role dom_role NOT NULL DEFAULT 'graduated',
+  confirmation_code VARCHAR(6),
   created_at dom_created_at,
   CONSTRAINT pk_user_id PRIMARY KEY (user_id)
 );
