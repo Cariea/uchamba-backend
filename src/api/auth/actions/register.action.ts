@@ -5,9 +5,8 @@ import { STATUS } from '../../../utils/constants'
 import { StatusError } from '../../../utils/responses/status-error'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import camelizeObject from '../../../utils/camelizeObject'
-import { AUTH_ROUNDS } from '../../../config'
-import {SMTP_MAIL} from '../../../config'
-import {transporter} from '../../../utils/mailer'
+import { AUTH_ROUNDS, SMTP_MAIL } from '../../../config'
+import { transporter } from '../../../utils/mailer'
 
 export const signUp = async (
   req: Request,
@@ -40,8 +39,8 @@ export const signUp = async (
 
     password = await bcrypt.hash(registerData[1], Number(AUTH_ROUNDS))
 
-    //Función para generar el codigo numérico de 6 dígitos
-    let code = Math.floor(Math.random() * 900000);
+    // Función para generar el codigo numérico de 6 dígitos
+    const code = Math.floor(Math.random() * 900000) + 100000
 
     const response = await pool.query({
       text: `
@@ -68,13 +67,13 @@ export const signUp = async (
       values: [email, name, password, phoneNumber, aboutMe, residenceAddress, role, code]
     })
 
-    //función para enviar correo con el código para confirmar cuenta
+    // función para enviar correo con el código para confirmar cuenta
     await transporter.sendMail({
-      from: `Eduardo Sucre <${SMTP_MAIL}>`, // sender address
+      from: `Eduardo Sucre < ${SMTP_MAIL} >`, // sender address
       to: email, // list of receivers
-      subject: "Código para validar tu correo", // Subject line
+      subject: 'Código para validar tu correo', // Subject line
       html: `<b>Código para validar tu correo: ${code}</b>` // html body
-    });
+    })
 
     return res.status(STATUS.CREATED).json(camelizeObject(response.rows[0]))
   } catch (error: unknown) {

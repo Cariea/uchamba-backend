@@ -33,13 +33,17 @@ export const verifyAccount = async (
 
     const response = await pool.query({
       text: `
-        UPDATE users SET is_verified = true
+        UPDATE users 
+        SET is_verified = true
+        WHERE email = $1
+        AND confirmation_code = $2
         RETURNING
           user_id,
           email,
           name,
           is_verified
-      `
+      `,
+      values: [verifyData[0], verifyData[1]]
     })
 
     return res.status(STATUS.OK).json(camelizeObject(response.rows[0]))
