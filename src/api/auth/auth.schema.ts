@@ -14,7 +14,7 @@ export const LoginSchema = z.object({
     .max(64, 'El nombre debe ser menor a 64 carácteres')
 })
 
-export const RegisterSchema = UserSchema
+export const RegisterSchema = RegisterUserPayload
 
 export const VerifyAccountSchema = z.object({
   confirmationCode: z
