@@ -13,7 +13,8 @@ export const UserSchema = z.object({
     .string()
     .min(1, 'Debe indicar un correo electrónico')
     .max(128, 'El email no puede superar los 128 carácteres')
-    .email(),
+    .email()
+    .regex(/^[a-zA-Z0-9._%+-]+@est.ucab.edu.ve$/, 'El correo debe ser un correo UCAB válido'),
   password: z
     .string()
     .min(1, 'Debe indicar una contraseña')
@@ -32,4 +33,21 @@ export const UserSchema = z.object({
   confirmationCode: z
     .string()
     .optional()
+})
+
+export const RegisterUserPayload = z.object({
+  name: z
+    .string()
+    .min(1, 'Debe indicar un nombre')
+    .max(64, 'El nombre no puede superar los 64 carácteres'),
+  email: z
+    .string()
+    .min(1, 'Debe indicar un correo electrónico')
+    .max(128, 'El email no puede superar los 128 carácteres')
+    .email()
+    .regex(/^[a-zA-Z0-9._%+-]+@est.ucab.edu.ve$/, 'El correo debe ser un correo UCAB válido'),
+  password: z
+    .string()
+    .min(1, 'Debe indicar una contraseña')
+    .max(128, 'La contraseña no puede superar los 128 carácteres')
 })

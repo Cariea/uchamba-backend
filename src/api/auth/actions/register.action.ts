@@ -13,7 +13,7 @@ export const signUp = async (
   res: Response
 ): Promise<Response | undefined> => {
   try {
-    const { email, name, aboutMe, phoneNumber, residenceAddress, role } = req.body
+    const { email, name } = req.body
     let { password } = req.body
     const registerData = [email, password]
 
@@ -48,23 +48,15 @@ export const signUp = async (
           email,
           name,
           password,
-          phone_number,
-          about_me,
-          residence_address,
-          role,
           confirmation_code
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        VALUES ($1, $2, $3, $4)
         RETURNING
           user_id,
           email,
-          name,
-          phone_number,
-          about_me,
-          residence_address,
-          role
+          name
       `,
-      values: [email, name, password, phoneNumber, aboutMe, residenceAddress, role, code]
+      values: [email, name, password, code]
     })
 
     // función para enviar correo con el código para confirmar cuenta
@@ -77,7 +69,6 @@ export const signUp = async (
 
     return res.status(STATUS.CREATED).json(camelizeObject(response.rows[0]))
   } catch (error: unknown) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }
