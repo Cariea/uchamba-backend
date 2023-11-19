@@ -5,33 +5,26 @@ import { handleControllerError } from '../../../utils/responses/handleController
 import camelizeObject from '../../../utils/camelizeObject'
 import { StatusError } from '../../../utils/responses/status-error'
 
-export const getUserById = async (
+export const getLanguageById = async (
   req: Request, res: Response
 ): Promise<Response | undefined> => {
   try {
-    const { userId } = req.params
+    const { languageId } = req.params
     const response = await pool.query({
       text: `
         SELECT
-          user_id,
+          language_id,
           name,
-          email,
-          about_me,
-          phone_number,
-          residence_address,
-          role,
-          is_verified,
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
-          TO_CHAR(updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
-        FROM users
-        WHERE user_id = $1
+        FROM languages
+        WHERE language_id = $1
       `,
-      values: [userId]
+      values: [languageId]
     })
 
     if (response.rowCount === 0) {
       throw new StatusError({
-        message: `No se pudo encontrar el registro de id: ${userId}`,
+        message: `No se pudo encontrar el registro de id: ${req.params.languageId}`,
         statusCode: STATUS.NOT_FOUND
       })
     }
