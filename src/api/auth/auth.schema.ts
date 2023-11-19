@@ -15,3 +15,15 @@ export const LoginSchema = z.object({
 })
 
 export const RegisterSchema = RegisterUserPayload
+
+export const VerifyAccountSchema = z.object({
+  confirmationCode: z
+    .string()
+    .refine(data => data.length === 6, {
+      message: 'El código de confirmación debe tener exactamente 6 caracteres'
+    }),
+  email: z
+    .string()
+    .min(1, 'Es necesario ingresar un correo electrónico')
+    .max(64, 'El nombre debe ser menor a 64 carácteres')
+})
