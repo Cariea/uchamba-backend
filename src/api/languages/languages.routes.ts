@@ -4,15 +4,15 @@ import { LanguageSchema } from './languages.schema'
 
 // Middlewares
 import { schemaGuard } from '../../middlewares/schemaGuard'
-import { getAllLanguages } from './actions/getAll.action'
-import { getLanguageById } from './actions/getById.action'
-import { updateLanguage } from './actions/update.action'
-import { deleteLanguage } from './actions/delete.action'
-import { createLanguage } from './actions/add.action'
-import { getLanguages } from './actions/get.action'
 import { paginationGuard } from '../../middlewares/paginationGuard'
 
 // Controllers
+import { getAllLanguages } from './actions/getAll.action'
+import { getLanguageById } from './actions/getById.action'
+import { getLanguages } from './actions/get.action'
+import { createLanguage } from './actions/add.action'
+import { updateLanguage } from './actions/update.action'
+import { deleteLanguage } from './actions/delete.action'
 
 const router = Router()
 

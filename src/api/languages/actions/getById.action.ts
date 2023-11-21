@@ -24,13 +24,12 @@ export const getLanguageById = async (
 
     if (response.rowCount === 0) {
       throw new StatusError({
-        message: `No se pudo encontrar el registro de id: ${req.params.languageId}`,
+        message: `No se pudo encontrar el registro de id: ${languageId}`,
         statusCode: STATUS.NOT_FOUND
       })
     }
     return res.status(STATUS.OK).json(camelizeObject(response.rows[0]))
   } catch (error: unknown) {
-    console.error(error)
     return handleControllerError(error, res)
   }
 }

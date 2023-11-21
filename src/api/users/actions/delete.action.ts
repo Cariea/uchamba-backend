@@ -3,14 +3,13 @@ import { pool } from '../../../database'
 import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { StatusError } from '../../../utils/responses/status-error'
-import { QueryResult } from 'pg'
 
 export const deleteUser = async (
   req: Request, res: Response
 ): Promise<Response | undefined> => {
   try {
     const { userId } = req.params
-    const response: QueryResult = await pool.query({
+    const response = await pool.query({
       text: `
         DELETE
         FROM users
@@ -27,7 +26,6 @@ export const deleteUser = async (
     }
     return res.status(STATUS.OK).json({ message: 'Usuario eliminado correctamente' })
   } catch (error: unknown) {
-    console.error(error)
     return handleControllerError(error, res)
   }
 }

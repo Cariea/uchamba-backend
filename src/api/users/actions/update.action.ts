@@ -31,7 +31,6 @@ export const updateUser = async (
     }
     return res.status(STATUS.OK).json({ message: 'Usuario modificado correctamente' })
   } catch (error) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }

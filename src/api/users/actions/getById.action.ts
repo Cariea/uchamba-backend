@@ -37,7 +37,6 @@ export const getUserById = async (
     }
     return res.status(STATUS.OK).json(camelizeObject(response.rows[0]))
   } catch (error: unknown) {
-    console.error(error)
     return handleControllerError(error, res)
   }
 }

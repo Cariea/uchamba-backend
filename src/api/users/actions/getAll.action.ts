@@ -20,7 +20,6 @@ export const getAllUsers = async (
 
     return res.status(STATUS.OK).json(camelizeObject(rows))
   } catch (error: unknown) {
-    console.error(error)
     return handleControllerError(error, res)
   }
 }
