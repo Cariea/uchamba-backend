@@ -4,17 +4,16 @@ import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import camelizeObject from '../../../utils/camelizeObject'
 
-export const getAllUsers = async (
+export const getAllLanguages = async (
   _req: Request, res: Response
 ): Promise<Response | undefined> => {
   try {
     const { rows } = await pool.query({
       text: `
         SELECT
-          user_id,
-          name,
-          email
-        FROM users
+          language_id,
+          name
+        FROM languages
       `
     })
 

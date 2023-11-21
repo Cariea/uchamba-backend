@@ -4,28 +4,26 @@ import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { StatusError } from '../../../utils/responses/status-error'
 
-export const updateUser = async (
+export const updateLanguage = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   try {
-    const { aboutMe, phoneNumber, residenceAddress } = req.body
-    const { userId } = req.params
+    const { name } = req.body
+    const { languageId } = req.params
     const response = await pool.query({
       text: `
-        UPDATE users
+        UPDATE languages
         SET 
-          about_me = $1,
-          phone_number = $2,
-          residence_address = $3
+          name = $1
         WHERE
-          user_id = $4
+          language_id = $2
       `,
-      values: [aboutMe, phoneNumber, residenceAddress, userId]
+      values: [name, languageId]
     })
     if (response.rowCount === 0) {
       throw new StatusError({
-        message: `No se encontro el usuario de id: ${userId}`,
+        message: `No se encontro el idioma de id: ${languageId}`,
         statusCode: STATUS.NOT_FOUND
       })
     }
