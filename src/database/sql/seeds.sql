@@ -24,8 +24,7 @@ VALUES
 
 INSERT INTO ucareers (
   name
-  )
-VALUES
+  ) VALUES
   ('Ingeniería Informática'),
   ('Ingeniería Civil'),
   ('Ingeniería Industrial'),

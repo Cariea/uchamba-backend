@@ -30,7 +30,7 @@ export const getCareers = async (
         SELECT
           ucareer_id,
           name,
-          TO_CHAR(created_at, 'YYYY-MM-DD') AS created_at
+          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
         FROM 
           ucareers
         ORDER BY ucareer_id ASC
@@ -47,7 +47,6 @@ export const getCareers = async (
 
     return paginatedItemsResponse(res, STATUS.OK, camelizeObject(response) as Array<Record<string, any>>, pagination)
   } catch (error: unknown) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }

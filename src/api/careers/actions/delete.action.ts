@@ -25,9 +25,8 @@ export const deleteCareer = async (
         statusCode: STATUS.NOT_FOUND
       })
     }
-    return res.status(STATUS.OK).json({ message: 'Usuario eliminado correctamente' })
+    return res.status(STATUS.OK).json({ message: 'Carrera de la UCAB eliminada correctamente' })
   } catch (error: unknown) {
-    console.error(error)
     return handleControllerError(error, res)
   }
 }

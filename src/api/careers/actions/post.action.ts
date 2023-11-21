@@ -5,7 +5,7 @@ import { StatusError } from '../../../utils/responses/status-error'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import camelizeObject from '../../../utils/camelizeObject'
 
-export const postCareer = async (
+export const addCareer = async (
   req: Request,
   res: Response
 ): Promise<Response | undefined> => {
@@ -47,7 +47,6 @@ export const postCareer = async (
 
     return res.status(STATUS.CREATED).json(camelizeObject(response.rows[0]))
   } catch (error: unknown) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }
