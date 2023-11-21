@@ -32,4 +32,6 @@ VALUES
   ('Relaciones Industriales'),
   ('Educación'),
   ('Comunicación Social'),
-  ('Derecho')
+  ('Derecho'),
+  ('Administración de Empresas'),
+  ('Contaduría Pública')
