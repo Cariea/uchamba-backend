@@ -3,14 +3,13 @@ import { pool } from '../../../database'
 import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { StatusError } from '../../../utils/responses/status-error'
-import { QueryResult } from 'pg'
 
 export const deleteCareer = async (
   req: Request, res: Response
 ): Promise<Response | undefined> => {
   try {
     const { careerId } = req.params
-    const response: QueryResult = await pool.query({
+    const response = await pool.query({
       text: `
         DELETE
         FROM ucareers
