@@ -31,7 +31,7 @@ export const getUserById = async (
 
     if (response.rowCount === 0) {
       throw new StatusError({
-        message: `No se pudo encontrar el registro de id: ${req.params.assignmentId}`,
+        message: `No se pudo encontrar el registro de id: ${userId}`,
         statusCode: STATUS.NOT_FOUND
       })
     }

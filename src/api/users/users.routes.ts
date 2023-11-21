@@ -7,10 +7,10 @@ import { schemaGuard } from '../../middlewares/schemaGuard'
 
 // Controllers
 import { getAllUsers } from './actions/getAll.action'
-import { getUsers } from './actions/get.action'
 import { getUserById } from './actions/getById.action'
-import { deleteUser } from './actions/delete.action'
+import { getUsers } from './actions/get.action'
 import { updateUser } from './actions/update.action'
+import { deleteUser } from './actions/delete.action'
 
 const router = Router()
 

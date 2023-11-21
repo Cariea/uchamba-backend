@@ -20,6 +20,7 @@ router.get('/ping', (_req, res) => {
 router.use('/auth', authRouter)
 router.use('/users', userRouter)
 router.use('/skills', skillRouter)
+
 // Middlewares for token validation
 router.use(tokenGuard(), verifyToken())
 
