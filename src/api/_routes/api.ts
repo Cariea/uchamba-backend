@@ -7,6 +7,7 @@ import { verifyToken } from '../../middlewares/auth'
 // Routers
 import authRouter from '../auth/auth.routes'
 import userRouter from '../users/users.routes'
+import languageRouter from '../languages/languages.routes'
 import skillRouter from '../skills/skills.routes'
 
 export const router = Router()
@@ -19,6 +20,7 @@ router.get('/ping', (_req, res) => {
 // No token validation endpoints
 router.use('/auth', authRouter)
 router.use('/users', userRouter)
+router.use('/languages', languageRouter)
 router.use('/skills', skillRouter)
 
 // Middlewares for token validation

@@ -21,8 +21,8 @@ export const getUserById = async (
           residence_address,
           role,
           is_verified,
-          TO_CHAR(created_at, 'YYYY-MM-DD') AS created_at,
-          TO_CHAR(updated_at, 'YYYY-MM-DD') AS updated_at
+          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
+          TO_CHAR(updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
         FROM users
         WHERE user_id = $1
       `,
@@ -37,7 +37,6 @@ export const getUserById = async (
     }
     return res.status(STATUS.OK).json(camelizeObject(response.rows[0]))
   } catch (error: unknown) {
-    console.error(error)
     return handleControllerError(error, res)
   }
 }

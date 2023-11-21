@@ -5,7 +5,7 @@ import { PaginateSettings, paginatedItemsResponse } from '../../../utils/respons
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import camelizeObject from '../../../utils/camelizeObject'
 
-export const getUsers = async (
+export const getLanguages = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
@@ -21,21 +21,19 @@ export const getUsers = async (
     const { rows } = await pool.query({
       text: `
         SELECT COUNT(*) 
-        FROM users
+        FROM languages
       `
     })
 
     const { rows: response } = await pool.query({
       text: `
         SELECT
-          user_id,
+          language_id,
           name,
-          email,
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
-          TO_CHAR(updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
         FROM 
-          users
-        ORDER BY user_id ASC
+          languages
+        ORDER BY language_id ASC
         LIMIT $1 OFFSET $2
       `,
       values: [size, offset]

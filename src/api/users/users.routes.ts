@@ -4,6 +4,7 @@ import { UpdateUserSchema } from './users.schema'
 
 // Middlewares
 import { schemaGuard } from '../../middlewares/schemaGuard'
+import { paginationGuard } from '../../middlewares/paginationGuard'
 
 // Controllers
 import { getAllUsers } from './actions/getAll.action'
@@ -16,7 +17,7 @@ const router = Router()
 
 router.get('/all', getAllUsers)
 router.get('/:userId', getUserById)
-router.get('/', getUsers)
+router.get('/', paginationGuard(), getUsers)
 router.put('/:userId', schemaGuard(UpdateUserSchema), updateUser)
 router.delete('/:userId', deleteUser)
 
