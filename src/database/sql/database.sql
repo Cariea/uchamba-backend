@@ -66,7 +66,7 @@ CREATE TABLE skills (
   user_id INTEGER,
   skill_id INTEGER GENERATED ALWAYS AS IDENTITY,
   description dom_name NOT NULL,
-  type character varying(1) NOT NULL,
+  type dom_skill NOT NULL,
   created_at dom_created_at,
   updated_at dom_created_at,
   CONSTRAINT pk_skill_id PRIMARY KEY (user_id, skill_id)

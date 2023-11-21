@@ -10,8 +10,8 @@ import { paginationGuard } from '../../middlewares/paginationGuard'
 import { getAllUsers } from './actions/getAll.action'
 import { getUserById } from './actions/getById.action'
 import { getUsers } from './actions/get.action'
-import { deleteUser } from './actions/delete.action'
 import { updateUser } from './actions/update.action'
+import { deleteUser } from './actions/delete.action'
 
 const router = Router()
 
