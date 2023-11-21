@@ -17,8 +17,8 @@ export const getSkillByUserId = async (
           skill_id,
           description,
           type,
-          TO_CHAR(created_at, 'YYYY-MM-DD') AS created_at,
-          TO_CHAR(updated_at, 'YYYY-MM-DD') AS updated_at
+          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at,
+          TO_CHAR(updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
         FROM skills
         WHERE user_id = $1
       `,
@@ -27,7 +27,7 @@ export const getSkillByUserId = async (
 
     if (response.rowCount === 0) {
       throw new StatusError({
-        message: `No se pudo encontrar el registro de user_id: ${req.user.id}`,
+        message: `No se pudo encontrar el registro de user_id: ${req.user.id as number}`,
         statusCode: STATUS.NOT_FOUND
       })
     }

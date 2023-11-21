@@ -14,7 +14,9 @@ export const deleteForeignStudie = async (
       text: `
         DELETE
         FROM foreign_studies
-        WHERE user_id = $1 and foreign_study_id = $2
+        WHERE 
+          user_id = $1 AND 
+          foreign_study_id = $2
       `,
       values: [req.user.id, foreignStudyId]
     })

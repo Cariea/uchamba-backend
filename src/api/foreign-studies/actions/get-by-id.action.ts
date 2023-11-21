@@ -19,7 +19,7 @@ export const getForeignStudiesByUserId = async (
           university_name,
           degree,
           graduation_date,
-          TO_CHAR(created_at, 'YYYY-MM-DD') AS created_at
+          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
         FROM foreign_studies
         WHERE user_id = $1
       `,
@@ -28,7 +28,7 @@ export const getForeignStudiesByUserId = async (
 
     if (response.rowCount === 0) {
       throw new StatusError({
-        message: `No se pudo encontrar el registro de user_id: ${req.user.id as number} `,
+        message: `No se pudo encontrar el registro de id: ${req.user.id as number} `,
         statusCode: STATUS.NOT_FOUND
       })
     }

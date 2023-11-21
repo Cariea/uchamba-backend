@@ -34,7 +34,6 @@ export const updateForeignStudie = async (
     }
     return res.status(STATUS.OK).json({ message: 'Estudio foraneo modificado correctamente' })
   } catch (error) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }

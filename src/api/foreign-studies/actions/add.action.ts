@@ -33,7 +33,6 @@ export const addForeignStudies = async (
 
     return res.status(STATUS.OK).json(response.rows[0])
   } catch (error) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }
