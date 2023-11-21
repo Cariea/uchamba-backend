@@ -4,32 +4,32 @@ import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { StatusError } from '../../../utils/responses/status-error'
 
-export const updateUser = async (
+export const updateSkill = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   try {
-    const { aboutMe, phoneNumber, residenceAddress } = req.body
-    const { userId } = req.params
+    const { description, type } = req.body
+    const { userId, skillId } = req.params
     const response = await pool.query({
       text: `
-        UPDATE users
+        UPDATE skills
         SET 
-          about_me = $1,
-          phone_number = $2,
-          residence_address = $3
+          description = $1,
+          type = $2
         WHERE
-          user_id = $4
+          user_id = $3 AND
+          skill_id = $4
       `,
-      values: [aboutMe, phoneNumber, residenceAddress, userId]
+      values: [description, type, userId, skillId]
     })
     if (response.rowCount === 0) {
       throw new StatusError({
-        message: `No se encontro el usuario de id: ${userId}`,
+        message: `No se encontro el skill: ${skillId} del usuario: ${userId}`,
         statusCode: STATUS.NOT_FOUND
       })
     }
-    return res.status(STATUS.OK).json({ message: 'Usuario modificado correctamente' })
+    return res.status(STATUS.OK).json({ message: 'Skill modificada correctamente' })
   } catch (error) {
     return handleControllerError(error, res)
   }
