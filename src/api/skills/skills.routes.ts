@@ -12,9 +12,9 @@ import { updateSkill } from './actions/update.action'
 import { schemaGuard } from '../../middlewares/schemaGuard'
 const router = Router()
 
-router.get('/user/:userId', getSkillByUserId)
-router.post('/user/:userId', schemaGuard(SkillSchema), addSkill)
-router.put('/user/:userId/skill/:skillId', schemaGuard(SkillSchema), updateSkill)
-router.delete('/user/:userId/skill/:skillId', deleteSkill)
+router.get('/', getSkillByUserId)
+router.post('/', schemaGuard(SkillSchema), addSkill)
+router.put('/skill/:skillId', schemaGuard(SkillSchema), updateSkill)
+router.delete('/skill/:skillId', deleteSkill)
 
 export default router

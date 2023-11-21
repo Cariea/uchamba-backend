@@ -1,16 +1,17 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
+import { ExtendedRequest } from '../../../middlewares/auth'
 import { pool } from '../../../database'
 import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { StatusError } from '../../../utils/responses/status-error'
 
 export const updateSkill = async (
-  req: Request,
+  req: ExtendedRequest,
   res: Response
 ): Promise<Response> => {
   try {
+    const { skillId } = req.params
     const { description, type } = req.body
-    const { userId, skillId } = req.params
     const response = await pool.query({
       text: `
         UPDATE skills
@@ -21,11 +22,11 @@ export const updateSkill = async (
           user_id = $3 AND
           skill_id = $4
       `,
-      values: [description, type, userId, skillId]
+      values: [description, type, req.user.id, skillId]
     })
     if (response.rowCount === 0) {
       throw new StatusError({
-        message: `No se encontro el skill: ${skillId} del usuario: ${userId}`,
+        message: `No se encontro el skill: ${skillId} del usuario: ${req.user.id}`,
         statusCode: STATUS.NOT_FOUND
       })
     }

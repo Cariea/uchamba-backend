@@ -19,11 +19,11 @@ router.get('/ping', (_req, res) => {
 
 // No token validation endpoints
 router.use('/auth', authRouter)
-router.use('/users', userRouter)
-router.use('/languages', languageRouter)
-router.use('/skills', skillRouter)
 
 // Middlewares for token validation
 router.use(tokenGuard(), verifyToken())
 
 // Secured by token validation endpoints
+router.use('/users', userRouter)
+router.use('/languages', languageRouter)
+router.use('/skills', skillRouter)
