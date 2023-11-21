@@ -4,27 +4,27 @@ import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { StatusError } from '../../../utils/responses/status-error'
 
-export const deleteUser = async (
+export const deleteLanguage = async (
   req: Request, res: Response
 ): Promise<Response | undefined> => {
   try {
-    const { userId } = req.params
+    const { languageId } = req.params
     const response = await pool.query({
       text: `
         DELETE
-        FROM users
-        WHERE user_id = $1
+        FROM languages
+        WHERE language_id = $1
       `,
-      values: [userId]
+      values: [languageId]
     })
 
     if (response.rowCount === 0) {
       throw new StatusError({
-        message: `No se pudo encontrar el registro de id: ${userId}`,
+        message: `No se pudo encontrar el registro de id: ${languageId}`,
         statusCode: STATUS.NOT_FOUND
       })
     }
-    return res.status(STATUS.OK).json({ message: 'Usuario eliminado correctamente' })
+    return res.status(STATUS.OK).json({ message: 'Idioma eliminado correctamente' })
   } catch (error: unknown) {
     return handleControllerError(error, res)
   }
