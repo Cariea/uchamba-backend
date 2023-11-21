@@ -7,8 +7,6 @@ CREATE DOMAIN dom_phone_number VARCHAR(16);
 CREATE DOMAIN dom_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
 CREATE TYPE dom_role AS ENUM ('admin', 'graduated');
-CREATE TYPE dom_time_unit AS ENUM ('months', 'years');
-CREATE TYPE dom_skill AS ENUM ('blanda', 'dura');
 CREATE TYPE dom_degree AS ENUM ('pregrado', 'postgrado', 'especializacion', 'maestria', 'doctorado');
 CREATE TYPE dom_proficiency_level AS ENUM ('A1', 'A2', 'B1', 'B2', 'C1', 'C2');
 
@@ -46,30 +44,45 @@ CREATE TABLE ucareers (
 );
 
 -- 4
-CREATE TABLE technologies (
-  technology_id INTEGER GENERATED ALWAYS AS IDENTITY,
+CREATE TABLE hard_skills (
+  hard_skill_id INTEGER GENERATED ALWAYS AS IDENTITY,
   name dom_name UNIQUE NOT NULL,
   created_at dom_created_at,
-  CONSTRAINT pk_technology_id PRIMARY KEY (technology_id)
+  CONSTRAINT pk_hard_skill_id PRIMARY KEY (hard_skill_id)
 );
 
 -- 4.1
-CREATE TABLE tech_categories(
-  technology_id INTEGER,
-  category_name dom_name,
+CREATE TABLE personal_hard_skills(
+  user_id INTEGER,
+  phard_skill_id INTEGER GENERATED ALWAYS AS IDENTITY,
+  name dom_name NOT NULL,
   created_at dom_created_at,
-  CONSTRAINT pk_technology_category_id PRIMARY KEY (technology_id, category_name)
+  updated_at dom_created_at,
+  CONSTRAINT pk_user_phard_skill_id PRIMARY KEY (user_id, phard_skill_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
 );
 
 -- 5
-CREATE TABLE skills (
+CREATE TABLE soft_skills (
+  soft_skill_id INTEGER GENERATED ALWAYS AS IDENTITY,
+  name dom_name UNIQUE NOT NULL,
+  created_at dom_created_at,
+  CONSTRAINT pk_soft_skill_id PRIMARY KEY (soft_skill_id)
+);
+
+-- 5.1
+CREATE TABLE personal_soft_skills (
   user_id INTEGER,
-  skill_id INTEGER GENERATED ALWAYS AS IDENTITY,
-  description dom_name NOT NULL,
-  type dom_skill NOT NULL,
+  psoft_skill_id INTEGER GENERATED ALWAYS AS IDENTITY,
+  name dom_name NOT NULL,
   created_at dom_created_at,
   updated_at dom_created_at,
-  CONSTRAINT pk_skill_id PRIMARY KEY (user_id, skill_id)
+  CONSTRAINT pk_user_psoft_skill_id PRIMARY KEY (user_id, psoft_skill_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
 );
 
 -- 6
@@ -79,7 +92,11 @@ CREATE TABLE personal_links (
   name dom_name UNIQUE NOT NULL,
   url TEXT DEFAULT '',
   created_at dom_created_at,
-  CONSTRAINT pk_user_link_id PRIMARY KEY (user_id, link_id)
+  updated_at dom_created_at,
+  CONSTRAINT pk_user_link_id PRIMARY KEY (user_id, link_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
 );
 
 -- 7
@@ -91,7 +108,11 @@ CREATE TABLE foreign_studies (
   degree dom_degree NOT NULL,
   graduation_date DATE DEFAULT NULL,
   created_at dom_created_at,
-  CONSTRAINT pk_user_foreign_study_id PRIMARY KEY (user_id, foreign_study_id)
+  updated_at dom_created_at,
+  CONSTRAINT pk_user_foreign_study_id PRIMARY KEY (user_id, foreign_study_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
 );
 
 -- 8
@@ -105,7 +126,10 @@ CREATE TABLE work_experiences (
   departure_date DATE,
   description TEXT DEFAULT '',
   created_at dom_created_at,
-  CONSTRAINT pk_user_work_xp_id PRIMARY KEY (user_id, work_exp_id)
+  CONSTRAINT pk_user_work_xp_id PRIMARY KEY (user_id, work_exp_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
 );
 
 -- 9
@@ -117,7 +141,10 @@ CREATE TABLE projects (
   project_url TEXT DEFAULT '',
   created_at dom_created_at,
   updated_at dom_created_at,
-  CONSTRAINT pk_user_project_id PRIMARY KEY (user_id, project_id)
+  CONSTRAINT pk_user_project_id PRIMARY KEY (user_id, project_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
 );
 
 -- 10
@@ -126,6 +153,7 @@ CREATE TABLE users_languages (
   language_id INTEGER,
   proficient_level dom_proficiency_level NOT NULL,
   created_at dom_created_at,
+  updated_at dom_created_at,
   CONSTRAINT pk_user_language_id PRIMARY KEY (user_id, language_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
     ON UPDATE CASCADE
@@ -136,26 +164,6 @@ CREATE TABLE users_languages (
 );
 
 -- 11
-CREATE TABLE users_technologies (
-  user_id INTEGER,
-  technology_id INTEGER,
-  time_unit dom_time_unit DEFAULT NULL,
-  time_value INTEGER DEFAULT NULL,
-  created_at dom_created_at,
-  CONSTRAINT pk_user_technology_id PRIMARY KEY (user_id, technology_id),
-  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
-    ON UPDATE CASCADE
-    ON DELETE RESTRICT,
-  CONSTRAINT fk_technology_id FOREIGN KEY (technology_id) REFERENCES technologies
-    ON UPDATE CASCADE
-    ON DELETE RESTRICT,
-  CONSTRAINT chk_time_usage CHECK (
-    (time_unit IS NOT NULL AND time_value IS NOT NULL) OR 
-    (time_unit IS NULL AND time_value IS NULL)
-  )
-);
-
--- 12
 CREATE TABLE users_ustudies (
   user_id INTEGER,
   ucareer_id INTEGER,
@@ -171,7 +179,35 @@ CREATE TABLE users_ustudies (
     ON DELETE RESTRICT
 );
 
+-- 12
+CREATE TABLE users_hard_skills (
+  user_id INTEGER,
+  hard_skill_id INTEGER,
+  created_at dom_created_at,
+  CONSTRAINT pk_user_hard_skill_id PRIMARY KEY (user_id, hard_skill_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT,
+  CONSTRAINT fk_hard_skill_id FOREIGN KEY (hard_skill_id) REFERENCES hard_skills
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
 -- 13
+CREATE TABLE users_soft_skills (
+  user_id INTEGER,
+  soft_skill_id INTEGER,
+  created_at dom_created_at,
+  CONSTRAINT pk_user_soft_skill_id PRIMARY KEY (user_id, soft_skill_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT,
+  CONSTRAINT fk_soft_skill_id FOREIGN KEY (soft_skill_id) REFERENCES soft_skills
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+-- 14
 CREATE TABLE projects_images (
   user_id INTEGER,
   project_id INTEGER,
@@ -200,8 +236,28 @@ BEFORE UPDATE ON users
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at();
 
-CREATE TRIGGER update_updated_at_skills
-BEFORE UPDATE ON skills
+CREATE TRIGGER update_updated_at_personal_hard_skills
+BEFORE UPDATE ON personal_hard_skills
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at();
+
+CREATE TRIGGER update_updated_at_personal_soft_skills
+BEFORE UPDATE ON personal_soft_skills
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at();
+
+CREATE TRIGGER update_updated_at_personal_links
+BEFORE UPDATE ON personal_links
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at();
+
+CREATE TRIGGER update_updated_at_foreign_studies
+BEFORE UPDATE ON foreign_studies
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at();
+
+CREATE TRIGGER update_updated_at_user_languages
+BEFORE UPDATE ON users_languages
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at();
 
