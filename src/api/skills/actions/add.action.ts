@@ -1,14 +1,14 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
+import { ExtendedRequest } from '../../../middlewares/auth'
 import { pool } from '../../../database'
 import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 
 export const addSkill = async (
-  req: Request,
+  req: ExtendedRequest,
   res: Response
 ): Promise<Response> => {
   try {
-    const { userId } = req.params
     const { description, type } = req.body
     const response = await pool.query({
       text: `
@@ -24,7 +24,7 @@ export const addSkill = async (
           type,
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
       `,
-      values: [userId, description, type]
+      values: [req.user.id, description, type]
     })
 
     return res.status(STATUS.OK).json(response.rows[0])

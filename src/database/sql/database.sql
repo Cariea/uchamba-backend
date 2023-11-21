@@ -183,4 +183,31 @@ CREATE TABLE projects_images (
     ON DELETE CASCADE
 );
 
+-- --------------------
+-- TRIGGERS
+-- --------------------
+
+CREATE FUNCTION update_updated_at ()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = CURRENT_TIMESTAMP;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_updated_at_users
+BEFORE UPDATE ON users
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at();
+
+CREATE TRIGGER update_updated_at_skills
+BEFORE UPDATE ON skills
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at();
+
+CREATE TRIGGER update_updated_at_projects
+BEFORE UPDATE ON projects
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at();
+
 COMMIT;

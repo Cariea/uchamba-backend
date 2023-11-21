@@ -1,4 +1,5 @@
-import { Response, Request } from 'express'
+import { Response } from 'express'
+import { ExtendedRequest } from '../../../middlewares/auth'
 import { pool } from '../../../database'
 import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
@@ -6,10 +7,9 @@ import camelizeObject from '../../../utils/camelizeObject'
 import { StatusError } from '../../../utils/responses/status-error'
 
 export const getSkillByUserId = async (
-  req: Request, res: Response
+  req: ExtendedRequest, res: Response
 ): Promise<Response | undefined> => {
   try {
-    const { userId } = req.params
     const response = await pool.query({
       text: `
         SELECT
@@ -22,18 +22,17 @@ export const getSkillByUserId = async (
         FROM skills
         WHERE user_id = $1
       `,
-      values: [userId]
+      values: [req.user.id]
     })
 
     if (response.rowCount === 0) {
       throw new StatusError({
-        message: `No se pudo encontrar el registro de user_id: ${userId}`,
+        message: `No se pudo encontrar el registro de user_id: ${req.user.id}`,
         statusCode: STATUS.NOT_FOUND
       })
     }
     return res.status(STATUS.OK).json(camelizeObject(response.rows))
   } catch (error: unknown) {
-    console.error(error)
     return handleControllerError(error, res)
   }
 }
