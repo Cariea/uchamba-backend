@@ -46,7 +46,6 @@ export const verifyAccount = async (
 
     return res.status(STATUS.OK).json(camelizeObject(response.rows[0]))
   } catch (error: unknown) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }

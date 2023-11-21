@@ -9,6 +9,7 @@ import authRouter from '../auth/auth.routes'
 import userRouter from '../users/users.routes'
 import languageRouter from '../languages/languages.routes'
 import skillRouter from '../skills/skills.routes'
+import foreignStudiesRouter from '../foreign-studies/foreign-studies.routes'
 
 export const router = Router()
 
@@ -27,3 +28,4 @@ router.use(tokenGuard(), verifyToken())
 router.use('/users', userRouter)
 router.use('/languages', languageRouter)
 router.use('/skills', skillRouter)
+router.use('/foreign-studies', foreignStudiesRouter)

@@ -6,7 +6,7 @@ import { handleControllerError } from '../../../utils/responses/handleController
 import camelizeObject from '../../../utils/camelizeObject'
 import { StatusError } from '../../../utils/responses/status-error'
 
-export const getSkillByUserId = async (
+export const getForeignStudiesByUserId = async (
   req: ExtendedRequest, res: Response
 ): Promise<Response | undefined> => {
   try {
@@ -14,12 +14,13 @@ export const getSkillByUserId = async (
       text: `
         SELECT
           user_id,
-          skill_id,
-          description,
-          type,
-          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at,
-          TO_CHAR(updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
-        FROM skills
+          foreign_study_id,
+          name,
+          university_name,
+          degree,
+          graduation_date,
+          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
+        FROM foreign_studies
         WHERE user_id = $1
       `,
       values: [req.user.id]
@@ -27,7 +28,7 @@ export const getSkillByUserId = async (
 
     if (response.rowCount === 0) {
       throw new StatusError({
-        message: `No se pudo encontrar el registro de user_id: ${req.user.id as number}`,
+        message: `No se pudo encontrar el registro de id: ${req.user.id as number} `,
         statusCode: STATUS.NOT_FOUND
       })
     }
