@@ -7,7 +7,7 @@ import { verifyToken } from '../../middlewares/auth'
 // Routers
 import authRouter from '../auth/auth.routes'
 import userRouter from '../users/users.routes'
-import careerRouter from '../careers/careers.routes'
+import careerRouter from '../uCareers/careers.routes'
 
 export const router = Router()
 
