@@ -15,7 +15,7 @@ export const getCareerById = async (
         SELECT
           ucareer_id,
           name,
-          TO_CHAR(created_at, 'YYYY-MM-DD') AS created_at
+          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
         FROM ucareers
         WHERE ucareer_id = $1
       `,
