@@ -74,3 +74,20 @@ INSERT INTO languages (
   ('Indonesio'),
   ('Farsi'),
   ('Kurdo');
+
+--Users
+
+INSERT INTO projects (
+  user_id,
+  name,
+  description,
+  project_url
+) VALUES
+  (1, 'Proyecto de Base de Datos', 'Llevar el registro de los autos que llegan a un concesionario', ''),
+  (2, 'Proyecto de Arquitectura', 'Armar un contador de 12 horas', 'https://arquicomberna.blogspot.com/2008/12/contador.html'),
+  (3, 'Proyecto de Ingeniería de Requisitos', 'Realizar una página donde las empresas puedan contratar egresados ucabistas', 'https://www.mayoclinic.org/es/diseases-conditions/schizophrenia/symptoms-causes/syc-20354443'),
+  (4, 'Offside', 'Album de barajitas del mundial', 'https://reglasdelfutbol.club/que-es-el-offiside/'),
+  (5, 'Proyecto de IHC', 'Sistema de gestión de la biblioteca UCAB', ''),
+  (6, 'Proyecto de Contabilidad', 'Relacionar la Contabilidad con 3 ODS', ''),
+  (7, 'Proyecto de Estructura', 'Calculadora en ensamblador', 'https://www.tecnologia-informatica.com/el-lenguaje-ensamblador/'),
+  (8, 'Proyecto de Sistemas de operación', 'Sistema Operativo', '');

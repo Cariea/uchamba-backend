@@ -14,26 +14,48 @@ export const addProject = async (
     const { name, description, projectUrl } = req.body
     const userId: number = req.user.id
 
-    // Verficar la existencia del proyecto antes de crear
+    if (projectUrl !== '') {
+      // Verficar la existencia del proyecto antes de crear
 
-    const { rows } = await pool.query({
-      text: `
-        SELECT *
-        FROM projects
-        WHERE user_id = $1
-        AND name = $2
-        OR project_url = $3
-      `,
-      values: [userId, name, projectUrl]
-    })
-
-    if (rows.length > 0) {
-      throw new StatusError({
-        message: 'Ya existe otro proyecto con los mismos datos',
-        statusCode: STATUS.BAD_REQUEST
+      const { rows } = await pool.query({
+        text: `
+          SELECT *
+          FROM projects
+          WHERE user_id = $1
+          AND name = $2
+          OR project_url = $3
+        `,
+        values: [userId, name, projectUrl]
       })
+
+      if (rows.length > 0) {
+        throw new StatusError({
+          message: 'Ya existe otro proyecto con el mismo nombre o con el mismo url',
+          statusCode: STATUS.BAD_REQUEST
+        })
+      }
     }
 
+    if (projectUrl === '') {
+      // Verficar la existencia del proyecto antes de crear
+
+      const { rows } = await pool.query({
+        text: `
+          SELECT *
+          FROM projects
+          WHERE user_id = $1
+          AND name = $2
+        `,
+        values: [userId, name]
+      })
+
+      if (rows.length > 0) {
+        throw new StatusError({
+          message: 'Ya existe otro proyecto con el mismo nombre',
+          statusCode: STATUS.BAD_REQUEST
+        })
+      }
+    }
     // --
 
     const response = await pool.query({
