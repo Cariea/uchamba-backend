@@ -74,3 +74,19 @@ INSERT INTO languages (
   ('Indonesio'),
   ('Farsi'),
   ('Kurdo');
+
+  --personal-hard-skills
+
+  
+INSERT INTO personal_hard_skills (user_id, name)
+VALUES
+  (4, 'Programming'),
+  (4, 'Data Analysis'),
+  (4, 'Machine Learning'),
+  (4, 'Database Management'),
+  (4, 'Web Development'),
+  (4, 'Network Security'),
+  (4, 'Software Testing'),
+  (4, 'System Administration'),
+  (4, 'Cloud Computing'),
+  (4, 'Mobile App Development');
