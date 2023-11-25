@@ -31,8 +31,10 @@ export const getUsers = async (
           user_id,
           name,
           email,
-          TO_CHAR(created_at, 'YYYY-MM-DD') AS created_at,
-          TO_CHAR(updated_at, 'YYYY-MM-DD') AS updated_at
+          role,
+          is_verified,
+          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at,
+          TO_CHAR(updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
         FROM 
           users
         ORDER BY user_id ASC
@@ -49,6 +51,7 @@ export const getUsers = async (
 
     return paginatedItemsResponse(res, STATUS.OK, camelizeObject(response) as Array<Record<string, any>>, pagination)
   } catch (error: unknown) {
+    console.log(error)
     return handleControllerError(error, res)
   }
 }
