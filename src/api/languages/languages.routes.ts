@@ -5,6 +5,7 @@ import { LanguageSchema } from './languages.schema'
 // Middlewares
 import { schemaGuard } from '../../middlewares/schemaGuard'
 import { paginationGuard } from '../../middlewares/paginationGuard'
+import { isAdmin } from '../../middlewares/auth'
 
 // Controllers
 import { getAllLanguages } from './actions/getAll.action'
@@ -19,8 +20,8 @@ const router = Router()
 router.get('/all', getAllLanguages)
 router.get('/:languageId', getLanguageById)
 router.get('/', paginationGuard(), getLanguages)
-router.post('/', schemaGuard(LanguageSchema), createLanguage)
-router.put('/:languageId', schemaGuard(LanguageSchema), updateLanguage)
-router.delete('/:languageId', deleteLanguage)
+router.post('/', isAdmin(), schemaGuard(LanguageSchema), createLanguage)
+router.put('/:languageId', isAdmin(), schemaGuard(LanguageSchema), updateLanguage)
+router.delete('/:languageId', isAdmin(), deleteLanguage)
 
 export default router
