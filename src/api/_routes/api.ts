@@ -10,6 +10,7 @@ import userRouter from '../users/users.routes'
 import languageRouter from '../languages/languages.routes'
 import skillRouter from '../skills/skills.routes'
 import foreignStudiesRouter from '../foreign-studies/foreign-studies.routes'
+import personalHardSkillsRouter from '../personal-hard-skills/personal-hard-skills.routes'
 import hardSkillsRouter from '../hard-skills/hard-skills.routes'
 import softSkillsRouter from '../soft-skills/soft-skills.routes'
 import personalSoftSkillsRouter from '../personal-soft-skills/personal-soft-skills.routes'
@@ -33,6 +34,7 @@ router.use('/users', userRouter)
 router.use('/languages', languageRouter)
 router.use('/skills', skillRouter)
 router.use('/foreign-studies', foreignStudiesRouter)
+router.use('/personal-hard-skills', personalHardSkillsRouter)
 router.use('/hard-skills', hardSkillsRouter)
 router.use('/soft-skills', softSkillsRouter)
 router.use('/personal-soft-skills', personalSoftSkillsRouter)
