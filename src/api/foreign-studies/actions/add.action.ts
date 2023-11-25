@@ -22,6 +22,7 @@ export const addForeignStudies = async (
         VALUES ($1,$2,$3,$4,$5)
         RETURNING
           user_id,
+          foreign_study_id,
           name,
           university_name,
           degree,

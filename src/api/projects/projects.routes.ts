@@ -4,21 +4,18 @@ import { ProjectSchema } from './projects.schema'
 
 // Middlewares
 import { schemaGuard } from '../../middlewares/schemaGuard'
-import { paginationGuard } from '../../middlewares/paginationGuard'
 
 // Controllers
-import { getAllProjects } from './actions/getAll.action'
-import { getProjectByUserProjectId } from './actions/getById.action'
-import { getProjects } from './actions/get.action'
+import { getByProjectId } from './actions/get-by-project-id.action'
+import { getByUserProjectId } from './actions/get-by-user-project-id'
 import { addProject } from './actions/add.action'
-import { deleteProject } from './actions/delete.action'
 import { updateProject } from './actions/update.action'
+import { deleteProject } from './actions/delete.action'
 
 const router = Router()
 
-router.get('/all', getAllProjects)
-router.get('/user/:userId/project/:projectId', getProjectByUserProjectId)
-router.get('/', paginationGuard(), getProjects)
+router.get('/:projectId', getByProjectId)
+router.get('/user/:userId/project/:projectId', getByUserProjectId)
 router.post('/', schemaGuard(ProjectSchema), addProject)
 router.put('/:projectId', schemaGuard(ProjectSchema), updateProject)
 router.delete('/:projectId', deleteProject)

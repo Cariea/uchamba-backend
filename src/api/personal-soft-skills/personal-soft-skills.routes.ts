@@ -12,9 +12,9 @@ import { updatePersonalSoftSkill } from './actions/update.action'
 import { schemaGuard } from '../../middlewares/schemaGuard'
 const router = Router()
 
-router.get('/', getSkillByUserId)
+router.get('/:skillId', getSkillByUserId)
 router.post('/', schemaGuard(personalSoftSkillSchema), addPersonalSoftSkill)
-router.put('/personalSoftskill/:psoftSkillId', schemaGuard(personalSoftSkillSchema), updatePersonalSoftSkill)
-router.delete('/personalSoftskill/:psoftSkillId', deletePersonalSoftSkill)
+router.put('/:psoftSkillId', schemaGuard(personalSoftSkillSchema), updatePersonalSoftSkill)
+router.delete('/:psoftSkillId', deletePersonalSoftSkill)
 
 export default router

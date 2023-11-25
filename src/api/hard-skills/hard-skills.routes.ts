@@ -20,8 +20,8 @@ const router = Router()
 router.get('/all', getAllSkills)
 router.get('/:hardSkillId', getSkillById)
 router.get('/', paginationGuard(), getHardSkills)
-router.post('/', schemaGuard(hardSkillSchema), addHardSkill)
-router.put('/:hardSkillId', schemaGuard(hardSkillSchema), updateHardSkill)
+router.post('/', isAdmin(), schemaGuard(hardSkillSchema), addHardSkill)
+router.put('/:hardSkillId', isAdmin(), schemaGuard(hardSkillSchema), updateHardSkill)
 router.delete('/:hardSkillId', isAdmin(), deleteHardSkill)
 
 export default router

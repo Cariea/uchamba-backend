@@ -10,6 +10,7 @@ export const getSkillByUserId = async (
   req: ExtendedRequest, res: Response
 ): Promise<Response | undefined> => {
   try {
+    const { skillId } = req.params
     const response = await pool.query({
       text: `
         SELECT
@@ -19,14 +20,16 @@ export const getSkillByUserId = async (
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at,
           TO_CHAR(updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
         FROM personal_soft_skills
-        WHERE user_id = $1
+        WHERE
+          user_id = $1 AND
+          psoft_skill_id = $2
       `,
-      values: [req.user.id]
+      values: [req.user.id, skillId]
     })
 
     if (response.rowCount === 0) {
       throw new StatusError({
-        message: `No se encontraron soft skills personales para el usuario usuario: ${req.user.id as number}`,
+        message: `No se encontraron la habilidad blanda de id: ${skillId} para el usuario usuario: ${req.user.id as number}`,
         statusCode: STATUS.NOT_FOUND
       })
     }

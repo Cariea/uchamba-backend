@@ -10,11 +10,12 @@ import { getForeignStudiesByUserId } from './actions/get-by-id.action'
 import { addForeignStudies } from './actions/add.action'
 import { deleteForeignStudie } from './actions/delete.action'
 import { updateForeignStudie } from './actions/update.action'
+
 const router = Router()
 
-router.get('/', getForeignStudiesByUserId)
+router.get('/:foreignStudyId', getForeignStudiesByUserId)
 router.post('/', schemaGuard(ForeignStudiesSchema), addForeignStudies)
-router.put('/foreign-study/:foreignStudyId', schemaGuard(ForeignStudiesSchema), updateForeignStudie)
-router.delete('/foreign-study/:foreignStudyId', deleteForeignStudie)
+router.put('/:foreignStudyId', schemaGuard(ForeignStudiesSchema), updateForeignStudie)
+router.delete('/:foreignStudyId', deleteForeignStudie)
 
 export default router

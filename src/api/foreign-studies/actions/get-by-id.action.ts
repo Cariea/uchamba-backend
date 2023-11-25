@@ -10,6 +10,8 @@ export const getForeignStudiesByUserId = async (
   req: ExtendedRequest, res: Response
 ): Promise<Response | undefined> => {
   try {
+    const { foreignStudyId } = req.params
+
     const response = await pool.query({
       text: `
         SELECT
@@ -21,9 +23,11 @@ export const getForeignStudiesByUserId = async (
           graduation_date,
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
         FROM foreign_studies
-        WHERE user_id = $1
+        WHERE
+          user_id = $1 AND
+          foreign_study_id = $2
       `,
-      values: [req.user.id]
+      values: [req.user.id, foreignStudyId]
     })
 
     if (response.rowCount === 0) {

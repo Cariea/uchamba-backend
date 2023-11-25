@@ -10,6 +10,8 @@ export const getLanguageByUserId = async (
   req: ExtendedRequest, res: Response
 ): Promise<Response | undefined> => {
   try {
+    const { languageId } = req.params
+
     const response = await pool.query({
       text: `
         SELECT
@@ -18,9 +20,11 @@ export const getLanguageByUserId = async (
           proficient_level,
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
         FROM users_languages
-        WHERE user_id = $1
+        WHERE 
+          user_id = $1 AND
+          language_id = $2
       `,
-      values: [req.user.id]
+      values: [req.user.id, languageId]
     })
 
     if (response.rowCount === 0) {

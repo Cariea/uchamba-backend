@@ -21,7 +21,7 @@ export const getUserById = async (
           residence_address,
           role,
           is_verified,
-          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
+          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at,
           TO_CHAR(updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
         FROM users
         WHERE user_id = $1

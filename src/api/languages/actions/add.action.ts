@@ -4,7 +4,7 @@ import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import camelizeObject from '../../../utils/camelizeObject'
 
-export const createLanguage = async (
+export const addLanguage = async (
   req: Request, res: Response
 ): Promise<Response | undefined> => {
   try {
