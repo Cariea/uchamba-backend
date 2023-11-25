@@ -75,6 +75,23 @@ INSERT INTO languages (
   ('Farsi'),
   ('Kurdo');
 
+  --soft-skills
+  INSERT INTO soft_skills (name) VALUES
+  ('Communication'),
+  ('Teamwork'),
+  ('Adaptability'),
+  ('Problem Solving'),
+  ('Creativity'),
+  ('Time Management'),
+  ('Leadership'),
+  ('Empathy'),
+  ('Conflict Resolution'),
+  ('Critical Thinking'),
+  ('Stress Management'),
+  ('Decision Making'),
+  ('Flexibility'),
+  ('Positive Attitude'),
+  ('Networking');
 
   -----Personal soft skills
 
