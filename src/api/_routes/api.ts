@@ -9,6 +9,7 @@ import authRouter from '../auth/auth.routes'
 import userRouter from '../users/users.routes'
 import languageRouter from '../languages/languages.routes'
 import skillRouter from '../skills/skills.routes'
+import projectRouter from '../projects/projects.routes'
 import foreignStudiesRouter from '../foreign-studies/foreign-studies.routes'
 import personalHardSkillsRouter from '../personal-hard-skills/personal-hard-skills.routes'
 import hardSkillsRouter from '../hard-skills/hard-skills.routes'
@@ -33,6 +34,7 @@ router.use(tokenGuard(), verifyToken())
 router.use('/users', userRouter)
 router.use('/languages', languageRouter)
 router.use('/skills', skillRouter)
+router.use('/projects', projectRouter)
 router.use('/foreign-studies', foreignStudiesRouter)
 router.use('/personal-hard-skills', personalHardSkillsRouter)
 router.use('/hard-skills', hardSkillsRouter)
