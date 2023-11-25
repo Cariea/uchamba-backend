@@ -11,6 +11,8 @@ import languageRouter from '../languages/languages.routes'
 import skillRouter from '../skills/skills.routes'
 import foreignStudiesRouter from '../foreign-studies/foreign-studies.routes'
 import softSkillsRouter from '../soft-skills/soft-skills.routes'
+import personalSoftSkillsRouter from '../personal-soft-skills/personal-soft-skills.routes'
+import userLanguagesRouter from '../user-languages/user-languages.routes'
 
 export const router = Router()
 
@@ -31,3 +33,5 @@ router.use('/languages', languageRouter)
 router.use('/skills', skillRouter)
 router.use('/foreign-studies', foreignStudiesRouter)
 router.use('/soft-skills', softSkillsRouter)
+router.use('/personal-soft-skills', personalSoftSkillsRouter)
+router.use('/user-languages', userLanguagesRouter)

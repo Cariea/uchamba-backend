@@ -92,3 +92,22 @@ INSERT INTO languages (
   ('Flexibility'),
   ('Positive Attitude'),
   ('Networking');
+
+  -----Personal soft skills
+
+  INSERT INTO personal_soft_skills (user_id, name) VALUES
+  (4, 'Effective Communication'),
+  (4, 'Team Collaboration'),
+  (4, 'Adaptability'),
+  (4, 'Problem Solving'),
+  (4, 'Creativity'),
+  (4, 'Time Management'),
+  (4, 'Leadership'),
+  (4, 'Empathy'),
+  (4, 'Conflict Resolution'),
+  (4, 'Critical Thinking'),
+  (4, 'Stress Management'),
+  (4, 'Decision Making'),
+  (4, 'Flexibility'),
+  (4, 'Positive Attitude'),
+  (4, 'Networking');
