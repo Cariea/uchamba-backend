@@ -1,7 +1,6 @@
 -- For Seeding the Database
 
 --Users
-
 INSERT INTO users (
   name,
   email,
@@ -22,7 +21,6 @@ INSERT INTO users (
   ('Acosta Carrion', 'yeniffer.acosta3097@gmail.com', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Bibi', '04121856049', 'Direccion 8', 'admin', TRUE);
 
 --Languages
-
 INSERT INTO languages (
   name
 ) VALUES
@@ -75,41 +73,24 @@ INSERT INTO languages (
   ('Farsi'),
   ('Kurdo');
 
---Users
-
-INSERT INTO projects (
-  user_id,
-  name,
-  description,
-  project_url
+-- UCAB Careers
+INSERT INTO ucareers (
+  name
 ) VALUES
-  (1, 'Proyecto de Base de Datos', 'Llevar el registro de los autos que llegan a un concesionario', ''),
-  (2, 'Proyecto de Arquitectura', 'Armar un contador de 12 horas', 'https://arquicomberna.blogspot.com/2008/12/contador.html'),
-  (3, 'Proyecto de Ingeniería de Requisitos', 'Realizar una página donde las empresas puedan contratar egresados ucabistas', 'https://www.mayoclinic.org/es/diseases-conditions/schizophrenia/symptoms-causes/syc-20354443'),
-  (4, 'Offside', 'Album de barajitas del mundial', 'https://reglasdelfutbol.club/que-es-el-offiside/'),
-  (5, 'Proyecto de IHC', 'Sistema de gestión de la biblioteca UCAB', ''),
-  (6, 'Proyecto de Contabilidad', 'Relacionar la Contabilidad con 3 ODS', ''),
-  (7, 'Proyecto de Estructura', 'Calculadora en ensamblador', 'https://www.tecnologia-informatica.com/el-lenguaje-ensamblador/'),
-  (8, 'Proyecto de Sistemas de operación', 'Sistema Operativo', '');
-
-  --personal-hard-skills
+  ('Ingeniería Informática'),
+  ('Ingeniería Civil'),
+  ('Ingeniería Industrial'),
+  ('Relaciones Industriales'),
+  ('Educación'),
+  ('Comunicación Social'),
+  ('Derecho'),
+  ('Administración de Empresas'),
+  ('Contaduría Pública');
   
-INSERT INTO personal_hard_skills (user_id, name)
-VALUES
-  (4, 'Programming'),
-  (4, 'Data Analysis'),
-  (4, 'Machine Learning'),
-  (4, 'Database Management'),
-  (4, 'Web Development'),
-  (4, 'Network Security'),
-  (4, 'Software Testing'),
-  (4, 'System Administration'),
-  (4, 'Cloud Computing'),
-  (4, 'Mobile App Development');
-  
-  --Hard Skills
-
-  INSERT INTO hard_skills (name) VALUES
+--Hard Skills
+INSERT INTO hard_skills (
+  name
+) VALUES
   ('Java'),
   ('Python'),
   ('C++'),
@@ -126,8 +107,26 @@ VALUES
   ('Data Analysis'),
   ('Agile Methodology');
   
-  --soft-skills
-  INSERT INTO soft_skills (name) VALUES
+-- Personal Hard Skills 
+INSERT INTO personal_hard_skills (
+  user_id, 
+  name
+) VALUES
+  (4, 'Programming'),
+  (4, 'Data Analysis'),
+  (4, 'Machine Learning'),
+  (4, 'Database Management'),
+  (4, 'Web Development'),
+  (4, 'Network Security'),
+  (4, 'Software Testing'),
+  (4, 'System Administration'),
+  (4, 'Cloud Computing'),
+  (4, 'Mobile App Development');
+  
+-- Soft Skills
+INSERT INTO soft_skills (
+  name
+) VALUES
   ('Communication'),
   ('Teamwork'),
   ('Adaptability'),
@@ -144,9 +143,11 @@ VALUES
   ('Positive Attitude'),
   ('Networking');
 
-  -----Personal soft skills
-
-  INSERT INTO personal_soft_skills (user_id, name) VALUES
+  -- Personal Soft Skills
+ INSERT INTO personal_soft_skills (
+   user_id, 
+   name
+ ) VALUES
   (4, 'Effective Communication'),
   (4, 'Team Collaboration'),
   (4, 'Adaptability'),
@@ -162,3 +163,19 @@ VALUES
   (4, 'Flexibility'),
   (4, 'Positive Attitude'),
   (4, 'Networking');
+
+-- Projects
+INSERT INTO projects (
+  user_id,
+  name,
+  description,
+  project_url
+) VALUES
+  (1, 'Proyecto de Base de Datos', 'Llevar el registro de los autos que llegan a un concesionario', ''),
+  (2, 'Proyecto de Arquitectura', 'Armar un contador de 12 horas', 'https://arquicomberna.blogspot.com/2008/12/contador.html'),
+  (3, 'Proyecto de Ingeniería de Requisitos', 'Realizar una página donde las empresas puedan contratar egresados ucabistas', 'https://www.mayoclinic.org/es/diseases-conditions/schizophrenia/symptoms-causes/syc-20354443'),
+  (4, 'Offside', 'Album de barajitas del mundial', 'https://reglasdelfutbol.club/que-es-el-offiside/'),
+  (5, 'Proyecto de IHC', 'Sistema de gestión de la biblioteca UCAB', ''),
+  (6, 'Proyecto de Contabilidad', 'Relacionar la Contabilidad con 3 ODS', ''),
+  (7, 'Proyecto de Estructura', 'Calculadora en ensamblador', 'https://www.tecnologia-informatica.com/el-lenguaje-ensamblador/'),
+  (8, 'Proyecto de Sistemas de operación', 'Sistema Operativo', '');

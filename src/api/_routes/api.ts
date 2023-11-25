@@ -8,6 +8,7 @@ import { verifyToken } from '../../middlewares/auth'
 import authRouter from '../auth/auth.routes'
 import userRouter from '../users/users.routes'
 import languageRouter from '../languages/languages.routes'
+import careerRouter from '../uCareers/careers.routes'
 import hardSkillsRouter from '../hard-skills/hard-skills.routes'
 import personalHardSkillsRouter from '../personal-hard-skills/personal-hard-skills.routes'
 import softSkillsRouter from '../soft-skills/soft-skills.routes'
@@ -32,6 +33,7 @@ router.use(tokenGuard(), verifyToken())
 // Secured by token validation endpoints
 router.use('/users', userRouter)
 router.use('/languages', languageRouter)
+router.use('/careers', careerRouter)
 router.use('/hard-skills', hardSkillsRouter)
 router.use('/personal-hard-skills', personalHardSkillsRouter)
 router.use('/soft-skills', softSkillsRouter)
