@@ -10,6 +10,7 @@ import userRouter from '../users/users.routes'
 import languageRouter from '../languages/languages.routes'
 import skillRouter from '../skills/skills.routes'
 import foreignStudiesRouter from '../foreign-studies/foreign-studies.routes'
+import softSkillsRouter from '../soft-skills/soft-skills.routes'
 
 export const router = Router()
 
@@ -29,3 +30,4 @@ router.use('/users', userRouter)
 router.use('/languages', languageRouter)
 router.use('/skills', skillRouter)
 router.use('/foreign-studies', foreignStudiesRouter)
+router.use('/soft-skills', softSkillsRouter)
