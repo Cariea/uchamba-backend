@@ -76,7 +76,6 @@ INSERT INTO languages (
   ('Kurdo');
 
   --personal-hard-skills
-
   
 INSERT INTO personal_hard_skills (user_id, name)
 VALUES
@@ -90,3 +89,59 @@ VALUES
   (4, 'System Administration'),
   (4, 'Cloud Computing'),
   (4, 'Mobile App Development');
+  
+  --Hard Skills
+
+  INSERT INTO hard_skills (name) VALUES
+  ('Java'),
+  ('Python'),
+  ('C++'),
+  ('JavaScript'),
+  ('HTML'),
+  ('CSS'),
+  ('SQL'),
+  ('React'),
+  ('Angular'),
+  ('Node.js'),
+  ('Git'),
+  ('Docker'),
+  ('Machine Learning'),
+  ('Data Analysis'),
+  ('Agile Methodology');
+  
+  --soft-skills
+  INSERT INTO soft_skills (name) VALUES
+  ('Communication'),
+  ('Teamwork'),
+  ('Adaptability'),
+  ('Problem Solving'),
+  ('Creativity'),
+  ('Time Management'),
+  ('Leadership'),
+  ('Empathy'),
+  ('Conflict Resolution'),
+  ('Critical Thinking'),
+  ('Stress Management'),
+  ('Decision Making'),
+  ('Flexibility'),
+  ('Positive Attitude'),
+  ('Networking');
+
+  -----Personal soft skills
+
+  INSERT INTO personal_soft_skills (user_id, name) VALUES
+  (4, 'Effective Communication'),
+  (4, 'Team Collaboration'),
+  (4, 'Adaptability'),
+  (4, 'Problem Solving'),
+  (4, 'Creativity'),
+  (4, 'Time Management'),
+  (4, 'Leadership'),
+  (4, 'Empathy'),
+  (4, 'Conflict Resolution'),
+  (4, 'Critical Thinking'),
+  (4, 'Stress Management'),
+  (4, 'Decision Making'),
+  (4, 'Flexibility'),
+  (4, 'Positive Attitude'),
+  (4, 'Networking');
