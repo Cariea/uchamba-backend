@@ -10,7 +10,7 @@ import userRouter from '../users/users.routes'
 import languageRouter from '../languages/languages.routes'
 import skillRouter from '../skills/skills.routes'
 import foreignStudiesRouter from '../foreign-studies/foreign-studies.routes'
-
+import hardSkillsRouter from '../hard-skills/hard-skills.routes'
 export const router = Router()
 
 // Test endpoint
@@ -29,3 +29,5 @@ router.use('/users', userRouter)
 router.use('/languages', languageRouter)
 router.use('/skills', skillRouter)
 router.use('/foreign-studies', foreignStudiesRouter)
+
+router.use('/hard-skills', hardSkillsRouter)

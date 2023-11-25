@@ -74,3 +74,22 @@ INSERT INTO languages (
   ('Indonesio'),
   ('Farsi'),
   ('Kurdo');
+
+  --Hard Skills
+
+  INSERT INTO hard_skills (name) VALUES
+  ('Java'),
+  ('Python'),
+  ('C++'),
+  ('JavaScript'),
+  ('HTML'),
+  ('CSS'),
+  ('SQL'),
+  ('React'),
+  ('Angular'),
+  ('Node.js'),
+  ('Git'),
+  ('Docker'),
+  ('Machine Learning'),
+  ('Data Analysis'),
+  ('Agile Methodology');
