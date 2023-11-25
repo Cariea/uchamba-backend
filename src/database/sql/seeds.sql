@@ -1,4 +1,5 @@
 -- For Seeding the Database
+BEGIN;
 
 --Users
 INSERT INTO users (
@@ -77,15 +78,15 @@ INSERT INTO languages (
 INSERT INTO ucareers (
   name
 ) VALUES
-  ('Ingeniería Informática'),
-  ('Ingeniería Civil'),
-  ('Ingeniería Industrial'),
+  ('Ingenieria Informatica'),
+  ('Ingenieria Civil'),
+  ('Ingenieria Industrial'),
   ('Relaciones Industriales'),
-  ('Educación'),
-  ('Comunicación Social'),
+  ('Educacion'),
+  ('Comunicacion Social'),
   ('Derecho'),
-  ('Administración de Empresas'),
-  ('Contaduría Pública');
+  ('Administracion de Empresas'),
+  ('Contaduria Publica');
   
 --Hard Skills
 INSERT INTO hard_skills (
@@ -143,11 +144,11 @@ INSERT INTO soft_skills (
   ('Positive Attitude'),
   ('Networking');
 
-  -- Personal Soft Skills
- INSERT INTO personal_soft_skills (
-   user_id, 
-   name
- ) VALUES
+-- Personal Soft Skills
+INSERT INTO personal_soft_skills (
+  user_id, 
+  name
+) VALUES
   (4, 'Effective Communication'),
   (4, 'Team Collaboration'),
   (4, 'Adaptability'),
@@ -173,9 +174,32 @@ INSERT INTO projects (
 ) VALUES
   (1, 'Proyecto de Base de Datos', 'Llevar el registro de los autos que llegan a un concesionario', ''),
   (2, 'Proyecto de Arquitectura', 'Armar un contador de 12 horas', 'https://arquicomberna.blogspot.com/2008/12/contador.html'),
-  (3, 'Proyecto de Ingeniería de Requisitos', 'Realizar una página donde las empresas puedan contratar egresados ucabistas', 'https://www.mayoclinic.org/es/diseases-conditions/schizophrenia/symptoms-causes/syc-20354443'),
+  (3, 'Proyecto de Ingenieria de Requisitos', 'Realizar una pagina donde las empresas puedan contratar egresados ucabistas', 'https://www.mayoclinic.org/es/diseases-conditions/schizophrenia/symptoms-causes/syc-20354443'),
   (4, 'Offside', 'Album de barajitas del mundial', 'https://reglasdelfutbol.club/que-es-el-offiside/'),
-  (5, 'Proyecto de IHC', 'Sistema de gestión de la biblioteca UCAB', ''),
+  (5, 'Proyecto de IHC', 'Sistema de gestion de la biblioteca UCAB', ''),
   (6, 'Proyecto de Contabilidad', 'Relacionar la Contabilidad con 3 ODS', ''),
   (7, 'Proyecto de Estructura', 'Calculadora en ensamblador', 'https://www.tecnologia-informatica.com/el-lenguaje-ensamblador/'),
-  (8, 'Proyecto de Sistemas de operación', 'Sistema Operativo', '');
+  (8, 'Proyecto de Sistemas de operacion', 'Sistema Operativo', '');
+
+INSERT INTO users_languages (
+  user_id, 
+  language_id, 
+  proficient_level
+) VALUES
+  (4, 1, 'A1'),
+  (4, 2, 'A2'),
+  (4, 3, 'B1'),
+  (4, 4, 'B2'),
+  (4, 5, 'C1'),
+  (4, 6, 'C2'),
+  (4, 7, 'A1'),
+  (4, 8, 'A2'),
+  (4, 9, 'B1'),
+  (4, 10, 'B2'),
+  (4, 11, 'C1'),
+  (4, 12, 'C2'),
+  (4, 13, 'A1'),
+  (4, 14, 'A2'),
+  (4, 15, 'B1');
+
+COMMIT;

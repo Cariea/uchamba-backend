@@ -5,6 +5,7 @@ import { CareerSchema } from './careers.schema'
 // Middlewares
 import { schemaGuard } from '../../middlewares/schemaGuard'
 import { paginationGuard } from '../../middlewares/paginationGuard'
+import { isAdmin } from '../../middlewares/auth'
 
 // Controllers
 import { getAllCareers } from './actions/getAll.action'
@@ -19,8 +20,8 @@ const router = Router()
 router.get('/all', getAllCareers)
 router.get('/:careerId', getCareerById)
 router.get('/', paginationGuard(), getCareers)
-router.post('/', schemaGuard(CareerSchema), addCareer)
-router.put('/:careerId', schemaGuard(CareerSchema), updateCareer)
-router.delete('/:careerId', deleteCareer)
+router.post('/', isAdmin(), schemaGuard(CareerSchema), addCareer)
+router.put('/:careerId', isAdmin(), schemaGuard(CareerSchema), updateCareer)
+router.delete('/:careerId', isAdmin(), deleteCareer)
 
 export default router

@@ -4,18 +4,40 @@ BEGIN;
 CREATE DOMAIN dom_name VARCHAR(64);
 CREATE DOMAIN dom_description VARCHAR(256);
 CREATE DOMAIN dom_phone_number VARCHAR(16);
+CREATE DOMAIN dom_email VARCHAR(64);
+CREATE DOMAIN dom_password VARCHAR(64);
 CREATE DOMAIN dom_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
 CREATE TYPE dom_role AS ENUM ('admin', 'graduated');
 CREATE TYPE dom_degree AS ENUM ('pregrado', 'postgrado', 'especializacion', 'maestria', 'doctorado');
 CREATE TYPE dom_proficiency_level AS ENUM ('A1', 'A2', 'B1', 'B2', 'C1', 'C2');
 
+-- Dummy
+CREATE TABLE ellucian_ethos (
+  email dom_email,
+  password dom_password,
+  CONSTRAINT pk_ellucian PRIMARY KEY (email)
+);
+
+-- Egresados
+CREATE TABLE undergraduates (
+  undergraduate_id VARCHAR(16),
+  email dom_email,
+  name dom_name NOT NULL,
+  residence_address TEXT DEFAULT '',
+  career VARCHAR(64) NOT NULL,
+  degree dom_degree NOT NULL,
+  graduation_date DATE NOT NULL,
+  CONSTRAINT pk_undergraduate_id PRIMARY KEY (undergraduate_id),
+  CONSTRAINT uk_career_per_undergraduate UNIQUE (undergraduate_id, career)
+);
+
 -- 1
 CREATE TABLE users (
   user_id INTEGER GENERATED ALWAYS AS IDENTITY,
   name dom_name NOT NULL,
   email VARCHAR(128) UNIQUE NOT NULL,
-  password VARCHAR(128) NOT NULL,
+  password dom_password NOT NULL,
   about_me TEXT DEFAULT '',
   phone_number dom_phone_number,
   residence_address TEXT DEFAULT '',
@@ -61,7 +83,8 @@ CREATE TABLE personal_hard_skills(
   CONSTRAINT pk_user_phard_skill_id PRIMARY KEY (user_id, phard_skill_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE RESTRICT,
+  CONSTRAINT uk_user_hard_name UNIQUE (user_id, name)
 );
 
 -- 5
@@ -82,7 +105,8 @@ CREATE TABLE personal_soft_skills (
   CONSTRAINT pk_user_psoft_skill_id PRIMARY KEY (user_id, psoft_skill_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE RESTRICT,
+  CONSTRAINT uk_user_soft_name UNIQUE (user_id, name)
 );
 
 -- 6
@@ -96,7 +120,8 @@ CREATE TABLE personal_links (
   CONSTRAINT pk_user_link_id PRIMARY KEY (user_id, link_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE RESTRICT,
+  CONSTRAINT uk_user_url UNIQUE (user_id, url)
 );
 
 -- 7
@@ -144,7 +169,9 @@ CREATE TABLE projects (
   CONSTRAINT pk_user_project_id PRIMARY KEY (user_id, project_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE RESTRICT,
+  CONSTRAINT uk_user_project_name UNIQUE (user_id, name),
+  CONSTRAINT uk_user_project_url UNIQUE (user_id, project_url)
 );
 
 -- 10
@@ -216,7 +243,8 @@ CREATE TABLE projects_images (
   CONSTRAINT pk_project_image_id PRIMARY KEY (user_id, project_id, image_url),
   CONSTRAINT fk_user_project_id FOREIGN KEY (user_id, project_id) REFERENCES projects
     ON UPDATE CASCADE
-    ON DELETE CASCADE
+    ON DELETE CASCADE,
+  CONSTRAINT uk_image_url UNIQUE (user_id, project_id, image_url)
 );
 
 -- --------------------
