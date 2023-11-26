@@ -181,6 +181,19 @@ INSERT INTO personal_links (
   (1, 'Medium', 'https://fineproxy.org/wp-content/uploads/2023/07/medium.com_logo.png'),
   (2, 'Dev.to', 'https://res.cloudinary.com/practicaldev/image/fetch/s--7zXAI5wW--/c_limit,f_auto,fl_progressive,q_80,w_190/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/8j7kvp660rqzt99zui8e.png');
 
+-- Work Experiences
+INSERT INTO work_experiences (
+  user_id,
+  organization_name,
+  job_title,
+  address,
+  entry_date,
+  departure_date,
+  description
+) VALUES
+  (5,'Lusitanos','Auxiliar de equipo','Urbanización Moreno De Mendoza','2016-04-13','2022-10-31','Una recarga de agua con una panadería al lado'),
+  (5,'Santo Tomé','Empaquetador','Los olivos','2010-10-10','2015-04-12','Embolsaba las compras de los clientes y los ayudaba a llevarlas');
+
 -- Projects
 INSERT INTO projects (
   user_id,
