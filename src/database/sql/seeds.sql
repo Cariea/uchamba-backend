@@ -113,16 +113,16 @@ INSERT INTO personal_hard_skills (
   user_id, 
   name
 ) VALUES
-  (4, 'Programming'),
-  (4, 'Data Analysis'),
-  (4, 'Machine Learning'),
+  (1, 'Programming'),
+  (2, 'Data Analysis'),
+  (3, 'Machine Learning'),
   (4, 'Database Management'),
-  (4, 'Web Development'),
-  (4, 'Network Security'),
-  (4, 'Software Testing'),
-  (4, 'System Administration'),
-  (4, 'Cloud Computing'),
-  (4, 'Mobile App Development');
+  (5, 'Web Development'),
+  (6, 'Network Security'),
+  (7, 'Software Testing'),
+  (8, 'System Administration'),
+  (1, 'Cloud Computing'),
+  (2, 'Mobile App Development');
   
 -- Soft Skills
 INSERT INTO soft_skills (
@@ -149,21 +149,21 @@ INSERT INTO personal_soft_skills (
   user_id, 
   name
 ) VALUES
-  (4, 'Effective Communication'),
-  (4, 'Team Collaboration'),
-  (4, 'Adaptability'),
+  (1, 'Effective Communication'),
+  (2, 'Team Collaboration'),
+  (3, 'Adaptability'),
   (4, 'Problem Solving'),
-  (4, 'Creativity'),
-  (4, 'Time Management'),
-  (4, 'Leadership'),
-  (4, 'Empathy'),
-  (4, 'Conflict Resolution'),
-  (4, 'Critical Thinking'),
-  (4, 'Stress Management'),
+  (5, 'Creativity'),
+  (6, 'Time Management'),
+  (7, 'Leadership'),
+  (8, 'Empathy'),
+  (1, 'Conflict Resolution'),
+  (2, 'Critical Thinking'),
+  (3, 'Stress Management'),
   (4, 'Decision Making'),
-  (4, 'Flexibility'),
-  (4, 'Positive Attitude'),
-  (4, 'Networking');
+  (5, 'Flexibility'),
+  (6, 'Positive Attitude'),
+  (7, 'Networking');
 
 INSERT INTO personal_links (
   user_id, 
@@ -216,21 +216,21 @@ INSERT INTO users_languages (
   language_id, 
   proficient_level
 ) VALUES
-  (4, 1, 'A1'),
-  (4, 2, 'A2'),
-  (4, 3, 'B1'),
+  (1, 1, 'A1'),
+  (2, 2, 'A2'),
+  (3, 3, 'B1'),
   (4, 4, 'B2'),
-  (4, 5, 'C1'),
-  (4, 6, 'C2'),
-  (4, 7, 'A1'),
-  (4, 8, 'A2'),
-  (4, 9, 'B1'),
-  (4, 10, 'B2'),
-  (4, 11, 'C1'),
+  (5, 5, 'C1'),
+  (6, 6, 'C2'),
+  (7, 7, 'A1'),
+  (8, 8, 'A2'),
+  (1, 9, 'B1'),
+  (2, 10, 'B2'),
+  (3, 11, 'C1'),
   (4, 12, 'C2'),
-  (4, 13, 'A1'),
-  (4, 14, 'A2'),
-  (4, 15, 'B1');
+  (5, 13, 'A1'),
+  (6, 14, 'A2'),
+  (7, 15, 'B1');
 
 --User Studies
 INSERT INTO users_ustudies (
