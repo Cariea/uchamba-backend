@@ -1,16 +1,17 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
+import { ExtendedRequest } from '../../../middlewares/auth'
 import { pool } from '../../../database'
 import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { StatusError } from '../../../utils/responses/status-error'
 
 export const updateUser = async (
-  req: Request,
+  req: ExtendedRequest,
   res: Response
 ): Promise<Response> => {
   try {
     const { aboutMe, phoneNumber, residenceAddress } = req.body
-    const { userId } = req.params
+    const userId = req.user.id as number
     const response = await pool.query({
       text: `
         UPDATE users

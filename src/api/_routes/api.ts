@@ -27,14 +27,14 @@ router.get('/ping', (_req, res) => {
   res.status(200).json({ test: 'todo piola' })
 })
 
-// No token validation endpoints
+// Public Routes
 router.use('/auth', authRouter)
+router.use('/users', userRouter)
 
 // Middlewares for token validation
 router.use(tokenGuard(), verifyToken())
 
 // Secured by token validation endpoints
-router.use('/users', userRouter)
 router.use('/languages', languageRouter)
 router.use('/careers', careerRouter)
 router.use('/hard-skills', hardSkillsRouter)

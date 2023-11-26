@@ -5,7 +5,8 @@ import { UpdateUserSchema } from './users.schema'
 // Middlewares
 import { schemaGuard } from '../../middlewares/schemaGuard'
 import { paginationGuard } from '../../middlewares/paginationGuard'
-import { isAdmin } from '../../middlewares/auth'
+import { tokenGuard } from '../../middlewares/tokenGuard'
+import { isAdmin, verifyToken } from '../../middlewares/auth'
 
 // Controllers
 import { getAllUsers } from './actions/getAll.action'
@@ -19,7 +20,12 @@ const router = Router()
 router.get('/all', getAllUsers)
 router.get('/:userId', getUserById)
 router.get('/', paginationGuard(), getUsers)
+
+// User Only Routes
+router.use(tokenGuard(), verifyToken())
 router.put('/:userId', schemaGuard(UpdateUserSchema), updateUser)
+
+// Admin Only
 router.delete('/:userId', isAdmin(), deleteUser)
 
 export default router
