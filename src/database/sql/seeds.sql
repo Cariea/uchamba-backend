@@ -202,4 +202,23 @@ INSERT INTO users_languages (
   (4, 14, 'A2'),
   (4, 15, 'B1');
 
+  --User Studies
+  INSERT INTO users_ustudies (
+    user_id, 
+    ucareer_id, 
+    degree, 
+    graduation_date
+  ) VALUES
+    (4, 1, 'pregrado', '2022-05-15'),
+    (4, 2, 'pregrado', '2021-12-20'),
+    (4, 3, 'pregrado', '2022-08-30'),
+    (4, 4, 'pregrado', '2023-06-10'),
+    (4, 5, 'pregrado', '2021-09-25'),
+    (4, 6, 'pregrado', '2022-04-05'),
+    (4, 7, 'pregrado', '2023-01-15'),
+    (4, 8, 'pregrado', '2023-07-20'),
+    (4, 9, 'pregrado', '2022-11-30'),
+    (4, 10, 'pregrado', '2023-03-08');
+
+
 COMMIT;
