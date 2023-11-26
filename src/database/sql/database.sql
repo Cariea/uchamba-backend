@@ -40,7 +40,7 @@ CREATE TABLE users (
   password dom_password NOT NULL,
   about_me TEXT DEFAULT '',
   phone_number dom_phone_number,
-  -- 🔥 Añadir campos country, state y city 🔥
+  -- 🔥 Agregar campos country, state y city 🔥
   residence_address TEXT DEFAULT '',
   role dom_role NOT NULL DEFAULT 'graduated',
   is_verified BOOLEAN NOT NULL DEFAULT FALSE,

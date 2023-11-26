@@ -181,6 +181,29 @@ INSERT INTO personal_links (
   (1, 'Medium', 'https://fineproxy.org/wp-content/uploads/2023/07/medium.com_logo.png'),
   (2, 'Dev.to', 'https://res.cloudinary.com/practicaldev/image/fetch/s--7zXAI5wW--/c_limit,f_auto,fl_progressive,q_80,w_190/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/8j7kvp660rqzt99zui8e.png');
 
+INSERT INTO foreign_studies (
+  user_id, 
+  name, 
+  university_name, 
+  degree, 
+  graduation_date
+) VALUES
+  (1, 'Study Abroad 1', 'Foreign University 1', 'pregrado', '2023-05-01'),
+  (2, 'Study Abroad 2', 'Foreign University 2', 'maestria', '2024-06-15'),
+  (3, 'Study Abroad 3', 'Foreign University 3', 'pregrado', '2022-12-31'),
+  (4, 'Study Abroad 4', 'Foreign University 4', 'doctorado', '2025-08-20'),
+  (5, 'Study Abroad 5', 'Foreign University 5', 'postgrado', '2024-02-10'),
+  (6, 'Study Abroad 6', 'Foreign University 6', 'pregrado', '2023-11-15'),
+  (7, 'Study Abroad 7', 'Foreign University 7', 'maestria', '2024-07-05'),
+  (8, 'Study Abroad 8', 'Foreign University 8', 'pregrado', '2023-09-30'),
+  (1, 'Study Abroad 9', 'Foreign University 9', 'maestria', '2025-01-18'),
+  (2, 'Study Abroad 10', 'Foreign University 10', 'doctorado', '2026-03-22'),
+  (3, 'Study Abroad 11', 'Foreign University 11', 'pregrado', '2023-06-08'),
+  (4, 'Study Abroad 12', 'Foreign University 12', 'postgrado', '2024-04-14'),
+  (5, 'Study Abroad 13', 'Foreign University 13', 'pregrado', '2023-08-07'),
+  (6, 'Study Abroad 14', 'Foreign University 14', 'maestria', '2024-11-25'),
+  (7, 'Study Abroad 15', 'Foreign University 15', 'pregrado', '2023-10-12');
+
 -- Work Experiences
 INSERT INTO work_experiences (
   user_id,
@@ -191,8 +214,8 @@ INSERT INTO work_experiences (
   departure_date,
   description
 ) VALUES
-  (5,'Lusitanos','Auxiliar de equipo','Urbanización Moreno De Mendoza','2016-04-13','2022-10-31','Una recarga de agua con una panadería al lado'),
-  (5,'Santo Tomé','Empaquetador','Los olivos','2010-10-10','2015-04-12','Embolsaba las compras de los clientes y los ayudaba a llevarlas');
+  (5, 'Lusitanos', 'Auxiliar de equipo', 'Urbanizacion Moreno De Mendoza', '2016-04-13', '2022-10-31', 'Una recarga de agua con una panaderia al lado'),
+  (5, 'Santo Tome', 'Empaquetador', 'Los olivos', '2010-10-10', '2015-04-12', 'Embolsaba las compras de los clientes y los ayudaba a llevarlas');
 
 -- Projects
 INSERT INTO projects (
@@ -247,7 +270,47 @@ INSERT INTO users_ustudies (
   (6, 6, 'doctorado', '2022-04-05'),
   (7, 7, 'pregrado', '2023-01-15'),
   (8, 8, 'pregrado', '2023-07-20'),
-  (1, 9, 'pregrado', '2022-11-30'),
-  (2, 10, 'pregrado', '2023-03-08');
+  (1, 2, 'pregrado', '2022-11-30'),
+  (2, 1, 'pregrado', '2023-03-08');
+
+INSERT INTO users_hard_skills (
+  user_id, 
+  hard_skill_id
+) VALUES
+  (1, 1),
+  (1, 2),
+  (2, 3),
+  (2, 4),
+  (3, 5),
+  (3, 6),
+  (4, 7),
+  (4, 8),
+  (5, 9),
+  (5, 10),
+  (6, 11),
+  (6, 12),
+  (7, 13),
+  (7, 14),
+  (8, 15);
+
+INSERT INTO users_soft_skills (
+  user_id, 
+  soft_skill_id
+) VALUES
+  (1, 1),
+  (1, 2),
+  (2, 3),
+  (2, 4),
+  (3, 5),
+  (3, 6),
+  (4, 7),
+  (4, 8),
+  (5, 9),
+  (5, 10),
+  (6, 11),
+  (6, 12),
+  (7, 13),
+  (7, 14),
+  (8, 15);
 
 COMMIT;

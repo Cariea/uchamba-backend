@@ -36,6 +36,23 @@ export const getUserById = async (
       })
     }
 
+    const { rows: userHardSkills } = await pool.query({
+      text: `
+        SELECT
+          uhs.hard_skill_id AS skill_id,
+          hs.name,
+          TO_CHAR(uhs.created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
+        FROM 
+          users_hard_skills AS uhs,
+          hard_skills AS hs
+        WHERE 
+          uhs.user_id = $1 AND
+          uhs.hard_skill_id = hs.hard_skill_id
+        ORDER BY hs.hard_skill_id ASC
+      `,
+      values: [userId]
+    })
+
     const { rows: personalHardSkills } = await pool.query({
       text: `
         SELECT
@@ -45,6 +62,23 @@ export const getUserById = async (
         FROM personal_hard_skills
         WHERE user_id = $1
         ORDER BY phard_skill_id ASC
+      `,
+      values: [userId]
+    })
+
+    const { rows: userSoftSkills } = await pool.query({
+      text: `
+        SELECT
+          uss.soft_skill_id AS skill_id,
+          ss.name,
+          TO_CHAR(uss.created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
+        FROM 
+          users_soft_skills AS uss,
+          soft_skills AS ss
+        WHERE 
+          uss.user_id = $1 AND
+          uss.soft_skill_id = ss.soft_skill_id
+        ORDER BY ss.soft_skill_id ASC
       `,
       values: [userId]
     })
@@ -77,6 +111,25 @@ export const getUserById = async (
       values: [userId]
     })
 
+    const { rows: userUStudies } = await pool.query({
+      text: `
+        SELECT
+          uc.ucareer_id,
+          uc.name,
+          uus.degree,
+          TO_CHAR(uus.graduation_date, 'DD/MM/YYYY') AS graduation_date,
+          TO_CHAR(uus.created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
+        FROM
+          users_ustudies AS uus,
+          ucareers AS uc
+        WHERE
+          uus.user_id = $1 AND
+          uus.ucareer_id = uc.ucareer_id
+        ORDER BY uc.ucareer_id ASC
+      `,
+      values: [userId]
+    })
+
     const { rows: foreignStudies } = await pool.query({
       text: `
         SELECT
@@ -85,8 +138,7 @@ export const getUserById = async (
           university_name,
           degree,
           TO_CHAR(graduation_date, 'DD/MM/YYYY') AS graduation_date,
-          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at,
-          TO_CHAR(updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
+          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
         FROM foreign_studies
         WHERE user_id = $1
         ORDER BY foreign_study_id ASC
@@ -149,59 +201,6 @@ export const getUserById = async (
           ul.user_id = $1 AND
           ul.language_id = l.language_id
         ORDER BY l.language_id ASC
-      `,
-      values: [userId]
-    })
-
-    const { rows: userUStudies } = await pool.query({
-      text: `
-        SELECT
-          uc.ucareer_id,
-          uc.name,
-          uus.degree,
-          TO_CHAR(uus.graduation_date, 'DD/MM/YYYY') AS graduation_date,
-          TO_CHAR(uus.created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
-        FROM
-          users_ustudies AS uus,
-          ucareers AS uc
-        WHERE
-          uus.user_id = $1 AND
-          uus.ucareer_id = uc.ucareer_id
-        ORDER BY uc.ucareer_id ASC
-      `,
-      values: [userId]
-    })
-
-    const { rows: userHardSkills } = await pool.query({
-      text: `
-        SELECT
-          uhs.hard_skill_id,
-          hs.name,
-          TO_CHAR(uhs.created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
-        FROM 
-          users_hard_skills AS uhs,
-          hard_skills AS hs
-        WHERE 
-          uhs.user_id = $1 AND
-          uhs.hard_skill_id = hs.hard_skill_id
-        ORDER BY hs.hard_skill_id ASC
-      `,
-      values: [userId]
-    })
-
-    const { rows: userSoftSkills } = await pool.query({
-      text: `
-        SELECT
-          uss.soft_skill_id,
-          ss.name,
-          TO_CHAR(uss.created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
-        FROM 
-          users_soft_skills AS uss,
-          soft_skills AS ss
-        WHERE 
-          uss.user_id = $1 AND
-          uss.soft_skill_id = ss.soft_skill_id
-        ORDER BY ss.soft_skill_id ASC
       `,
       values: [userId]
     })
