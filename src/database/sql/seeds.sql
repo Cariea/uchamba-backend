@@ -202,4 +202,17 @@ INSERT INTO users_languages (
   (4, 14, 'A2'),
   (4, 15, 'B1');
 
+-- Work Experiences
+INSERT INTO work_experiences (
+  user_id,
+  organization_name,
+  job_title,
+  address,
+  entry_date,
+  departure_date,
+  description
+) VALUES
+  (5,'Lusitanos','Auxiliar de equipo','Urbanización Moreno De Mendoza','2016-04-13','2022-10-31','Una recarga de agua con una panadería al lado'),
+  (5,'Santo Tomé','Empaquetador','Los olivos','2010-10-10','2015-04-12','Embolsaba las compras de los clientes y los ayudaba a llevarlas');
+
 COMMIT;
