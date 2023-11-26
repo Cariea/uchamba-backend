@@ -165,6 +165,35 @@ INSERT INTO personal_soft_skills (
   (4, 'Positive Attitude'),
   (4, 'Networking');
 
+INSERT INTO personal_links (
+  user_id, 
+  name, 
+  url
+) VALUES
+  (1, 'LinkedIn', 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/LinkedIn_Logo.svg/1024px-LinkedIn_Logo.svg.png'),
+  (2, 'GitHub', 'https://assets-global.website-files.com/5f5a53e153805db840dae2db/64e79ca5aff2fb7295bfddf9_github-que-es.jpg'),
+  (3, 'Portfolio', 'https://media.istockphoto.com/id/1251693104/es/vector/poo-emoticon-emoji-cara-de-caca-ilustracion-vectorial.jpg?s=612x612&w=0&k=20&c=tzIypiPXr1F0r6EAJLhXebSRhtqUeBxdEz2Et1VNBoE='),
+  (4, 'X', 'https://logos-world.net/wp-content/uploads/2023/08/X-Logo.png'),
+  (5, 'Personal Blog', 'https://media.istockphoto.com/id/1251693104/es/vector/poo-emoticon-emoji-cara-de-caca-ilustracion-vectorial.jpg?s=612x612&w=0&k=20&c=tzIypiPXr1F0r6EAJLhXebSRhtqUeBxdEz2Et1VNBoE='),
+  (6, 'Stack Overflow', 'https://stackoverflow.design/assets/img/logos/so/logo-stackoverflow.png'),
+  (7, 'Behance', 'https://pbs.twimg.com/profile_images/636661084720500737/_QglFGym_400x400.jpg'),
+  (8, 'Dribbble', 'https://widulife.com/wp-content/uploads/2021/05/A%C3%BAn-no-conoces-la-red-social-Dribble-3.png'),
+  (1, 'Medium', 'https://fineproxy.org/wp-content/uploads/2023/07/medium.com_logo.png'),
+  (2, 'Dev.to', 'https://res.cloudinary.com/practicaldev/image/fetch/s--7zXAI5wW--/c_limit,f_auto,fl_progressive,q_80,w_190/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/8j7kvp660rqzt99zui8e.png');
+
+-- Work Experiences
+INSERT INTO work_experiences (
+  user_id,
+  organization_name,
+  job_title,
+  address,
+  entry_date,
+  departure_date,
+  description
+) VALUES
+  (5,'Lusitanos','Auxiliar de equipo','Urbanización Moreno De Mendoza','2016-04-13','2022-10-31','Una recarga de agua con una panadería al lado'),
+  (5,'Santo Tomé','Empaquetador','Los olivos','2010-10-10','2015-04-12','Embolsaba las compras de los clientes y los ayudaba a llevarlas');
+
 -- Projects
 INSERT INTO projects (
   user_id,
@@ -181,6 +210,7 @@ INSERT INTO projects (
   (7, 'Proyecto de Estructura', 'Calculadora en ensamblador', 'https://www.tecnologia-informatica.com/el-lenguaje-ensamblador/'),
   (8, 'Proyecto de Sistemas de operacion', 'Sistema Operativo', '');
 
+-- User Languages
 INSERT INTO users_languages (
   user_id, 
   language_id, 
@@ -202,17 +232,22 @@ INSERT INTO users_languages (
   (4, 14, 'A2'),
   (4, 15, 'B1');
 
--- Work Experiences
-INSERT INTO work_experiences (
-  user_id,
-  organization_name,
-  job_title,
-  address,
-  entry_date,
-  departure_date,
-  description
+--User Studies
+INSERT INTO users_ustudies (
+  user_id, 
+  ucareer_id, 
+  degree, 
+  graduation_date
 ) VALUES
-  (5,'Lusitanos','Auxiliar de equipo','Urbanización Moreno De Mendoza','2016-04-13','2022-10-31','Una recarga de agua con una panadería al lado'),
-  (5,'Santo Tomé','Empaquetador','Los olivos','2010-10-10','2015-04-12','Embolsaba las compras de los clientes y los ayudaba a llevarlas');
+  (1, 1, 'pregrado', '2022-05-15'),
+  (2, 2, 'postgrado', '2021-12-20'),
+  (3, 3, 'maestria', '2022-08-30'),
+  (4, 4, 'especializacion', '2023-06-10'),
+  (5, 5, 'maestria', '2021-09-25'),
+  (6, 6, 'doctorado', '2022-04-05'),
+  (7, 7, 'pregrado', '2023-01-15'),
+  (8, 8, 'pregrado', '2023-07-20'),
+  (1, 9, 'pregrado', '2022-11-30'),
+  (2, 10, 'pregrado', '2023-03-08');
 
 COMMIT;
