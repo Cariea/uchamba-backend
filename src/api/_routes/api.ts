@@ -19,6 +19,8 @@ import workExperiencesRouter from '../work-experiences/work-experiences.routes'
 import projectRouter from '../projects/projects.routes'
 import userLanguagesRouter from '../user-languages/user-languages.routes'
 import userStudiesRouter from '../user-studies/user-studies.routes'
+import userHardSkillRouter from '../users-hard-skills/users-hard-skills.routes'
+import userSoftSkillRouter from '../users-soft-skills/users-soft-skills.routes'
 
 export const router = Router()
 
@@ -47,3 +49,5 @@ router.use('/work-experiences', workExperiencesRouter)
 router.use('/projects', projectRouter)
 router.use('/user-languages', userLanguagesRouter)
 router.use('/user-studies', userStudiesRouter)
+router.use('/user-hard-skills', userHardSkillRouter)
+router.use('/user-soft-skills', userSoftSkillRouter)
