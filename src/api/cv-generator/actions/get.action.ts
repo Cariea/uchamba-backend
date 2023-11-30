@@ -167,7 +167,7 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
       education,
       workExperiences
     }
-    console.log(CV)
+    // console.log(CV)
     const htmlContent = `<!DOCTYPE html>
     <html lang="es">
     <head>
@@ -281,6 +281,7 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
 
     return res.status(STATUS.OK).send(pdfBuffer)
   } catch (error: unknown) {
+    console.log(error)
     return handleControllerError(error, res)
   }
 }
