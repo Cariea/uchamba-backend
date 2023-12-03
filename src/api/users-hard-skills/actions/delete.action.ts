@@ -15,8 +15,9 @@ export const deleteUserHardSkill = async (
       text: `
         DELETE
         FROM users_hard_skills
-        WHERE user_id = $1
-        AND hard_skill_id = $2
+        WHERE 
+          user_id = $1 AND 
+          hard_skill_id = $2
       `,
       values: [userId, hardSkillId]
     })
