@@ -1,5 +1,13 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import * as pdf from 'html-pdf'
+import { SpawnOptions } from 'child_process'
+
+interface ExtendedChildProcessOptions extends SpawnOptions {
+  env?: {
+    OPENSSL_CONF: string
+  }
+}
+
 interface MyPdfOptions extends pdf.CreateOptions {
   format: 'Letter' | 'A3' | 'A4' | 'A5' | 'Legal' | 'Tabloid' | undefined
   orientation: 'portrait' | 'landscape'
@@ -9,6 +17,7 @@ interface MyPdfOptions extends pdf.CreateOptions {
     bottom: string
     left: string
   }
+  childProcessOptions?: ExtendedChildProcessOptions
 }
 
 export const options: MyPdfOptions = {
@@ -19,6 +28,11 @@ export const options: MyPdfOptions = {
     right: '1cm', // Márgenes derecho
     bottom: '1cm', // Márgenes inferior
     left: '1cm' // Márgenes izquierdo
+  },
+  childProcessOptions: {
+    env: {
+      OPENSSL_CONF: '/dev/null'
+    }
   }
 }
 
