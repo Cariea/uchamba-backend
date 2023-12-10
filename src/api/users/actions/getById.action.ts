@@ -18,9 +18,12 @@ export const getUserById = async (
           email,
           about_me,
           phone_number,
+          country,
+          state,
+          city
           residence_address,
           role,
-          is_verified,
+          is_active,
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at,
           TO_CHAR(updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
         FROM users
@@ -117,7 +120,7 @@ export const getUserById = async (
           uc.ucareer_id,
           uc.name,
           uus.degree,
-          TO_CHAR(uus.graduation_date, 'DD/MM/YYYY') AS graduation_date,
+          TO_CHAR(uus.graduation_year, 'YYYY') AS graduation_year,
           TO_CHAR(uus.created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
         FROM
           users_ustudies AS uus,
@@ -137,7 +140,7 @@ export const getUserById = async (
           name,
           university_name,
           degree,
-          TO_CHAR(graduation_date, 'DD/MM/YYYY') AS graduation_date,
+          TO_CHAR(graduation_year, 'YYYY') AS graduation_year,
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
         FROM foreign_studies
         WHERE user_id = $1
@@ -192,6 +195,7 @@ export const getUserById = async (
           l.language_id,
           l.name,
           ul.proficient_level,
+          ul.certificate_image_url,
           TO_CHAR(ul.created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at,
           TO_CHAR(ul.updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
         FROM

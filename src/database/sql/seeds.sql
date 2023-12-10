@@ -8,18 +8,21 @@ INSERT INTO users (
   password,
   about_me,
   phone_number,
+  country,
+  state,
+  city,
   residence_address,
   role,
-  is_verified
+  is_active
 ) VALUES
-  ('Jose Andres', 'jarodriguez.21@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy luffy', '04147664397', 'Direccion 1', 'admin', TRUE),
-  ('Maria Paula', 'mpforero.21@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Boa', '04129873912', 'Direccion 2', 'admin', TRUE),
-  ('Eduardo Arzolay', 'ejarzolay.21@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Sanji', '04165887448', 'Direccion 3', 'admin', TRUE),
-  ('Alejandro Rosas', 'ajrosas.19@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Chopper', '04141919875', 'Direccion 4', 'admin', TRUE),
-  ('Eduardo Sucre', 'ejsucre.19@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Daz Bonez', '04121320792', 'Direccion 5', 'admin', TRUE),
-  ('Carmelo Naim', 'usuario6@example.com', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Panda Man', '04124992818', 'Direccion 6', 'admin', TRUE),
-  ('Maria Gioretti ', 'mggiorgetti.17@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Nami', '04249033451', 'Direccion 7', 'admin', TRUE),
-  ('Acosta Carrion', 'yeniffer.acosta3097@gmail.com', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Bibi', '04121856049', 'Direccion 8', 'admin', TRUE);
+  ('Jose Andres', 'jarodriguez.21@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy luffy', '04147664397', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 1', 'admin', TRUE),
+  ('Maria Paula', 'mpforero.21@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Boa', '04129873912', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 2', 'admin', TRUE),
+  ('Eduardo Arzolay', 'ejarzolay.21@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Sanji', '04165887448', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 3', 'admin', TRUE),
+  ('Alejandro Rosas', 'ajrosas.19@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Chopper', '04141919875', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 4', 'admin', TRUE),
+  ('Eduardo Sucre', 'ejsucre.19@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Daz Bonez', '04121320792', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 5', 'admin', TRUE),
+  ('Carmelo Naim', 'usuario6@example.com', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Panda Man', '04124992818', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 6', 'admin', TRUE),
+  ('Maria Gioretti ', 'mggiorgetti.17@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Nami', '04249033451', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 7', 'admin', TRUE),
+  ('Acosta Carrion', 'yeniffer.acosta3097@gmail.com', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Bibi', '04121856049', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 8', 'admin', TRUE);
 
 --Languages
 INSERT INTO languages (
@@ -186,52 +189,57 @@ INSERT INTO foreign_studies (
   name, 
   university_name, 
   degree, 
-  graduation_date
+  graduation_year
 ) VALUES
-  (1, 'Study Abroad 1', 'Foreign University 1', 'pregrado', '2023-05-01'),
-  (2, 'Study Abroad 2', 'Foreign University 2', 'maestria', '2024-06-15'),
-  (3, 'Study Abroad 3', 'Foreign University 3', 'pregrado', '2022-12-31'),
-  (4, 'Study Abroad 4', 'Foreign University 4', 'doctorado', '2025-08-20'),
-  (5, 'Study Abroad 5', 'Foreign University 5', 'postgrado', '2024-02-10'),
-  (6, 'Study Abroad 6', 'Foreign University 6', 'pregrado', '2023-11-15'),
-  (7, 'Study Abroad 7', 'Foreign University 7', 'maestria', '2024-07-05'),
-  (8, 'Study Abroad 8', 'Foreign University 8', 'pregrado', '2023-09-30'),
-  (1, 'Study Abroad 9', 'Foreign University 9', 'maestria', '2025-01-18'),
-  (2, 'Study Abroad 10', 'Foreign University 10', 'doctorado', '2026-03-22'),
-  (3, 'Study Abroad 11', 'Foreign University 11', 'pregrado', '2023-06-08'),
-  (4, 'Study Abroad 12', 'Foreign University 12', 'postgrado', '2024-04-14'),
-  (5, 'Study Abroad 13', 'Foreign University 13', 'pregrado', '2023-08-07'),
-  (6, 'Study Abroad 14', 'Foreign University 14', 'maestria', '2024-11-25'),
-  (7, 'Study Abroad 15', 'Foreign University 15', 'pregrado', '2023-10-12');
+  (1, 'Study Abroad 1', 'Foreign University 1', 'pregrado', '2023-01-01'),
+  (2, 'Study Abroad 2', 'Foreign University 2', 'maestria', '2024-01-01'),
+  (3, 'Study Abroad 3', 'Foreign University 3', 'pregrado', '2022-01-01'),
+  (4, 'Study Abroad 4', 'Foreign University 4', 'doctorado', '2025-01-01'),
+  (5, 'Study Abroad 5', 'Foreign University 5', 'postgrado', '2024-01-01'),
+  (6, 'Study Abroad 6', 'Foreign University 6', 'pregrado', '2023-01-01'),
+  (7, 'Study Abroad 7', 'Foreign University 7', 'maestria', '2024-01-01'),
+  (8, 'Study Abroad 8', 'Foreign University 8', 'pregrado', '2023-01-01'),
+  (1, 'Study Abroad 9', 'Foreign University 9', 'maestria', '2025-01-01'),
+  (2, 'Study Abroad 10', 'Foreign University 10', 'doctorado', '2026-01-01'),
+  (3, 'Study Abroad 11', 'Foreign University 11', 'pregrado', '2023-01-01'),
+  (4, 'Study Abroad 12', 'Foreign University 12', 'postgrado', '2024-01-01'),
+  (5, 'Study Abroad 13', 'Foreign University 13', 'pregrado', '2023-01-01'),
+  (6, 'Study Abroad 14', 'Foreign University 14', 'maestria', '2024-01-01'),
+  (7, 'Study Abroad 15', 'Foreign University 15', 'pregrado', '2023-01-01');
 
 -- Work Experiences
 INSERT INTO work_experiences (
   user_id,
   organization_name,
   job_title,
+  country,
+  state,
+  city,
   address,
   entry_date,
   departure_date,
   description
 ) VALUES
-  (5, 'Lusitanos', 'Auxiliar de equipo', 'Urbanizacion Moreno De Mendoza', '2016-04-13', '2022-10-31', 'Una recarga de agua con una panaderia al lado'),
-  (5, 'Santo Tome', 'Empaquetador', 'Los olivos', '2010-10-10', '2015-04-12', 'Embolsaba las compras de los clientes y los ayudaba a llevarlas');
+  (5, 'Lusitanos', 'Auxiliar de equipo', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Urbanizacion Moreno De Mendoza', '2016-04-13', '2022-10-31', 'Una recarga de agua con una panaderia al lado'),
+  (5, 'Santo Tome', 'Empaquetador', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Los olivos', '2010-10-10', '2015-04-12', 'Embolsaba las compras de los clientes y los ayudaba a llevarlas');
 
 -- Projects
 INSERT INTO projects (
   user_id,
   name,
   description,
-  project_url
+  project_url,
+  cover_image_id,
+  cover_image_url
 ) VALUES
-  (1, 'Proyecto de Base de Datos', 'Llevar el registro de los autos que llegan a un concesionario', ''),
-  (2, 'Proyecto de Arquitectura', 'Armar un contador de 12 horas', 'https://arquicomberna.blogspot.com/2008/12/contador.html'),
-  (3, 'Proyecto de Ingenieria de Requisitos', 'Realizar una pagina donde las empresas puedan contratar egresados ucabistas', 'https://www.mayoclinic.org/es/diseases-conditions/schizophrenia/symptoms-causes/syc-20354443'),
-  (4, 'Offside', 'Album de barajitas del mundial', 'https://reglasdelfutbol.club/que-es-el-offiside/'),
-  (5, 'Proyecto de IHC', 'Sistema de gestion de la biblioteca UCAB', ''),
-  (6, 'Proyecto de Contabilidad', 'Relacionar la Contabilidad con 3 ODS', ''),
-  (7, 'Proyecto de Estructura', 'Calculadora en ensamblador', 'https://www.tecnologia-informatica.com/el-lenguaje-ensamblador/'),
-  (8, 'Proyecto de Sistemas de operacion', 'Sistema Operativo', '');
+  (1, 'Proyecto de Base de Datos', 'Llevar el registro de los autos que llegan a un concesionario', null, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (2, 'Proyecto de Arquitectura', 'Armar un contador de 12 horas', 'https://arquicomberna.blogspot.com/2008/12/contador.html', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (3, 'Proyecto de Ingenieria de Requisitos', 'Realizar una pagina donde las empresas puedan contratar egresados ucabistas', 'https://www.mayoclinic.org/es/diseases-conditions/schizophrenia/symptoms-causes/syc-20354443', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (4, 'Offside', 'Album de barajitas del mundial', 'https://reglasdelfutbol.club/que-es-el-offiside/', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (5, 'Proyecto de IHC', 'Sistema de gestion de la biblioteca UCAB', null, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (6, 'Proyecto de Contabilidad', 'Relacionar la Contabilidad con 3 ODS', null, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (7, 'Proyecto de Estructura', 'Calculadora en ensamblador', 'https://www.tecnologia-informatica.com/el-lenguaje-ensamblador/', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (8, 'Proyecto de Sistemas de operacion', 'Sistema Operativo', null, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg');
 
 -- User Languages
 INSERT INTO users_languages (
@@ -239,39 +247,39 @@ INSERT INTO users_languages (
   language_id, 
   proficient_level
 ) VALUES
-  (1, 1, 'A1'),
-  (2, 2, 'A2'),
-  (3, 3, 'B1'),
-  (4, 4, 'B2'),
-  (5, 5, 'C1'),
-  (6, 6, 'C2'),
-  (7, 7, 'A1'),
-  (8, 8, 'A2'),
-  (1, 9, 'B1'),
-  (2, 10, 'B2'),
-  (3, 11, 'C1'),
-  (4, 12, 'C2'),
-  (5, 13, 'A1'),
-  (6, 14, 'A2'),
-  (7, 15, 'B1');
+  (1, 1, 'Native'),
+  (1, 2, 'B1'),
+  (2, 1, 'Native'),
+  (2, 2, 'B1'),
+  (3, 1, 'Native'),
+  (3, 2, 'B2'),
+  (4, 1, 'Native'),
+  (4, 2, 'B2'),
+  (5, 1, 'Native'),
+  (5, 2, 'C1'),
+  (6, 1, 'Native'),
+  (6, 2, 'C2'),
+  (7, 1, 'Native'),
+  (7, 2, 'A1'),
+  (8, 1, 'Native');
 
 --User Studies
 INSERT INTO users_ustudies (
   user_id, 
   ucareer_id, 
   degree, 
-  graduation_date
+  graduation_year
 ) VALUES
-  (1, 1, 'pregrado', '2022-05-15'),
-  (2, 2, 'postgrado', '2021-12-20'),
-  (3, 3, 'maestria', '2022-08-30'),
-  (4, 4, 'especializacion', '2023-06-10'),
-  (5, 5, 'maestria', '2021-09-25'),
-  (6, 6, 'doctorado', '2022-04-05'),
-  (7, 7, 'pregrado', '2023-01-15'),
-  (8, 8, 'pregrado', '2023-07-20'),
-  (1, 2, 'pregrado', '2022-11-30'),
-  (2, 1, 'pregrado', '2023-03-08');
+  (1, 1, 'pregrado', '2022-01-01'),
+  (2, 2, 'postgrado', '2021-01-01'),
+  (3, 3, 'maestria', '2022-01-01'),
+  (4, 4, 'especializacion', '2023-01-01'),
+  (5, 5, 'maestria', '2021-01-01'),
+  (6, 6, 'doctorado', '2022-01-01'),
+  (7, 7, 'pregrado', '2023-01-01'),
+  (8, 8, 'pregrado', '2023-01-01'),
+  (1, 2, 'pregrado', '2022-01-01'),
+  (2, 1, 'pregrado', '2023-01-01');
 
 INSERT INTO users_hard_skills (
   user_id, 
