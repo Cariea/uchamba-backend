@@ -45,8 +45,7 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
 
     const { rows: hardSkillsResponse } = await pool.query({
       text: `
-        SELECT
-          hs.name
+        SELECT hs.name
         FROM 
           users_hard_skills AS uhs,
           hard_skills AS hs
@@ -60,8 +59,7 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
 
     const { rows: personalHardSkillsResponse } = await pool.query({
       text: `
-        SELECT
-          name
+        SELECT name
         FROM personal_hard_skills
         WHERE user_id = $1
         ORDER BY phard_skill_id ASC
@@ -71,8 +69,7 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
 
     const { rows: softSkillsResponse } = await pool.query({
       text: `
-        SELECT
-          ss.name
+        SELECT ss.name
         FROM 
           users_soft_skills AS uss,
           soft_skills AS ss
@@ -86,8 +83,7 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
 
     const { rows: personalSoftSkillsResponse } = await pool.query({
       text: `
-        SELECT
-          name
+        SELECT name
         FROM personal_soft_skills
         WHERE user_id = $1
         ORDER BY psoft_skill_id ASC
@@ -100,7 +96,7 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
       SELECT
           uc.name,
           uus.degree,
-          TO_CHAR(uus.graduation_date, 'DD/MM/YYYY') AS graduation_date
+          TO_CHAR(uus.graduation_year, 'YYYY') AS graduation_year
         FROM
           users_ustudies AS uus,
           ucareers AS uc
@@ -118,7 +114,7 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
           name,
           university_name,
           degree,
-          TO_CHAR(graduation_date, 'DD/MM/YYYY') AS graduation_date
+          TO_CHAR(graduation_year, 'YYYY') AS graduation_year
         FROM foreign_studies
         WHERE user_id = $1
         ORDER BY foreign_study_id ASC
@@ -254,11 +250,11 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
       <h2>Educación</h2>
       <h3>Destacada</h3>
       <ul>
-        ${CV.education.featured.map(edu => `<li>${edu.name} - ${edu.degree} (${edu.graduationDate})</li>`).join('')}
+        ${CV.education.featured.map(edu => `<li>${edu.name} - ${edu.degree} (${edu.graduationYear})</li>`).join('')}
       </ul>
       <h3>Personal</h3>
       <ul>
-        ${CV.education.personal.map(edu => `<li>${edu.name} - ${edu.universityName} - ${edu.degree} (${edu.graduationDate})</li>`).join('')}
+        ${CV.education.personal.map(edu => `<li>${edu.name} - ${edu.universityName} - ${edu.degree} (${edu.graduationYear})</li>`).join('')}
       </ul>
     </div>
     

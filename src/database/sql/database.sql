@@ -28,7 +28,7 @@ CREATE TABLE ellucian_ethos (
 --   residence_address TEXT DEFAULT NULL,
 --   career VARCHAR(64) NOT NULL,
 --   degree dom_degree NOT NULL,
---   graduation_date DATE NOT NULL,
+--   graduation_year DATE NOT NULL,
 --   CONSTRAINT pk_undergraduate_id PRIMARY KEY (undergraduate_id),
 --   CONSTRAINT uk_career_per_undergraduate UNIQUE (undergraduate_id, career)
 -- );

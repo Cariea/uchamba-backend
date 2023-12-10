@@ -53,14 +53,14 @@ export interface Education {
 export interface FeaturedCareers {
   name: string
   degree: string
-  graduationDate: string
+  graduationYear: string
 }
 
 export interface PersonalCareers {
   name: string
   universityName: string
   degree: string
-  graduationDate: string
+  graduationYear: string
 }
 
 export interface WorkExperience {
