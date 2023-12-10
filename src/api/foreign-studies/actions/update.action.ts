@@ -11,7 +11,9 @@ export const updateForeignStudie = async (
 ): Promise<Response> => {
   try {
     const { foreignStudyId } = req.params
-    const { name, universityName, degree, graduationDate } = req.body
+    const { name, universityName, degree, graduationYear } = req.body
+    const formattedDate = `${graduationYear as string}-01-01`
+
     const response = await pool.query({
       text: `
         UPDATE foreign_studies
@@ -19,12 +21,12 @@ export const updateForeignStudie = async (
           name = $1,
           university_name = $2,
           degree = $3,
-          graduation_date = $4
+          graduation_year = $4
         WHERE
           user_id = $5 AND
           foreign_study_id = $6
       `,
-      values: [name, universityName, degree, graduationDate, req.user.id, foreignStudyId]
+      values: [name, universityName, degree, formattedDate, req.user.id, foreignStudyId]
     })
     if (response.rowCount === 0) {
       throw new StatusError({

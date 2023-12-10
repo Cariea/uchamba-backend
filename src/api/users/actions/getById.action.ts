@@ -18,11 +18,11 @@ export const getUserById = async (
           email,
           about_me,
           phone_number,
+          country,
+          state,
+          city,
           residence_address,
-          role,
-          is_verified,
-          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at,
-          TO_CHAR(updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
+          role
         FROM users
         WHERE user_id = $1
       `,
@@ -38,10 +38,7 @@ export const getUserById = async (
 
     const { rows: userHardSkills } = await pool.query({
       text: `
-        SELECT
-          uhs.hard_skill_id AS skill_id,
-          hs.name,
-          TO_CHAR(uhs.created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
+        SELECT hs.name
         FROM 
           users_hard_skills AS uhs,
           hard_skills AS hs
@@ -55,10 +52,7 @@ export const getUserById = async (
 
     const { rows: personalHardSkills } = await pool.query({
       text: `
-        SELECT
-          phard_skill_id AS skill_id,
-          name,
-          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
+        SELECT name
         FROM personal_hard_skills
         WHERE user_id = $1
         ORDER BY phard_skill_id ASC
@@ -68,10 +62,7 @@ export const getUserById = async (
 
     const { rows: userSoftSkills } = await pool.query({
       text: `
-        SELECT
-          uss.soft_skill_id AS skill_id,
-          ss.name,
-          TO_CHAR(uss.created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
+        SELECT ss.name
         FROM 
           users_soft_skills AS uss,
           soft_skills AS ss
@@ -85,10 +76,7 @@ export const getUserById = async (
 
     const { rows: personalSoftSkills } = await pool.query({
       text: `
-        SELECT
-          psoft_skill_id AS skill_id,
-          name,
-          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
+        SELECT name
         FROM personal_soft_skills
         WHERE user_id = $1
         ORDER BY psoft_skill_id ASC
@@ -101,9 +89,7 @@ export const getUserById = async (
         SELECT
           link_id,
           name,
-          url,
-          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at,
-          TO_CHAR(updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
+          url
         FROM personal_links
         WHERE user_id = $1
         ORDER BY link_id ASC
@@ -117,7 +103,7 @@ export const getUserById = async (
           uc.ucareer_id,
           uc.name,
           uus.degree,
-          TO_CHAR(uus.graduation_date, 'DD/MM/YYYY') AS graduation_date,
+          TO_CHAR(uus.graduation_year, 'YYYY') AS graduation_year,
           TO_CHAR(uus.created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
         FROM
           users_ustudies AS uus,
@@ -137,7 +123,7 @@ export const getUserById = async (
           name,
           university_name,
           degree,
-          TO_CHAR(graduation_date, 'DD/MM/YYYY') AS graduation_date,
+          TO_CHAR(graduation_year, 'YYYY') AS graduation_year,
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
         FROM foreign_studies
         WHERE user_id = $1
@@ -192,6 +178,7 @@ export const getUserById = async (
           l.language_id,
           l.name,
           ul.proficient_level,
+          ul.certificate_image_url,
           TO_CHAR(ul.created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at,
           TO_CHAR(ul.updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
         FROM

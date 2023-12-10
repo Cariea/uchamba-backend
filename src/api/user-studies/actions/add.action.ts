@@ -10,24 +10,26 @@ export const addUserUstudys = async (
 ): Promise<Response | undefined> => {
   try {
     const { ucareerId } = req.params
-    const { degree, graduationDate } = req.body
+    const { degree, graduationYear } = req.body
+    const formattedDate = `${graduationYear as string}-01-01`
+
     const response = await pool.query({
       text: `
         INSERT INTO users_ustudies (
           user_id,
           ucareer_id,
           degree,
-          graduation_date
+          graduation_year
         ) 
         VALUES ($1,$2,$3,$4)
         RETURNING
           user_id,
           ucareer_id,
           degree,
-          graduation_date,
+          TO_CHAR(graduation_year, 'YYYY') AS graduation_year,
           TO_CHAR(created_at, 'DD/MM/YYYY') AS created_at
       `,
-      values: [req.user.id, ucareerId, degree, graduationDate]
+      values: [req.user.id, ucareerId, degree, formattedDate]
     })
 
     return res.status(STATUS.OK).json(camelizeObject(response.rows[0]))
