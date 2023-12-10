@@ -19,7 +19,7 @@ import workExperiencesRouter from '../work-experiences/work-experiences.routes'
 import projectRouter from '../projects/projects.routes'
 import userLanguagesRouter from '../user-languages/user-languages.routes'
 import userStudiesRouter from '../user-studies/user-studies.routes'
-
+import cvGeneratorRoutes from '../cv-generator/cv.routes'
 export const router = Router()
 
 // Test endpoint
@@ -30,6 +30,7 @@ router.get('/ping', (_req, res) => {
 // Public Routes
 router.use('/auth', authRouter)
 router.use('/users', userRouter)
+router.use('/generar-cv', cvGeneratorRoutes)
 
 // Middlewares for token validation
 router.use(tokenGuard(), verifyToken())
