@@ -1,6 +1,7 @@
 import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
+import fileUpload from 'express-fileupload'
 import { PORT } from './config'
 import { router } from './api/_routes/api'
 
@@ -14,7 +15,10 @@ app.set('port', PORT !== '' ? PORT : 3000)
 app.use(morgan('dev'))
 app.use(cors())
 app.use(express.json()) // middleware que transforma la req.body a un json
-
+app.use(fileUpload({
+  useTempFiles: false,
+  tempFileDir: ''
+}))
 // Routes
 app.use('/', router)
 
