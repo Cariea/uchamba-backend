@@ -24,15 +24,18 @@ export const UserSchema = z.object({
   phoneNumber: z
     .string()
     .regex(/^[0-9]+$/, 'El numero de telefono solo acepta caracteres alfanumericos'),
+  country: z
+    .string(),
+  state: z
+    .string(),
+  city: z
+    .string(),
   residenceAddress: z
     .string(),
   role: z
     .enum([UserRole.ADMIN, UserRole.GRADUATED]),
-  isVerified: z
+  isActive: z
     .boolean()
-    .optional(),
-  confirmationCode: z
-    .string()
     .optional()
 })
 
@@ -53,4 +56,11 @@ export const RegisterUserPayload = z.object({
     .max(128, 'La contraseña no puede superar los 128 carácteres')
 })
 
-export const UpdateUserSchema = UserSchema.pick({ aboutMe: true, phoneNumber: true, residenceAddress: true })
+export const UpdateUserSchema = UserSchema.pick({
+  aboutMe: true,
+  phoneNumber: true,
+  country: true,
+  state: true,
+  city: true,
+  residenceAddress: true
+})

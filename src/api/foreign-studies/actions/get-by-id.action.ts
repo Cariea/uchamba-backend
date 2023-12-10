@@ -20,7 +20,7 @@ export const getForeignStudiesByUserId = async (
           name,
           university_name,
           degree,
-          graduation_date,
+          TO_CHAR(graduation_year, 'YYYY') AS graduation_year,
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
         FROM foreign_studies
         WHERE

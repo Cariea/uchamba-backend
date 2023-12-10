@@ -17,9 +17,12 @@ export const getByWorkExperienceId = async (
         SELECT
           organization_name,
           job_title,
+          country,
+          state,
+          city,
           address,
-          entry_date,
-          departure_date,
+          TO_CHAR(entry_date, 'DD/MM/YYYY') AS entry_date,
+          TO_CHAR(departure_date, 'DD/MM/YYYY) AS departure_date,
           description,
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
         FROM work_experiences

@@ -11,18 +11,20 @@ export const updateUserStudy = async (
 ): Promise<Response> => {
   try {
     const { ucareerId } = req.params
-    const { degree, graduationDate } = req.body
+    const { degree, graduationYear } = req.body
+    const formattedDate = `${graduationYear as string}-01-01`
+
     const response = await pool.query({
       text: `
         UPDATE users_ustudies
         SET 
           degree = $1,
-          graduation_date = $2
+          graduation_year = $2
         WHERE
           user_id = $3 AND
           ucareer_id = $4
       `,
-      values: [degree, graduationDate, req.user.id, ucareerId]
+      values: [degree, formattedDate, req.user.id, ucareerId]
     })
     if (response.rowCount === 0) {
       throw new StatusError({

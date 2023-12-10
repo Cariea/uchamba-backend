@@ -140,7 +140,8 @@ CREATE TABLE foreign_studies (
   CONSTRAINT pk_user_foreign_study_id PRIMARY KEY (user_id, foreign_study_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE RESTRICT,
+  CONSTRAINT uk_name_university_degree UNIQUE (user_id, name, university_name, degree)
 );
 
 -- 8

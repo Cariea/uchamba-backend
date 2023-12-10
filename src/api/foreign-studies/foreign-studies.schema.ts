@@ -16,6 +16,7 @@ export const ForeignStudiesSchema = z.object({
     .max(64, 'El nombre de la universidad no puede superar los 64 caracteres'),
   degree: z
     .enum([Degree.UNDERGRADUATE, Degree.POSTGRADUATE, Degree.SPECIALIZATION, Degree.MASTER, Degree.DOCTORATE]),
-  graduationDate: z
+  graduationYear: z
     .string()
+    .regex(/^(19\d{2}|20\d{2})$/, 'Debe ingresar un año valido')
 })

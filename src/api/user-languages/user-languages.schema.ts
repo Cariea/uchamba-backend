@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { proficientLevels } from '../../utils/languagesLevel.enum'
+import { PROFICIENCY_LEVELS } from '../../utils/languagesLevel.enum'
 export const UserLanguageSchema = z.object({
   userId: z
     .number()
@@ -8,5 +8,5 @@ export const UserLanguageSchema = z.object({
     .number()
     .optional(),
   proficientLevel: z
-    .enum([proficientLevels.A1, proficientLevels.A2, proficientLevels.B1, proficientLevels.B2, proficientLevels.C1, proficientLevels.C2])
+    .enum([PROFICIENCY_LEVELS.A1, PROFICIENCY_LEVELS.A2, PROFICIENCY_LEVELS.B1, PROFICIENCY_LEVELS.B2, PROFICIENCY_LEVELS.C1, PROFICIENCY_LEVELS.C2, PROFICIENCY_LEVELS.NATIVE])
 })

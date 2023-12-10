@@ -10,7 +10,18 @@ export const updateWorkExperience = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const { organizationName, jobTitle, address, entryDate, departureDate, description } = req.body
+    const {
+      organizationName,
+      jobTitle,
+      country,
+      state,
+      city,
+      address,
+      entryDate,
+      departureDate,
+      description
+    } = req.body
+
     const { workExpId } = req.params
     const userId: number = req.user.id
 
@@ -18,11 +29,12 @@ export const updateWorkExperience = async (
       text: `
         SELECT *
         FROM work_experiences
-        WHERE user_id = $1
-        AND work_exp_id != $2
-        AND organization_name = $3
-        AND job_title = $4
-        AND entry_date = $5
+        WHERE 
+          user_id = $1 AND
+          work_exp_id != $2 AND
+          organization_name = $3 AND
+          job_title = $4 AND
+          entry_date = $5
       `,
       values: [userId, workExpId, organizationName, jobTitle, entryDate]
     })
@@ -40,14 +52,18 @@ export const updateWorkExperience = async (
         SET 
           organization_name = $1,
           job_title = $2,
-          address = $3,
-          entry_date = $4,
-          departure_date = $5,
-          description = $6
-        WHERE user_id = $7
-        AND work_exp_id = $8
+          country = $3,
+          state = $4,
+          city = $5,
+          address = $6,
+          entry_date = $7,
+          departure_date = $8,
+          description = $9
+        WHERE 
+          user_id = $10 AND
+          work_exp_id = $11
       `,
-      values: [organizationName, jobTitle, address, entryDate, departureDate, description, userId, workExpId]
+      values: [organizationName, jobTitle, country, state, city, address, entryDate, departureDate, description, userId, workExpId]
     })
     if (response.rowCount === 0) {
       throw new StatusError({
