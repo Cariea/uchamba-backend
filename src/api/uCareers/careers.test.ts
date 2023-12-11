@@ -1,14 +1,13 @@
 // for testing
-import app from '../app'
+import app from '../../app'
 import supertest from 'supertest'
-import { TEST_PASSWORD, TEST_EMAIL } from '../config'
+import { TEST_PASSWORD, TEST_EMAIL } from '../../config'
 
 // VARIABLES PARA LAS PETICIONES EN LOS TEST
 // LAS CARRERAS DE LA UCAB SON 9, POR LO TANTO EL ID DE LA ÚLTIMA CARRERA ES 9
-const namePost = 'Ingeniería Mecánica'
-const namePut = 'Ingeniería Electrónica'
-const idPut = '10'
-const idDelete = '11'
+const namePost = 'OLAMAMAMA'
+const namePut = 'Mecanica'
+let idPutDelete = ''
 
 describe('GET careers/all', () => {
   test('should respond with a 200 status code', async () => {
@@ -28,7 +27,6 @@ describe('GET careers/all', () => {
       .get('/careers/all')
       .set('Authorization', `Bearer ${token}`)
       .send()
-
     // Verificar que la respuesta tenga un estado de 200
     expect(response.statusCode).toBe(200)
   })
@@ -71,7 +69,7 @@ describe('GET careers/:careerId', () => {
 
     // Enviar la solicitud con el token de autenticación
     const response = await supertest(app)
-      .get('/careers/9')
+      .get('/careers/8')
       .set('Authorization', `Bearer ${token}`)
       .send()
 
@@ -124,6 +122,8 @@ describe('POST careers/', () => {
       .send({
         name: namePost
       })
+    idPutDelete = response.body.ucareerId
+    console.log(idPutDelete)
 
     // Verificar que la respuesta tenga un estado de 201
     expect(response.statusCode).toBe(201)
@@ -145,7 +145,7 @@ describe('UPDATE careers/:careerId', () => {
 
     // Enviar la solicitud con el token de autenticación
     const response = await supertest(app)
-      .put(`/careers/${idPut}`)
+      .put(`/careers/${idPutDelete}`)
       .set('Authorization', `Bearer ${token}`)
       .send({
         name: namePut
@@ -171,7 +171,7 @@ describe('DELETE careers/:careerId', () => {
 
     // Enviar la solicitud con el token de autenticación
     const response = await supertest(app)
-      .delete(`/careers/${idDelete}`)
+      .delete(`/careers/${idPutDelete}`)
       .set('Authorization', `Bearer ${token}`)
       .send()
 
