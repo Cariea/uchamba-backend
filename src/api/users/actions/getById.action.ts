@@ -103,8 +103,7 @@ export const getUserById = async (
           uc.ucareer_id,
           uc.name,
           uus.degree,
-          TO_CHAR(uus.graduation_year, 'YYYY') AS graduation_year,
-          TO_CHAR(uus.created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
+          TO_CHAR(uus.graduation_year, 'YYYY') AS graduation_year
         FROM
           users_ustudies AS uus,
           ucareers AS uc
@@ -123,8 +122,7 @@ export const getUserById = async (
           name,
           university_name,
           degree,
-          TO_CHAR(graduation_year, 'YYYY') AS graduation_year,
-          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
+          TO_CHAR(graduation_year, 'YYYY') AS graduation_year
         FROM foreign_studies
         WHERE user_id = $1
         ORDER BY foreign_study_id ASC
@@ -138,11 +136,13 @@ export const getUserById = async (
           work_exp_id,
           organization_name,
           job_title,
+          country,
+          state,
+          city,
           address,
           description,
           TO_CHAR(entry_date, 'DD/MM/YYYY') AS entry_date,
-          TO_CHAR(departure_date, 'DD/MM/YYYY') AS departure_date,
-          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
+          TO_CHAR(departure_date, 'DD/MM/YYYY') AS departure_date
         FROM work_experiences
         WHERE user_id = $1
         ORDER BY work_exp_id ASC
@@ -157,8 +157,8 @@ export const getUserById = async (
           name,
           description,
           project_url,
-          TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at,
-          TO_CHAR(updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
+          cover_image_id,
+          cover_image_url
         FROM projects
         WHERE user_id = $1
         ORDER BY project_id ASC
@@ -166,11 +166,27 @@ export const getUserById = async (
       values: [userId]
     })
 
-    // const { rows: projectImages } = await pool.query({
-    //   text: `
-    //   `,
-    //   values: [userId, projects[].project_id]
-    // })
+    if (projects.length > 0) {
+      for (let i = 0; i < projects.length; i++) {
+        const { rows } = await pool.query({
+          text: `
+            SELECT
+              image_cloud_id,
+              image_url
+            FROM projects_images
+            WHERE 
+              user_id = $1 AND
+              project_id = $2
+          `,
+          values: [userId, projects[i].project_id]
+        })
+
+        projects[i] = {
+          ...projects[i],
+          images: rows
+        }
+      }
+    }
 
     const { rows: languages } = await pool.query({
       text: `
@@ -178,9 +194,8 @@ export const getUserById = async (
           l.language_id,
           l.name,
           ul.proficient_level,
-          ul.certificate_image_url,
-          TO_CHAR(ul.created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at,
-          TO_CHAR(ul.updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
+          ul.certificate_image_id,
+          ul.certificate_image_url
         FROM
           users_languages AS ul,
           languages AS l

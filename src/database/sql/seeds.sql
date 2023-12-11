@@ -236,32 +236,51 @@ INSERT INTO projects (
   (2, 'Proyecto de Arquitectura', 'Armar un contador de 12 horas', 'https://arquicomberna.blogspot.com/2008/12/contador.html', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
   (3, 'Proyecto de Ingenieria de Requisitos', 'Realizar una pagina donde las empresas puedan contratar egresados ucabistas', 'https://www.mayoclinic.org/es/diseases-conditions/schizophrenia/symptoms-causes/syc-20354443', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
   (4, 'Offside', 'Album de barajitas del mundial', 'https://reglasdelfutbol.club/que-es-el-offiside/', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (5, 'Offside', 'Album de barajitas del mundial', 'https://reglasdelfutbol.club/que-es-el-offiside/', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
   (5, 'Proyecto de IHC', 'Sistema de gestion de la biblioteca UCAB', null, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
   (6, 'Proyecto de Contabilidad', 'Relacionar la Contabilidad con 3 ODS', null, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
   (7, 'Proyecto de Estructura', 'Calculadora en ensamblador', 'https://www.tecnologia-informatica.com/el-lenguaje-ensamblador/', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
   (8, 'Proyecto de Sistemas de operacion', 'Sistema Operativo', null, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg');
 
+INSERT INTO projects_images (
+  user_id,
+  project_id,
+  image_cloud_id,
+  image_url
+) VALUES
+  (1, 1, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (2, 2, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (3, 3, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (4, 4, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (5, 5, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (5, 6, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (6, 7, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (7, 8, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (8, 9, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg');
+
 -- User Languages
 INSERT INTO users_languages (
   user_id, 
   language_id, 
-  proficient_level
+  proficient_level,
+  certificate_image_id,
+  certificate_image_url
 ) VALUES
-  (1, 1, 'Native'),
-  (1, 2, 'B1'),
-  (2, 1, 'Native'),
-  (2, 2, 'B1'),
-  (3, 1, 'Native'),
-  (3, 2, 'B2'),
-  (4, 1, 'Native'),
-  (4, 2, 'B2'),
-  (5, 1, 'Native'),
-  (5, 2, 'C1'),
-  (6, 1, 'Native'),
-  (6, 2, 'C2'),
-  (7, 1, 'Native'),
-  (7, 2, 'A1'),
-  (8, 1, 'Native');
+  (1, 1, 'Native', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (1, 2, 'B1', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (2, 1, 'Native', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (2, 2, 'B1', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (3, 1, 'Native', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (3, 2, 'B2', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (4, 1, 'Native', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (4, 2, 'B2', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (5, 1, 'Native', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (5, 2, 'C1', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (6, 1, 'Native', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (6, 2, 'C2', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (7, 1, 'Native', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (7, 2, 'A1', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (8, 1, 'Native', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg');
 
 --User Studies
 INSERT INTO users_ustudies (
