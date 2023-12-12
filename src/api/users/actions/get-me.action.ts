@@ -1,13 +1,14 @@
-import { Response, Request } from 'express'
+import { Response } from 'express'
+import { ExtendedRequest } from '../../../middlewares/auth'
 import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { getUserDetailed } from '../_utils/get-user-detailed'
 
-export const getUserById = async (
-  req: Request, res: Response
+export const getMe = async (
+  req: ExtendedRequest, res: Response
 ): Promise<Response | undefined> => {
   try {
-    const { userId } = req.params
+    const { id: userId } = req.user
 
     const userDetailed = await getUserDetailed(userId)
 
