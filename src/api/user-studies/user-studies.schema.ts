@@ -9,8 +9,7 @@ export const UserStudiesSchema = z.object({
     .optional(),
   degree: z
     .enum([Degree.UNDERGRADUATE, Degree.POSTGRADUATE, Degree.SPECIALIZATION, Degree.MASTER, Degree.DOCTORATE]),
-  graduationDate: z
+  graduationYear: z
     .string()
-    .min(10)
-    .max(10)
+    .regex(/^(19\d{2}|20\d{2})$/, 'Debe ingresar un año valido')
 })

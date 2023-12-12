@@ -15,9 +15,14 @@ export const WorkExperiencesSchema = z.object({
     .string()
     .min(1, 'Debe indicar el rol que desempeñaba')
     .max(64, 'El nombre no puede superar los 64 carácteres'),
+  country: z
+    .string(),
+  state: z
+    .string(),
+  city: z
+    .string(),
   address: z
-    .string()
-    .optional(),
+    .string(),
   entryDate: z
     .string()
     .min(1, 'Debe indicar la fecha en que ingresó'),

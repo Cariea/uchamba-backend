@@ -22,7 +22,15 @@ export const getUsers = async (
       text: `
         SELECT COUNT(*) 
         FROM users
+        WHERE is_active = TRUE
       `
+    })
+
+    console.log('Seed', getDailyRandomSeed())
+
+    await pool.query({
+      text: 'SELECT SETSEED($1)',
+      values: [getDailyRandomSeed()]
     })
 
     const { rows: response } = await pool.query({
@@ -32,12 +40,13 @@ export const getUsers = async (
           name,
           email,
           role,
-          is_verified,
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at,
           TO_CHAR(updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
         FROM 
           users
-        ORDER BY user_id ASC
+        WHERE
+          is_active = TRUE
+        ORDER BY random()
         LIMIT $1 OFFSET $2
       `,
       values: [size, offset]
@@ -54,4 +63,17 @@ export const getUsers = async (
     console.log(error)
     return handleControllerError(error, res)
   }
+}
+
+function getDailyRandomSeed (): number {
+  const today = new Date()
+
+  const startOfYear = new Date(today.getFullYear(), 0, 0)
+  const dayOfYear = Math.floor((+today - +startOfYear) / 86400000)
+
+  const randomValue = Math.sin(dayOfYear * 0.1)
+
+  const adjustedValue = randomValue
+
+  return adjustedValue
 }
