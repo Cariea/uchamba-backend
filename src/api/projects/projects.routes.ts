@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router } from 'express'
-import { ProjectSchema } from './projects.schema'
+import { ProjectSchema, ProjectUpdateSchema } from './projects.schema'
 
 // Middlewares
 import { schemaGuard } from '../../middlewares/schemaGuard'
@@ -17,7 +17,7 @@ const router = Router()
 router.get('/:projectId', getByProjectId)
 router.get('/user/:userId/project/:projectId', getByUserProjectId)
 router.post('/', schemaGuard(ProjectSchema), addProject)
-router.put('/:projectId', schemaGuard(ProjectSchema), updateProject)
+router.put('/:projectId', schemaGuard(ProjectUpdateSchema), updateProject)
 router.delete('/:projectId', deleteProject)
 
 export default router

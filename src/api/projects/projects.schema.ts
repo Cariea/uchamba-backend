@@ -16,3 +16,12 @@ export const ProjectSchema = z.object({
   projectUrl: z
     .string()
 })
+
+export const ProjectUpdateSchema = ProjectSchema.extend({
+  coverImageId: z
+    .string()
+    .nullable(),
+  deletedImages: z
+    .array(z.string())
+    .nullable()
+})
