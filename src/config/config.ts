@@ -11,9 +11,9 @@ export const AUTH_EXPIRE = process.env.AUTH_EXPIRE
 export const AUTH_ROUNDS = process.env.AUTH_ROUNDS
 export const PORT = process.env.PORT
 export const DATABASE_URL = process.env.DATABASE_URL
-export const CLOUDINARY_CLOUD = process.env.CLOUDINARY_CLOUD
-export const CLOUDINARY_API = process.env.CLOUDINARY_API
-export const CLOUDINARY_SECRET = process.env.CLOUDINARY_SECRET
+export const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME
+export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY
+export const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET
 
 // SMTP Information
 export const SMTP_HOST = process.env.SMTP_HOST

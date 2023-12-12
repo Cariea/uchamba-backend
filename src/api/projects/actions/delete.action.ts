@@ -15,8 +15,9 @@ export const deleteProject = async (
       text: `
         DELETE
         FROM projects
-        WHERE user_id = $1
-        AND project_id = $2
+        WHERE 
+          user_id = $1 AND 
+          project_id = $2
       `,
       values: [userId, projectId]
     })
