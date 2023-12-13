@@ -109,7 +109,6 @@ export const updateProject = async (
     }
     return res.status(STATUS.CREATED).json({ message: 'Debe cargar una imagen' })
   } catch (error: unknown) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }

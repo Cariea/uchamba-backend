@@ -3,8 +3,25 @@ import { pool } from '../../../database'
 import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { generatePdf } from '../../../utils/pdfGenerator'
-import { User, Language, HardSkills, PersonalHardSkills, SoftSkills, PersonalSoftSkills, FeaturedCareers, PersonalCareers, WorkExperience, Curriculum, FeaturedHardSkills, FeaturedSoftSkills, Education } from '../../../types/cv'
+import {
+  User,
+  Language,
+  HardSkills,
+  PersonalHardSkills,
+  SoftSkills,
+  PersonalSoftSkills,
+  FeaturedCareers,
+  PersonalCareers,
+  WorkExperience,
+  Curriculum,
+  FeaturedHardSkills,
+  FeaturedSoftSkills,
+  Education
+} from '../../../types/cv'
 import camelizeObject from '../../../utils/camelizeObject'
+import { compileFile } from 'pug'
+
+const compiledFunction = compileFile('./src/api/cv-generator/cv-template/template.pug')
 
 export const cvGenerator = async (req: Request, res: Response): Promise<Response | undefined> => {
   try {
@@ -163,112 +180,8 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
       education,
       workExperiences
     }
-    // console.log(CV)
-    const htmlContent = `<!DOCTYPE html>
-    <html lang="es">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Currículum</title>
-      <style>
-        body {
-          font-family: Arial, sans-serif;
-          margin: 20px;
-        }
-    
-        h1 {
-          color: #333;
-        }
-    
-        p {
-          color: #555;
-        }
-    
-        .user-details {
-          margin-bottom: 20px;
-        }
-    
-        .user-details strong {
-          color: #666;
-        }
-    
-        .section {
-          margin-bottom: 30px;
-        }
-    
-        .section h2 {
-          color: #333;
-        }
-      </style>
-    </head>
-    <body>
-    
-      <h1>Currículum de Usuario</h1>
-    
-      <div class="user-details">
-        <p><strong>Nombre:</strong> ${CV.name}</p>
-        <p><strong>Email:</strong> ${CV.email}</p>
-        <p><strong>Teléfono:</strong> ${CV.phoneNumber}</p>
-        <!-- Agrega más campos según sea necesario -->
-      </div>
-    
-      <div class="section">
-        <h2>Sobre mí</h2>
-        <p>${CV.aboutMe}</p>
-      </div>
-    
-      <div class="section">
-        <h2>Idiomas</h2>
-        <ul>
-          ${CV.languages.map(language => `<li>${language.name} - ${language.proficientLevel}</li>`).join('')}
-        </ul>
-      </div>
-    
-      <div class="section">
-        <h2>Habilidades Duras</h2>
-        <ul>
-          ${CV.hardSkills.featured.map(skill => `<li>${skill.name}</li>`).join('')}
-        </ul>
-        <h3>Habilidades Personales</h3>
-        <ul>
-          ${CV.hardSkills.personal.map(skill => `<li>${skill.name}</li>`).join('')}
-        </ul>
-      </div>
-    
-      <div class="section">
-        <h2>Habilidades Blandas</h2>
-        <ul>
-          ${CV.softSkills.featured.map(skill => `<li>${skill.name}</li>`).join('')}
-        </ul>
-        <h3>Habilidades Personales</h3>
-        <ul>
-          ${CV.softSkills.personal.map(skill => `<li>${skill.name}</li>`).join('')}
-        </ul>
-      </div>
-    
-      <div class="section">
-      <h2>Educación</h2>
-      <h3>Destacada</h3>
-      <ul>
-        ${CV.education.featured.map(edu => `<li>${edu.name} - ${edu.degree} (${edu.graduationYear})</li>`).join('')}
-      </ul>
-      <h3>Personal</h3>
-      <ul>
-        ${CV.education.personal.map(edu => `<li>${edu.name} - ${edu.universityName} - ${edu.degree} (${edu.graduationYear})</li>`).join('')}
-      </ul>
-    </div>
-    
-      <div class="section">
-        <h2>Experiencia Laboral</h2>
-        <ul>
-          ${CV.workExperiences.map(exp => `<li>${exp.organizationName} - ${exp.jobTitle} (${exp.entryDate} - ${exp.departureDate})</li>`).join('')}
-        </ul>
-      </div>
-    
-    </body>
-    </html>
-    
-`
+
+    const htmlContent = compiledFunction(CV)
     const pdfBuffer = await generatePdf(htmlContent)
 
     const filename = `cv_usuario_${userId}.pdf`
@@ -277,7 +190,6 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
 
     return res.status(STATUS.OK).send(pdfBuffer)
   } catch (error: unknown) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }

@@ -26,8 +26,6 @@ export const getUsers = async (
       `
     })
 
-    console.log('Seed', getDailyRandomSeed())
-
     await pool.query({
       text: 'SELECT SETSEED($1)',
       values: [getDailyRandomSeed()]
@@ -60,7 +58,6 @@ export const getUsers = async (
 
     return paginatedItemsResponse(res, STATUS.OK, camelizeObject(response) as Array<Record<string, any>>, pagination)
   } catch (error: unknown) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }

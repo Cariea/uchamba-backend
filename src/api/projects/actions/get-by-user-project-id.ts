@@ -54,7 +54,6 @@ export const getByUserProjectId = async (
     }
     return res.status(STATUS.OK).json(allResponse)
   } catch (error: unknown) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }

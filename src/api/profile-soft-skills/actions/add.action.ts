@@ -87,7 +87,6 @@ export const addProfileSoftSkills = async (
 
     return res.status(STATUS.CREATED).json({ message: 'Habilidades blandas añadidas correctamente' })
   } catch (error: unknown) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }
