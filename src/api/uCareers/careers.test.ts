@@ -123,7 +123,6 @@ describe('POST careers/', () => {
         name: namePost
       })
     idPutDelete = response.body.ucareerId
-    console.log(idPutDelete)
 
     // Verificar que la respuesta tenga un estado de 201
     expect(response.statusCode).toBe(201)
