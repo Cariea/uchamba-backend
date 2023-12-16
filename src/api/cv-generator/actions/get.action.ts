@@ -2,7 +2,6 @@ import { Response, Request } from 'express'
 import { pool } from '../../../database'
 import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
-import { generatePdf } from '../../../utils/pdfGenerator'
 import {
   User,
   Language,
@@ -20,6 +19,7 @@ import {
 } from '../../../types/cv'
 import camelizeObject from '../../../utils/camelizeObject'
 import { compileFile } from 'pug'
+import { HTML_PDF_URL } from '../../../config'
 
 const compiledFunction = compileFile('./src/api/cv-generator/cv-template/template.pug')
 
@@ -182,13 +182,22 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
     }
 
     const htmlContent = compiledFunction(CV)
-    const pdfBuffer = await generatePdf(htmlContent)
+
+    const pdfResponse = await fetch(`${HTML_PDF_URL as string}/convert`, {
+      method: 'POST',
+      body: htmlContent,
+      headers: {
+        'content-type': 'text/html'
+      }
+    })
+
+    const pdf = Buffer.from(await pdfResponse.arrayBuffer())
 
     const filename = `cv_usuario_${userId}.pdf`
     res.setHeader('Content-Disposition', `attachment; filename=${filename}`)
     res.setHeader('Content-Type', 'application/pdf')
 
-    return res.status(STATUS.OK).send(pdfBuffer)
+    return res.status(STATUS.OK).send(pdf)
   } catch (error: unknown) {
     return handleControllerError(error, res)
   }

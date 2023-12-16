@@ -11,6 +11,11 @@ export const AUTH_EXPIRE = process.env.AUTH_EXPIRE
 export const AUTH_ROUNDS = process.env.AUTH_ROUNDS
 export const PORT = process.env.PORT
 export const DATABASE_URL = process.env.DATABASE_URL
+
+// Microservices
+export const HTML_PDF_URL = process.env.HTML_PDF_URL
+
+// Cloud
 export const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME
 export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY
 export const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET
