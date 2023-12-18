@@ -182,7 +182,7 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
     }
 
     const htmlContent = compiledFunction(CV)
-
+    // ${HTML_PDF_URL as string}
     const pdfResponse = await fetch(`${HTML_PDF_URL as string}/convert`, {
       method: 'POST',
       body: htmlContent,
@@ -193,11 +193,14 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
 
     const pdf = Buffer.from(await pdfResponse.arrayBuffer())
 
-    const filename = `cv_usuario_${userId}.pdf`
-    res.setHeader('Content-Disposition', `attachment; filename=${filename}`)
-    res.setHeader('Content-Type', 'application/pdf')
+    console.log(pdf)
 
-    return res.status(STATUS.OK).send(pdf)
+    const filename = `cv_usuario_${userId}.pdf`
+
+    return res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': `attachment; filename=${filename}`
+    }).status(STATUS.OK).send(pdf)
   } catch (error: unknown) {
     return handleControllerError(error, res)
   }

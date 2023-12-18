@@ -1,73 +1,136 @@
-doctype html
-html(lang="es")
+html(lang='es')
   head
     style
       include styles.css
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Currículum
+    meta(charset='UTF-8')
+    |     
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    |     
+    link(rel='preconnect', href='https://fonts.googleapis.com')
+    |     
+    link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='')
+    |     
+    link(href='https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Raleway:wght@800;900&display=swap', rel='stylesheet')
+    |        
+    title Curr&iacute;culum
+  |   
   body
-    h1 Currículum de Usuario
+    .cv
+      header.cv-header
+        .cv-header__logo-container
+          img.cv-header__logo(src='https://res.cloudinary.com/dypukp3t0/image/upload/v1702855845/bz68psr6k3iq9nziwooe.png', alt='')
+        |         
+        .cv-header__important-container
+          h1.cv-header__important-text.cv-header__important-text--title
+            | #{name}
+          |           
+          h2.cv-header__important-text.cv-header__important-text--subtitle
+            | Software Developer
+        |         
+        .cv-header__info-container
+          p Isla Dorada Pzo - Venezuela
+          |           
+          p
+            a(href='mailto:' + email) #{email}
+      |       
+      hr.section-divider.section-divider--header
+      |       
+      main.cv-main
+        section.cv-section.cv-section--work-experiences
+          h3.cv-section__important-text Experiencia Laboral
+          |           
+          div
+            each workExp in workExperiences
+              article.cv-article
+                h4.cv-article__title #{workExp.jobTitle}
+                |
+                strong.cv-article__important-text #{workExp.organizationName} &bull; #{workExp.entryDate} - #{workExp.departureDate} &bull; Pzo/Venezuela
+                |
+                p
+                  | #{workExp.description}
 
-    .user-details
-      p
-        strong Nombre:
-        | #{name}
-      p
-        strong Email:
-        | #{email}
-      p
-        strong Teléfono:
-        | #{phoneNumber}
-      // Agrega más campos según sea necesario
+        |         
+        hr.section-divider
+        |      
 
-    .section
-      h2 Sobre mí
-      p #{aboutMe}
+        section.cv-section.cv-section--education
+          h3.cv-section__important-text Formaci&oacute;n Acad&eacute;mica
+          |           
+          div
+            each ed in [...education.featured, ...education.personal]
+              article.cv-article
+                h4.cv-article__title.cv-article__title--education
+                | #{ed.name}
+                strong.cv-article__important-text.cv-article__important-text--education - #{ed.degree}
+                | 
+                p.cv-article__important-text.cv-article__important-text--education_place 
+                  | #{ed.universityName}
+                p 
+                | Fecha de Graduaci&oacute;n: #{ed.graduationYear}
 
-    .section
-      h2 Idiomas
-      ul
-        each language in languages
-          li
-            | #{language.name} - #{language.proficientLevel}
 
-    .section
-      h2 Habilidades Duras
-      ul
-        each skill in hardSkills.featured
-          li #{skill.name}
-      h3 Habilidades Personales
-      ul
-        each skill in hardSkills.personal
-          li #{skill.name}
+            article.cv-article
+              h4.cv-article__title.cv-article__title--education
+                | Ingenier&iacute;a Inform&aacute;tica -
+                strong.cv-article__important-text.cv-article__important-text--education Pregrado
+              |
+              p.cv-article__important-text.cv-article__important-text--education_place Universidad Cat&oacute;lica Andr&eacute;s Bello
+              |               
+              p Fecha de Graduaci&oacute;n: 26-11-2023
+            |             
+            article.cv-article
+              h4.cv-article__title.cv-article__title--education
+                | Ingenier&iacute;a Inform&aacute;tica -
+                strong.cv-article__important-text.cv-article__important-text--education Pregrado
+              |               
+              p.cv-article__important-text.cv-article__important-text--education_place Universidad Cat&oacute;lica Andr&eacute;s Bello
+              |               
+              p Fecha de Graduaci&oacute;n: 26-11-2023
+            |             
+            article.cv-article
+              h4.cv-article__title.cv-article__title--education
+                | Ingenier&iacute;a Inform&aacute;tica -
+                strong.cv-article__important-text.cv-article__important-text--education Pregrado
+              |               
+              p.cv-article__important-text.cv-article__important-text--education_place Universidad Cat&oacute;lica Andr&eacute;s Bello
+              |               
+              p Fecha de Graduaci&oacute;n: 26-11-2023
 
-    .section
-      h2 Habilidades Blandas
-      ul
-        each skill in softSkills.featured
-          li #{skill.name}
-      h3 Habilidades Personales
-      ul
-        each skill in softSkills.personal
-          li #{skill.name}
+        |         
+        hr.section-divider
+        |    
 
-    .section
-      h2 Educación
-      h3 Destacada
-      ul
-        each edu in education.featured
-          li
-            | #{edu.name} - #{edu.degree} (#{edu.graduationYear})
-      h3 Personal
-      ul
-        each edu in education.personal
-          li
-            | #{edu.name} - #{edu.universityName} - #{edu.degree} (#{edu.graduationYear})
+        section.cv-section
+          h3.cv-section__important-text Habilidades
+          |   
+          section.cv-section.cv-section--skills
+            h4.cv-section__important-text.cv-section__important-text--subtitle
+              | Blandas
+            |
+            ul.cv-section__list.cv-section__list--soft-skills
+              each soft in [...softSkills.featured, ...softSkills.personal]
+                li #{soft.name}
 
-    .section
-      h2 Experiencia Laboral
-      ul
-        each exp in workExperiences
-          li
-            | #{exp.organizationName} - #{exp.jobTitle} (#{exp.entryDate} - #{exp.departureDate})
+            h4.cv-section__important-text.cv-section__important-text--subtitle
+              | Duras
+            |
+            ul.cv-section__list.cv-section__list--hard-skills
+              each hard in [...hardSkills.featured, ...hardSkills.personal]
+                li #{hard.name}
+
+        |
+        hr.section-divider
+        |
+
+        section.cv-section.cv-section--languages
+          h3.cv-section__important-text Idiomas
+          |
+          ul.cv-section__list
+            each lang in languages
+              li #{lang.name} - #{lang.proficientLevel}
+              |
+      |       
+      footer.cv-footer
+        small.cv-footer__text
+          | Para m&aacute;s informaci&oacute;n:
+          a.cv-footer__text(href='https://www.UChamba.com/MiCV') https://www.UChamba.com/MiCV
