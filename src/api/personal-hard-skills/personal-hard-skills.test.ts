@@ -5,15 +5,15 @@ import { TEST_PASSWORD, TEST_EMAIL } from '../../config'
 
 // VARIABLES PARA LAS PETICIONES EN LOS TEST
 // constante para mandar en el body de la petición POST
-const namePost = 'Iraní'
+const namePost = 'Desarrollo de páginas web'
 // constante para mandar en el body de la petición PUT
-const namePut = 'Irlandés'
+const namePut = 'Desarrollo de videojuegos'
 // variable para almacenar el id de la carrera que se crea en la petición POST y usarlo en las peticiones GET-PUT-DELETE
 let idGetPutDelete = ''
 // variable para almacenar el token de autorización
 let token = ''
 
-describe('POST languages', () => {
+describe('POST personal-hard-skills', () => {
   test('should respond with a 200 status code', async () => {
     // Obtener el token de autenticación
     const authResponse = await supertest(app)
@@ -28,23 +28,24 @@ describe('POST languages', () => {
 
     // Enviar la solicitud con el token de autenticación
     const response = await supertest(app)
-      .post('/languages')
+      .post('/personal-hard-skills')
       .set('Authorization', `Bearer ${token}`)
       .send({
         name: namePost
       })
-    idGetPutDelete = response.body.languageId
+    console.log(response.body)
+    idGetPutDelete = response.body.phard_skill_id
 
     // Verificar que la respuesta tenga un estado de 201
     expect(response.statusCode).toBe(200)
   })
 })
 
-describe('GET languages/:languageId', () => {
+describe('GET personal-hard-skills/:skillId', () => {
   test('should respond with a 200 status code', async () => {
     // Enviar la solicitud con el token de autenticación
     const response = await supertest(app)
-      .get(`/languages/${idGetPutDelete}`)
+      .get(`/personal-hard-skills/${idGetPutDelete}`)
       .set('Authorization', `Bearer ${token}`)
       .send()
 
@@ -53,11 +54,11 @@ describe('GET languages/:languageId', () => {
   })
 })
 
-describe('UPDATE languages/:languageId', () => {
+describe('UPDATE personal-hard-skills/:phardSkillId', () => {
   test('should respond with a 200 status code', async () => {
     // Enviar la solicitud con el token de autenticación
     const response = await supertest(app)
-      .put(`/languages/${idGetPutDelete}`)
+      .put(`/personal-hard-skills/${idGetPutDelete}`)
       .set('Authorization', `Bearer ${token}`)
       .send({
         name: namePut
@@ -68,47 +69,11 @@ describe('UPDATE languages/:languageId', () => {
   })
 })
 
-describe('DELETE languages/:languageId', () => {
+describe('DELETE personal-hard-skills/:phardSkillId', () => {
   test('should respond with a 200 status code', async () => {
     // Enviar la solicitud con el token de autenticación
     const response = await supertest(app)
-      .delete(`/languages/${idGetPutDelete}`)
-      .set('Authorization', `Bearer ${token}`)
-      .send()
-
-    // Verificar que la respuesta tenga un estado de 200
-    expect(response.statusCode).toBe(200)
-  })
-})
-
-describe('GET languages/all', () => {
-  test('should respond with a 200 status code', async () => {
-    // Enviar la solicitud con el token de autenticación
-    const response = await supertest(app)
-      .get('/languages/all')
-      .set('Authorization', `Bearer ${token}`)
-      .send()
-    // Verificar que la respuesta tenga un estado de 200
-    expect(response.statusCode).toBe(200)
-  })
-
-  test('should respond with an array', async () => {
-    // Enviar la solicitud con el token de autenticación
-    const response = await supertest(app)
-      .get('/languages/all')
-      .set('Authorization', `Bearer ${token}`)
-      .send()
-
-    // Verificar que la respuesta sea de tipo Array
-    expect(response.body).toBeInstanceOf(Array)
-  })
-})
-
-describe('GET languages/', () => {
-  test('should respond with a 200 status code', async () => {
-    // Enviar la solicitud con el token de autenticación
-    const response = await supertest(app)
-      .get('/languages')
+      .delete(`/personal-hard-skills/${idGetPutDelete}`)
       .set('Authorization', `Bearer ${token}`)
       .send()
 
