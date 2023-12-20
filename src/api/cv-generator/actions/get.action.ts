@@ -193,8 +193,6 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
 
     const pdf = Buffer.from(await pdfResponse.arrayBuffer())
 
-    console.log(pdf)
-
     const filename = `cv_usuario_${userId}.pdf`
 
     return res.set({
