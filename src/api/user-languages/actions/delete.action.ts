@@ -25,7 +25,6 @@ export const deleteUserLanguage = async (
 
     for (const row of rows) {
       if (row.certificate_image_id != null) {
-        console.log(row.certificate_image_id)
         await deleteImage(row.certificate_image_id)
       }
     }
@@ -48,7 +47,6 @@ export const deleteUserLanguage = async (
     }
     return res.status(STATUS.OK).json({ message: 'Lenguage eliminado correctamente' })
   } catch (error: unknown) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }

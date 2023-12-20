@@ -26,7 +26,6 @@ export const updateUserLanguage = async (
         values: [req.user.id, languageId]
       })
       if (rows[0].certificate_image_id != null) {
-        console.log('se elimino: ', rows[0].certificate_image_id)
         await deleteImage(rows[0].certificate_image_id)
       }
       certificateImageResponse = await uploadImage(req.files.certificateImage)
@@ -44,7 +43,6 @@ export const updateUserLanguage = async (
       `,
       values: [proficientLevel, req.user.id, languageId, certificateImageResponse?.public_id, certificateImageResponse?.url]
     })
-    console.log(certificateImageResponse?.public_id, certificateImageResponse?.url)
     if (response.rowCount === 0) {
       throw new StatusError({
         message: `No se encontro el idioma de id: ${languageId} del usuario: ${req.user.id as number}`,
