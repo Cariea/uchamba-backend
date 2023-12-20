@@ -19,7 +19,6 @@ export const addPersonalHardSkill = async (
         VALUES ($1,$2)
         RETURNING
           user_id,
-          phard_skill_id,
           name,
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
       `,
