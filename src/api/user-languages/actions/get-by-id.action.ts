@@ -18,6 +18,8 @@ export const getLanguageByUserId = async (
           user_id,
           language_id,
           proficient_level,
+          certificate_image_id,
+          certificate_image_url,
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
         FROM users_languages
         WHERE 
