@@ -14,7 +14,7 @@ export const updateProject = async (
     const userId = req.user.id
     const { projectId } = req.params
 
-    if (coverImageId !== null) {
+    if (coverImageId !== undefined) {
       if (req.files?.coverImage === null) {
         return res.status(STATUS.BAD_REQUEST).json({ message: 'se esperaba un reemplazo para el coverImage' })
       }
@@ -65,7 +65,7 @@ export const updateProject = async (
       }
     }
 
-    if (deletedImages.length > 0) {
+    if (deletedImages?.length > 0) {
       for (const image of deletedImages) {
         await deleteImage(image)
         await pool.query({
