@@ -21,16 +21,18 @@ CREATE TABLE ellucian_ethos (
 );
 
 -- Egresados 🔥
--- CREATE TABLE undergraduates (
+-- CREATE TABLE banner(
 --   undergraduate_id VARCHAR(16),
---   email dom_email,
 --   name dom_name NOT NULL,
+--   email dom_email DEFAULT NULL,
+--   phone_number dom_phone_number DEFAULT NULL,
+--   career dom_name,
 --   residence_address TEXT DEFAULT NULL,
---   career VARCHAR(64) NOT NULL,
---   degree dom_degree NOT NULL,
---   graduation_year DATE NOT NULL,
---   CONSTRAINT pk_undergraduate_id PRIMARY KEY (undergraduate_id),
---   CONSTRAINT uk_career_per_undergraduate UNIQUE (undergraduate_id, career)
+--   campus dom_name,
+--   graduation_year INTEGER,
+--   CONSTRAINT pk_banner PRIMARY KEY (undergraduate_id,career),
+--   CONSTRAINT uq_email UNIQUE (email,career),
+--   CONSTRAINT uq_phone_number UNIQUE (phone_number,career),
 -- );
 
 -- 1
