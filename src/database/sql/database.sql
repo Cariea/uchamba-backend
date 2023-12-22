@@ -264,13 +264,17 @@ CREATE TABLE projects_images (
 CREATE TABLE users_cvs (
   user_id INTEGER,
   cv_id INTEGER GENERATED ALWAYS AS IDENTITY,
+  ucareer_id INTEGER,
   name dom_name UNIQUE NOT NULL,
   created_at dom_created_at,
   updated_at dom_created_at,
   CONSTRAINT pk_user_cv_id PRIMARY KEY (user_id, cv_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
-    ON DELETE CASCADE
+    ON DELETE CASCADE,
+  CONSTRAINT fk_ucareer_id FOREIGN KEY (ucareer_id) REFERENCES ucareers (ucareer_id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
 );
 
 -- 16
@@ -278,6 +282,7 @@ CREATE TABLE cv_hard_skill (
   user_id INTEGER,
   cv_id INTEGER,
   hard_skill_id INTEGER,
+  order_index INTEGER NOT NULL,
   created_at dom_created_at,
   CONSTRAINT pk_user_cv_hs_id PRIMARY KEY (user_id, cv_id, hard_skill_id),
   CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES users_cvs (user_id, cv_id)
@@ -293,6 +298,7 @@ CREATE TABLE cv_personal_hard_skill (
   user_id INTEGER,
   cv_id INTEGER,
   phard_skill_id INTEGER,
+  order_index INTEGER NOT NULL,
   created_at dom_created_at,
   CONSTRAINT pk_user_cv_phs_id PRIMARY KEY (user_id, cv_id, phard_skill_id),
   CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES users_cvs (user_id, cv_id)
@@ -308,6 +314,7 @@ CREATE TABLE cv_soft_skill (
   user_id INTEGER,
   cv_id INTEGER,
   soft_skill_id INTEGER,
+  order_index INTEGER NOT NULL,
   created_at dom_created_at,
   CONSTRAINT pk_user_cv_ss_id PRIMARY KEY (user_id, cv_id, soft_skill_id),
   CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES users_cvs (user_id, cv_id)
@@ -323,6 +330,7 @@ CREATE TABLE cv_personal_soft_skill (
   user_id INTEGER,
   cv_id INTEGER,
   psoft_skill_id INTEGER,
+  order_index INTEGER NOT NULL,
   created_at dom_created_at,
   CONSTRAINT pk_user_cv_pss_id PRIMARY KEY (user_id, cv_id, psoft_skill_id),
   CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES users_cvs (user_id, cv_id)
@@ -383,6 +391,7 @@ CREATE TABLE cv_languages (
   user_id INTEGER,
   cv_id INTEGER,
   language_id INTEGER,
+  order_index INTEGER NOT NULL,
   created_at dom_created_at,
   CONSTRAINT pk_user_cv_language_id PRIMARY KEY (user_id, cv_id, language_id),
   CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES users_cvs (user_id, cv_id)
