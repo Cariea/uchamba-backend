@@ -24,7 +24,7 @@ router.get('/:userId', getUserById)
 router.get('/', paginationGuard(), getUsers)
 
 // User Only Routes
-router.put('/:userId', schemaGuard(UpdateUserSchema), updateUser)
+router.put('/', tokenGuard(), verifyToken(), schemaGuard(UpdateUserSchema), updateUser)
 
 // Admin Only
 router.delete('/:userId', isAdmin(), deleteUser)

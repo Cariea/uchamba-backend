@@ -153,6 +153,7 @@ CREATE TABLE work_experiences (
   state dom_location DEFAULT NULL,
   city dom_location DEFAULT NULL,
   address TEXT DEFAULT NULL,
+  freelancer BOOLEAN NOT NULL,
   entry_date DATE NOT NULL,
   departure_date DATE,
   description TEXT DEFAULT NULL,
@@ -160,7 +161,24 @@ CREATE TABLE work_experiences (
   CONSTRAINT pk_user_work_xp_id PRIMARY KEY (user_id, work_exp_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE RESTRICT,
+  CONSTRAINT ck_freelancer CHECK (
+    (
+      freelancer IS TRUE AND 
+      country IS NULL AND
+      state IS NULL AND
+      city IS NULL AND
+      address IS NULL
+    )
+    OR
+    (
+      freelancer IS FALSE AND 
+      country IS NOT NULL AND
+      state IS NOT NULL AND
+      city IS NOT NULL AND
+      address IS NOT NULL
+    )
+  )
 );
 
 -- 9

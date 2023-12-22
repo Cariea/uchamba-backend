@@ -11,7 +11,7 @@ export const updateUser = async (
 ): Promise<Response> => {
   try {
     const { aboutMe, country, state, city, residenceAddress } = req.body
-    const userId = req.user.id as number
+    const userId: number = req.user.id
     const response = await pool.query({
       text: `
         UPDATE users
