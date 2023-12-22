@@ -11,7 +11,6 @@ export async function getUserDetailed (userId: string): Promise<any> {
         name,
         email,
         about_me,
-        phone_number,
         country,
         state,
         city,
