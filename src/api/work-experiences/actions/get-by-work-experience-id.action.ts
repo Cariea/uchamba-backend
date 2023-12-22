@@ -21,6 +21,7 @@ export const getByWorkExperienceId = async (
           state,
           city,
           address,
+          freelancer,
           TO_CHAR(entry_date, 'DD/MM/YYYY') AS entry_date,
           TO_CHAR(departure_date, 'DD/MM/YYYY) AS departure_date,
           description,

@@ -215,12 +215,13 @@ INSERT INTO work_experiences (
   state,
   city,
   address,
+  freelancer,
   entry_date,
   departure_date,
   description
 ) VALUES
-  (5, 'Lusitanos', 'Auxiliar de equipo', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Urbanizacion Moreno De Mendoza', '2016-04-13', '2022-10-31', 'Una recarga de agua con una panaderia al lado'),
-  (5, 'Santo Tome', 'Empaquetador', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Los olivos', '2010-10-10', '2015-04-12', 'Embolsaba las compras de los clientes y los ayudaba a llevarlas');
+  (5, 'Lusitanos', 'Auxiliar de equipo', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Urbanizacion Moreno De Mendoza', FALSE, '2016-04-13', '2022-10-31', 'Una recarga de agua con una panaderia al lado'),
+  (5, 'Santo Tome', 'Empaquetador', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Los olivos', FALSE, '2010-10-10', '2015-04-12', 'Embolsaba las compras de los clientes y los ayudaba a llevarlas');
 
 -- Projects
 INSERT INTO projects (
