@@ -81,7 +81,6 @@ export async function getUserDetailed (userId: string): Promise<any> {
     text: `
       SELECT
         link_id,
-        name,
         url
       FROM personal_links
       WHERE user_id = $1

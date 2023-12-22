@@ -15,7 +15,9 @@ export const deletePersonalLink = async (
       text: `
         DELETE
         FROM personal_links
-        WHERE user_id = $1 and link_id = $2
+        WHERE 
+          user_id = $1 AND 
+          link_id = $2
       `,
       values: [req.user.id, linkId]
     })

@@ -170,19 +170,18 @@ INSERT INTO personal_soft_skills (
 
 INSERT INTO personal_links (
   user_id, 
-  name, 
   url
 ) VALUES
-  (1, 'LinkedIn', 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/LinkedIn_Logo.svg/1024px-LinkedIn_Logo.svg.png'),
-  (2, 'GitHub', 'https://assets-global.website-files.com/5f5a53e153805db840dae2db/64e79ca5aff2fb7295bfddf9_github-que-es.jpg'),
-  (3, 'Portfolio', 'https://media.istockphoto.com/id/1251693104/es/vector/poo-emoticon-emoji-cara-de-caca-ilustracion-vectorial.jpg?s=612x612&w=0&k=20&c=tzIypiPXr1F0r6EAJLhXebSRhtqUeBxdEz2Et1VNBoE='),
-  (4, 'X', 'https://logos-world.net/wp-content/uploads/2023/08/X-Logo.png'),
-  (5, 'Personal Blog', 'https://media.istockphoto.com/id/1251693104/es/vector/poo-emoticon-emoji-cara-de-caca-ilustracion-vectorial.jpg?s=612x612&w=0&k=20&c=tzIypiPXr1F0r6EAJLhXebSRhtqUeBxdEz2Et1VNBoE='),
-  (6, 'Stack Overflow', 'https://stackoverflow.design/assets/img/logos/so/logo-stackoverflow.png'),
-  (7, 'Behance', 'https://pbs.twimg.com/profile_images/636661084720500737/_QglFGym_400x400.jpg'),
-  (8, 'Dribbble', 'https://widulife.com/wp-content/uploads/2021/05/A%C3%BAn-no-conoces-la-red-social-Dribble-3.png'),
-  (1, 'Medium', 'https://fineproxy.org/wp-content/uploads/2023/07/medium.com_logo.png'),
-  (2, 'Dev.to', 'https://res.cloudinary.com/practicaldev/image/fetch/s--7zXAI5wW--/c_limit,f_auto,fl_progressive,q_80,w_190/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/8j7kvp660rqzt99zui8e.png');
+  (1, 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/LinkedIn_Logo.svg/1024px-LinkedIn_Logo.svg.png'),
+  (2, 'https://assets-global.website-files.com/5f5a53e153805db840dae2db/64e79ca5aff2fb7295bfddf9_github-que-es.jpg'),
+  (3, 'https://media.istockphoto.com/id/1251693104/es/vector/poo-emoticon-emoji-cara-de-caca-ilustracion-vectorial.jpg?s=612x612&w=0&k=20&c=tzIypiPXr1F0r6EAJLhXebSRhtqUeBxdEz2Et1VNBoE='),
+  (4, 'https://logos-world.net/wp-content/uploads/2023/08/X-Logo.png'),
+  (5, 'https://media.istockphoto.com/id/1251693104/es/vector/poo-emoticon-emoji-cara-de-caca-ilustracion-vectorial.jpg?s=612x612&w=0&k=20&c=tzIypiPXr1F0r6EAJLhXebSRhtqUeBxdEz2Et1VNBoE='),
+  (6, 'https://stackoverflow.design/assets/img/logos/so/logo-stackoverflow.png'),
+  (7, 'https://pbs.twimg.com/profile_images/636661084720500737/_QglFGym_400x400.jpg'),
+  (8, 'https://widulife.com/wp-content/uploads/2021/05/A%C3%BAn-no-conoces-la-red-social-Dribble-3.png'),
+  (1, 'https://fineproxy.org/wp-content/uploads/2023/07/medium.com_logo.png'),
+  (2, 'https://res.cloudinary.com/practicaldev/image/fetch/s--7zXAI5wW--/c_limit,f_auto,fl_progressive,q_80,w_190/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/8j7kvp660rqzt99zui8e.png');
 
 INSERT INTO foreign_studies (
   user_id, 
