@@ -15,6 +15,8 @@ export const WorkExperiencesSchema = z.object({
     .string()
     .min(1, 'Debe indicar el rol que desempeñaba')
     .max(64, 'El nombre no puede superar los 64 carácteres'),
+  freelancer: z
+    .boolean(),
   country: z
     .string()
     .nullable()
@@ -31,8 +33,6 @@ export const WorkExperiencesSchema = z.object({
     .string()
     .nullable()
     .optional(),
-  freelancer: z
-    .boolean(),
   entryDate: z
     .string()
     .min(1, 'Debe indicar la fecha en que ingresó'),
@@ -42,4 +42,16 @@ export const WorkExperiencesSchema = z.object({
   description: z
     .string()
     .optional()
+}).refine(data => data.freelancer, {
+  message: 'Es necesario especificar un País',
+  path: ['country']
+}).refine(data => data.freelancer, {
+  message: 'Es necesario especificar un Estado',
+  path: ['state']
+}).refine(data => data.freelancer, {
+  message: 'Es necesario especificar una Ciudad',
+  path: ['city']
+}).refine(data => data.freelancer, {
+  message: 'Es necesario especificar una Dirección',
+  path: ['address']
 })
