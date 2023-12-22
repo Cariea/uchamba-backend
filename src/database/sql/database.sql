@@ -116,7 +116,6 @@ CREATE TABLE personal_soft_skills (
 CREATE TABLE personal_links (
   user_id INTEGER,
   link_id INTEGER GENERATED ALWAYS AS IDENTITY,
-  name dom_name UNIQUE NOT NULL,
   url TEXT DEFAULT NULL,
   created_at dom_created_at,
   updated_at dom_created_at,

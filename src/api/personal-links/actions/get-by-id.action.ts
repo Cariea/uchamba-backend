@@ -16,7 +16,6 @@ export const getLinkByUserId = async (
         SELECT
           user_id,
           link_id,
-          name,
           url,
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at,
           TO_CHAR(updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
