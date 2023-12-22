@@ -63,19 +63,21 @@ html(lang='es')
 
         section.cv-section
           h3.cv-section__important-text Habilidades
-          section.cv-section.cv-section--skills
+          .flex
 
-            h4.cv-section__important-text.cv-section__important-text--subtitle
-              | Blandas
-            ul.cv-section__list.cv-section__list--soft-skills
-              each soft in [...softSkills.featured, ...softSkills.personal]
-                li #{soft.name}
+            section.cv-section.cv-section--skills
+              h4.cv-section__important-text.cv-section__important-text--subtitle
+                | Blandas
+              ul.cv-section__list.cv-section__list--soft-skills
+                each soft in [...softSkills.featured, ...softSkills.personal]
+                  li #{soft.name}
 
-            h4.cv-section__important-text.cv-section__important-text--subtitle
-              | Duras
-            ul.cv-section__list.cv-section__list--hard-skills
-              each hard in [...hardSkills.featured, ...hardSkills.personal]
-                li #{hard.name}
+            section.cv-section.cv-section--skills
+              h4.cv-section__important-text.cv-section__important-text--subtitle
+                | Duras
+              ul.cv-section__list.cv-section__list--hard-skills
+                each hard in [...hardSkills.featured, ...hardSkills.personal]
+                  li #{hard.name}
 
         hr.section-divider.section-divider--skills
 
