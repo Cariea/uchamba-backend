@@ -87,7 +87,7 @@ export const addWorkExperience = async (
         (freelancer === true ? null : city),
         (freelancer === true ? null : address),
         entryDate,
-        departureDate,
+        (departureDate === '' ? null : departureDate),
         description
       ]
     })

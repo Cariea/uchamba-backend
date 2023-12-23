@@ -74,7 +74,7 @@ export const updateWorkExperience = async (
         (freelancer === true ? null : address),
         freelancer,
         entryDate,
-        departureDate,
+        (departureDate === '' ? null : departureDate),
         description,
         userId,
         workExpId
