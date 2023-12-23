@@ -65,7 +65,20 @@ export const updateWorkExperience = async (
           user_id = $11 AND
           work_exp_id = $12
       `,
-      values: [organizationName, jobTitle, country, state, city, address, freelancer, entryDate, departureDate, description, userId, workExpId]
+      values: [
+        organizationName,
+        jobTitle,
+        (freelancer === true ? null : country),
+        (freelancer === true ? null : state),
+        (freelancer === true ? null : city),
+        (freelancer === true ? null : address),
+        freelancer,
+        entryDate,
+        departureDate,
+        description,
+        userId,
+        workExpId
+      ]
     })
     if (response.rowCount === 0) {
       throw new StatusError({
