@@ -24,7 +24,7 @@ router.get('/:userId', getUserById)
 router.get('/', paginationGuard(), getUsers)
 
 // User Only Routes
-router.put('/:userId', tokenGuard(), verifyToken(), schemaGuard(UpdateUserSchema), updateUser)
+router.put('/', tokenGuard(), verifyToken(), schemaGuard(UpdateUserSchema), updateUser)
 router.post('/change-status', tokenGuard(), verifyToken(), changeStatus)
 
 // Admin Only

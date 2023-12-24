@@ -9,24 +9,22 @@ export const addPersonalLink = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const { name, url } = req.body
+    const { url } = req.body
     const response = await pool.query({
       text: `
         INSERT INTO personal_links (
           user_id,
-          name,
           url
         )
-        VALUES ($1,$2,$3)
+        VALUES ($1, $2)
         RETURNING
           user_id,
           link_id,
-          name,
           url,
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at,
           TO_CHAR(updated_at, 'DD/MM/YYYY - HH12:MI AM') AS updated_at
       `,
-      values: [req.user.id, name, url]
+      values: [req.user.id, url]
     })
     return res.status(STATUS.OK).json(response.rows[0])
   } catch (error) {

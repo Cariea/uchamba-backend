@@ -11,12 +11,12 @@ export async function getUserDetailed (userId: string): Promise<any> {
         name,
         email,
         about_me,
-        phone_number,
         country,
         state,
         city,
         residence_address,
-        role
+        role,
+        is_active
       FROM users
       WHERE user_id = $1
     `,
@@ -82,7 +82,6 @@ export async function getUserDetailed (userId: string): Promise<any> {
     text: `
       SELECT
         link_id,
-        name,
         url
       FROM personal_links
       WHERE user_id = $1
@@ -130,13 +129,14 @@ export async function getUserDetailed (userId: string): Promise<any> {
         work_exp_id,
         organization_name,
         job_title,
+        freelancer,
         country,
         state,
         city,
         address,
         description,
-        TO_CHAR(entry_date, 'DD/MM/YYYY') AS entry_date,
-        TO_CHAR(departure_date, 'DD/MM/YYYY') AS departure_date
+        TO_CHAR(entry_date, 'YYYY-MM-DD') AS entry_date,
+        TO_CHAR(departure_date, 'YYYY-MM-DD') AS departure_date
       FROM work_experiences
       WHERE user_id = $1
       ORDER BY work_exp_id ASC
@@ -200,6 +200,26 @@ export async function getUserDetailed (userId: string): Promise<any> {
     `,
     values: [userId]
   })
+
+  // const { rows: userCvs } = await pool.query({
+  //   text: `
+  //     SELECT
+  //       uc.cv_id,
+  //       uc.career_id,
+
+  //       uc.name
+  //     FROM
+  //       user_cvs AS uc,
+  //       ucareers AS c
+  //     WHERE
+  //       user_id = $1 AND
+  //       c.ucareer_id = uc.ucareer_id
+  //     ORDER BY cv_id
+  //   `,
+  //   values: [userId]
+  // })
+
+  // console.log(userCvs)
 
   const userDetailed = {
     ...camelizeObject(user.rows[0]),

@@ -107,44 +107,44 @@ INSERT INTO hard_skills (
   ('Node.js'),
   ('Git'),
   ('Docker'),
-  ('Machine Learning'),
-  ('Data Analysis'),
-  ('Agile Methodology');
+  ('Aprendizaje automatico (Machine Learning)'),
+  ('Analisis de datos (Data Analysis)'),
+  ('Metodologia agil (Agile Methodology)');
   
 -- Personal Hard Skills 
 INSERT INTO personal_hard_skills (
   user_id, 
   name
 ) VALUES
-  (1, 'Programming'),
-  (2, 'Data Analysis'),
-  (3, 'Machine Learning'),
-  (4, 'Database Management'),
-  (5, 'Web Development'),
-  (6, 'Network Security'),
-  (7, 'Software Testing'),
-  (8, 'System Administration'),
-  (1, 'Cloud Computing'),
-  (2, 'Mobile App Development');
+  (1, 'Programacion'),
+  (2, 'Analisis de datos'),
+  (3, 'Aprendizaje automatico (Machine Learning)'),
+  (4, 'Gestion de bases de datos'),
+  (5, 'Desarrollo web'),
+  (6, 'Seguridad de redes'),
+  (7, 'Pruebas de software'),
+  (8, 'Administracion de sistemas'),
+  (1, 'Computacion en la nube'),
+  (2, 'Desarrollo de aplicaciones moviles');
   
 -- Soft Skills
 INSERT INTO soft_skills (
   name
 ) VALUES
-  ('Communication'),
-  ('Teamwork'),
-  ('Adaptability'),
-  ('Problem Solving'),
-  ('Creativity'),
-  ('Time Management'),
-  ('Leadership'),
-  ('Empathy'),
-  ('Conflict Resolution'),
-  ('Critical Thinking'),
-  ('Stress Management'),
-  ('Decision Making'),
-  ('Flexibility'),
-  ('Positive Attitude'),
+  ('Comunicacion'),
+  ('Trabajo en equipo'),
+  ('Adaptabilidad'),
+  ('Resolucion de problemas'),
+  ('Creatividad'),
+  ('Gestion del tiempo'),
+  ('Liderazgo'),
+  ('Empatia'),
+  ('Resolucion de conflictos'),
+  ('Pensamiento critico'),
+  ('Gestion del estres'),
+  ('Toma de decisiones'),
+  ('Flexibilidad'),
+  ('Actitud positiva'),
   ('Networking');
 
 -- Personal Soft Skills
@@ -152,37 +152,36 @@ INSERT INTO personal_soft_skills (
   user_id, 
   name
 ) VALUES
-  (1, 'Effective Communication'),
-  (2, 'Team Collaboration'),
-  (3, 'Adaptability'),
-  (4, 'Problem Solving'),
-  (5, 'Creativity'),
-  (6, 'Time Management'),
-  (7, 'Leadership'),
-  (8, 'Empathy'),
-  (1, 'Conflict Resolution'),
-  (2, 'Critical Thinking'),
-  (3, 'Stress Management'),
-  (4, 'Decision Making'),
-  (5, 'Flexibility'),
-  (6, 'Positive Attitude'),
+  (1, 'Comunicacion efectiva'),
+  (2, 'Colaboracion en equipo'),
+  (3, 'Adaptabilidad'),
+  (4, 'Resolucion de problemas'),
+  (5, 'Creatividad'),
+  (6, 'Gestion del tiempo'),
+  (7, 'Liderazgo'),
+  (8, 'Empatia'),
+  (1, 'Resolucion de conflictos'),
+  (2, 'Pensamiento critico'),
+  (3, 'Gestion del estres'),
+  (4, 'Toma de decisiones'),
+  (5, 'Flexibilidad'),
+  (6, 'Actitud positiva'),
   (7, 'Networking');
 
 INSERT INTO personal_links (
   user_id, 
-  name, 
   url
 ) VALUES
-  (1, 'LinkedIn', 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/LinkedIn_Logo.svg/1024px-LinkedIn_Logo.svg.png'),
-  (2, 'GitHub', 'https://assets-global.website-files.com/5f5a53e153805db840dae2db/64e79ca5aff2fb7295bfddf9_github-que-es.jpg'),
-  (3, 'Portfolio', 'https://media.istockphoto.com/id/1251693104/es/vector/poo-emoticon-emoji-cara-de-caca-ilustracion-vectorial.jpg?s=612x612&w=0&k=20&c=tzIypiPXr1F0r6EAJLhXebSRhtqUeBxdEz2Et1VNBoE='),
-  (4, 'X', 'https://logos-world.net/wp-content/uploads/2023/08/X-Logo.png'),
-  (5, 'Personal Blog', 'https://media.istockphoto.com/id/1251693104/es/vector/poo-emoticon-emoji-cara-de-caca-ilustracion-vectorial.jpg?s=612x612&w=0&k=20&c=tzIypiPXr1F0r6EAJLhXebSRhtqUeBxdEz2Et1VNBoE='),
-  (6, 'Stack Overflow', 'https://stackoverflow.design/assets/img/logos/so/logo-stackoverflow.png'),
-  (7, 'Behance', 'https://pbs.twimg.com/profile_images/636661084720500737/_QglFGym_400x400.jpg'),
-  (8, 'Dribbble', 'https://widulife.com/wp-content/uploads/2021/05/A%C3%BAn-no-conoces-la-red-social-Dribble-3.png'),
-  (1, 'Medium', 'https://fineproxy.org/wp-content/uploads/2023/07/medium.com_logo.png'),
-  (2, 'Dev.to', 'https://res.cloudinary.com/practicaldev/image/fetch/s--7zXAI5wW--/c_limit,f_auto,fl_progressive,q_80,w_190/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/8j7kvp660rqzt99zui8e.png');
+  (1, 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/LinkedIn_Logo.svg/1024px-LinkedIn_Logo.svg.png'),
+  (2, 'https://assets-global.website-files.com/5f5a53e153805db840dae2db/64e79ca5aff2fb7295bfddf9_github-que-es.jpg'),
+  (3, 'https://media.istockphoto.com/id/1251693104/es/vector/poo-emoticon-emoji-cara-de-caca-ilustracion-vectorial.jpg?s=612x612&w=0&k=20&c=tzIypiPXr1F0r6EAJLhXebSRhtqUeBxdEz2Et1VNBoE='),
+  (4, 'https://logos-world.net/wp-content/uploads/2023/08/X-Logo.png'),
+  (5, 'https://media.istockphoto.com/id/1251693104/es/vector/poo-emoticon-emoji-cara-de-caca-ilustracion-vectorial.jpg?s=612x612&w=0&k=20&c=tzIypiPXr1F0r6EAJLhXebSRhtqUeBxdEz2Et1VNBoE='),
+  (6, 'https://stackoverflow.design/assets/img/logos/so/logo-stackoverflow.png'),
+  (7, 'https://pbs.twimg.com/profile_images/636661084720500737/_QglFGym_400x400.jpg'),
+  (8, 'https://widulife.com/wp-content/uploads/2021/05/A%C3%BAn-no-conoces-la-red-social-Dribble-3.png'),
+  (1, 'https://fineproxy.org/wp-content/uploads/2023/07/medium.com_logo.png'),
+  (2, 'https://res.cloudinary.com/practicaldev/image/fetch/s--7zXAI5wW--/c_limit,f_auto,fl_progressive,q_80,w_190/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/8j7kvp660rqzt99zui8e.png');
 
 INSERT INTO foreign_studies (
   user_id, 
@@ -216,12 +215,13 @@ INSERT INTO work_experiences (
   state,
   city,
   address,
+  freelancer,
   entry_date,
   departure_date,
   description
 ) VALUES
-  (5, 'Lusitanos', 'Auxiliar de equipo', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Urbanizacion Moreno De Mendoza', '2016-04-13', '2022-10-31', 'Una recarga de agua con una panaderia al lado'),
-  (5, 'Santo Tome', 'Empaquetador', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Los olivos', '2010-10-10', '2015-04-12', 'Embolsaba las compras de los clientes y los ayudaba a llevarlas');
+  (5, 'Lusitanos', 'Auxiliar de equipo', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Urbanizacion Moreno De Mendoza', FALSE, '2016-04-13', '2022-10-31', 'Una recarga de agua con una panaderia al lado'),
+  (5, 'Santo Tome', 'Empaquetador', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Los olivos', FALSE, '2010-10-10', '2015-04-12', 'Embolsaba las compras de los clientes y los ayudaba a llevarlas');
 
 -- Projects
 INSERT INTO projects (

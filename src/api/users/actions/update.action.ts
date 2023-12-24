@@ -10,22 +10,21 @@ export const updateUser = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const { aboutMe, phoneNumber, country, state, city, residenceAddress } = req.body
-    const userId = req.user.id as number
+    const { aboutMe, country, state, city, residenceAddress } = req.body
+    const userId: number = req.user.id
     const response = await pool.query({
       text: `
         UPDATE users
         SET 
           about_me = $1,
-          phone_number = $2,
-          country = $3,
-          state = $4,
-          city = $5,
-          residence_address = $6
+          country = $2,
+          state = $3,
+          city = $4,
+          residence_address = $5
         WHERE
-          user_id = $7
+          user_id = $6
       `,
-      values: [aboutMe, phoneNumber, country, state, city, residenceAddress, userId]
+      values: [aboutMe, country, state, city, residenceAddress, userId]
     })
     if (response.rowCount === 0) {
       throw new StatusError({

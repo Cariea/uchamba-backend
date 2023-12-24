@@ -16,7 +16,6 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
           name,
           email,
           about_me,
-          phone_number,
           residence_address
         FROM users
         WHERE user_id = $1
@@ -208,7 +207,6 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
       <div class="user-details">
         <p><strong>Nombre:</strong> ${CV.name}</p>
         <p><strong>Email:</strong> ${CV.email}</p>
-        <p><strong>Teléfono:</strong> ${CV.phoneNumber}</p>
         <!-- Agrega más campos según sea necesario -->
       </div>
     
