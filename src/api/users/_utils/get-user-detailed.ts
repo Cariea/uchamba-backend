@@ -135,8 +135,8 @@ export async function getUserDetailed (userId: string): Promise<any> {
         city,
         address,
         description,
-        TO_CHAR(entry_date, 'DD/MM/YYYY') AS entry_date,
-        TO_CHAR(departure_date, 'DD/MM/YYYY') AS departure_date
+        TO_CHAR(entry_date, 'YYYY-MM-DD') AS entry_date,
+        TO_CHAR(departure_date, 'YYYY-MM-DD') AS departure_date
       FROM work_experiences
       WHERE user_id = $1
       ORDER BY work_exp_id ASC
