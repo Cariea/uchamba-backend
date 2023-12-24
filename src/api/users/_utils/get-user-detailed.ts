@@ -15,7 +15,8 @@ export async function getUserDetailed (userId: string): Promise<any> {
         state,
         city,
         residence_address,
-        role
+        role,
+        is_active
       FROM users
       WHERE user_id = $1
     `,
@@ -128,6 +129,7 @@ export async function getUserDetailed (userId: string): Promise<any> {
         work_exp_id,
         organization_name,
         job_title,
+        freelancer,
         country,
         state,
         city,
@@ -198,6 +200,26 @@ export async function getUserDetailed (userId: string): Promise<any> {
     `,
     values: [userId]
   })
+
+  // const { rows: userCvs } = await pool.query({
+  //   text: `
+  //     SELECT
+  //       uc.cv_id,
+  //       uc.career_id,
+
+  //       uc.name
+  //     FROM
+  //       user_cvs AS uc,
+  //       ucareers AS c
+  //     WHERE
+  //       user_id = $1 AND
+  //       c.ucareer_id = uc.ucareer_id
+  //     ORDER BY cv_id
+  //   `,
+  //   values: [userId]
+  // })
+
+  // console.log(userCvs)
 
   const userDetailed = {
     ...camelizeObject(user.rows[0]),

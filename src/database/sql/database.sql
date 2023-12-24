@@ -162,7 +162,8 @@ CREATE TABLE work_experiences (
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
     ON DELETE RESTRICT,
-  CONSTRAINT ck_freelancer CHECK (
+  CONSTRAINT chk_date CHECK (departure_date > entry_date OR daparture_date IS NULL),
+  CONSTRAINT chk_freelancer CHECK (
     (
       freelancer IS TRUE AND 
       country IS NULL AND

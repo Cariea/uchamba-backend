@@ -107,44 +107,44 @@ INSERT INTO hard_skills (
   ('Node.js'),
   ('Git'),
   ('Docker'),
-  ('Machine Learning'),
-  ('Data Analysis'),
-  ('Agile Methodology');
+  ('Aprendizaje automatico (Machine Learning)'),
+  ('Analisis de datos (Data Analysis)'),
+  ('Metodologia agil (Agile Methodology)');
   
 -- Personal Hard Skills 
 INSERT INTO personal_hard_skills (
   user_id, 
   name
 ) VALUES
-  (1, 'Programming'),
-  (2, 'Data Analysis'),
-  (3, 'Machine Learning'),
-  (4, 'Database Management'),
-  (5, 'Web Development'),
-  (6, 'Network Security'),
-  (7, 'Software Testing'),
-  (8, 'System Administration'),
-  (1, 'Cloud Computing'),
-  (2, 'Mobile App Development');
+  (1, 'Programacion'),
+  (2, 'Analisis de datos'),
+  (3, 'Aprendizaje automatico (Machine Learning)'),
+  (4, 'Gestion de bases de datos'),
+  (5, 'Desarrollo web'),
+  (6, 'Seguridad de redes'),
+  (7, 'Pruebas de software'),
+  (8, 'Administracion de sistemas'),
+  (1, 'Computacion en la nube'),
+  (2, 'Desarrollo de aplicaciones moviles');
   
 -- Soft Skills
 INSERT INTO soft_skills (
   name
 ) VALUES
-  ('Communication'),
-  ('Teamwork'),
-  ('Adaptability'),
-  ('Problem Solving'),
-  ('Creativity'),
-  ('Time Management'),
-  ('Leadership'),
-  ('Empathy'),
-  ('Conflict Resolution'),
-  ('Critical Thinking'),
-  ('Stress Management'),
-  ('Decision Making'),
-  ('Flexibility'),
-  ('Positive Attitude'),
+  ('Comunicacion'),
+  ('Trabajo en equipo'),
+  ('Adaptabilidad'),
+  ('Resolucion de problemas'),
+  ('Creatividad'),
+  ('Gestion del tiempo'),
+  ('Liderazgo'),
+  ('Empatia'),
+  ('Resolucion de conflictos'),
+  ('Pensamiento critico'),
+  ('Gestion del estres'),
+  ('Toma de decisiones'),
+  ('Flexibilidad'),
+  ('Actitud positiva'),
   ('Networking');
 
 -- Personal Soft Skills
@@ -152,20 +152,20 @@ INSERT INTO personal_soft_skills (
   user_id, 
   name
 ) VALUES
-  (1, 'Effective Communication'),
-  (2, 'Team Collaboration'),
-  (3, 'Adaptability'),
-  (4, 'Problem Solving'),
-  (5, 'Creativity'),
-  (6, 'Time Management'),
-  (7, 'Leadership'),
-  (8, 'Empathy'),
-  (1, 'Conflict Resolution'),
-  (2, 'Critical Thinking'),
-  (3, 'Stress Management'),
-  (4, 'Decision Making'),
-  (5, 'Flexibility'),
-  (6, 'Positive Attitude'),
+  (1, 'Comunicacion efectiva'),
+  (2, 'Colaboracion en equipo'),
+  (3, 'Adaptabilidad'),
+  (4, 'Resolucion de problemas'),
+  (5, 'Creatividad'),
+  (6, 'Gestion del tiempo'),
+  (7, 'Liderazgo'),
+  (8, 'Empatia'),
+  (1, 'Resolucion de conflictos'),
+  (2, 'Pensamiento critico'),
+  (3, 'Gestion del estres'),
+  (4, 'Toma de decisiones'),
+  (5, 'Flexibilidad'),
+  (6, 'Actitud positiva'),
   (7, 'Networking');
 
 INSERT INTO personal_links (
