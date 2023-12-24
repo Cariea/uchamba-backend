@@ -15,7 +15,7 @@ import { getUsers } from './actions/get.action'
 import { updateUser } from './actions/update.action'
 import { getMe } from './actions/get-me.action'
 import { deleteUser } from './actions/delete.action'
-
+import { changeStatus } from './actions/changeStatus.action'
 const router = Router()
 
 router.get('/all', getAllUsers)
@@ -25,6 +25,7 @@ router.get('/', paginationGuard(), getUsers)
 
 // User Only Routes
 router.put('/', tokenGuard(), verifyToken(), schemaGuard(UpdateUserSchema), updateUser)
+router.post('/change-status', tokenGuard(), verifyToken(), changeStatus)
 
 // Admin Only
 router.delete('/:userId', isAdmin(), deleteUser)

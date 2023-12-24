@@ -84,7 +84,7 @@ export const addProject = async (
         `,
         values: [userId, name, description, projectCoverCloudResponse.public_id, projectCoverCloudResponse.url, projectUrl]
       })
-
+      console.log(response.rows[0].cover_image_id, response.rows[0].cover_image_url)
       const responseImages = []
       const images = Array.isArray(req.files?.images) ? req.files?.images : [req.files?.images]
 
@@ -120,7 +120,6 @@ export const addProject = async (
     }
     return res.status(STATUS.CREATED).json({ message: 'Debe cargar una imagen' })
   } catch (error: unknown) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }

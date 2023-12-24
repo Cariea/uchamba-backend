@@ -4,12 +4,30 @@ import { pool } from '../../../database'
 import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { StatusError } from '../../../utils/responses/status-error'
+import { deleteImage } from '../../../utils/cloudinary'
 
 export const deleteUserLanguage = async (
   req: ExtendedRequest, res: Response
 ): Promise<Response | undefined> => {
   try {
     const { languageId } = req.params
+    const { rows } = await pool.query({
+      text: `
+        SELECT
+          certificate_image_id
+        FROM users_languages
+        WHERE 
+          user_id = $1 AND 
+          language_id = $2
+      `,
+      values: [req.user.id, languageId]
+    })
+
+    for (const row of rows) {
+      if (row.certificate_image_id != null) {
+        await deleteImage(row.certificate_image_id)
+      }
+    }
     const response = await pool.query({
       text: `
         DELETE
