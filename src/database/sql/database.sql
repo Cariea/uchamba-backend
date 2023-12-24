@@ -14,26 +14,27 @@ CREATE TYPE dom_degree AS ENUM ('pregrado', 'postgrado', 'especializacion', 'mae
 CREATE TYPE dom_proficiency_level AS ENUM ('A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native');
 
 -- Dummy
-CREATE TABLE ellucian_ethos (
+CREATE TABLE ellucian (
   email dom_email,
   password dom_password,
   CONSTRAINT pk_ellucian PRIMARY KEY (email)
 );
 
--- Egresados 🔥
--- CREATE TABLE banner(
---   undergraduate_id VARCHAR(16),
---   name dom_name NOT NULL,
---   email dom_email DEFAULT NULL,
---   phone_number dom_phone_number DEFAULT NULL,
---   career dom_name,
---   residence_address TEXT DEFAULT NULL,
---   campus dom_name,
---   graduation_year INTEGER,
---   CONSTRAINT pk_banner PRIMARY KEY (undergraduate_id,career),
---   CONSTRAINT uq_email UNIQUE (email,career),
---   CONSTRAINT uq_phone_number UNIQUE (phone_number,career),
--- );
+--Egresados 🔥
+CREATE TABLE banner(
+  undergraduate_id VARCHAR(16),
+  name dom_name NOT NULL,
+  email dom_email DEFAULT NULL,
+  phone_number dom_phone_number DEFAULT NULL,
+  career dom_name,
+  residence_address TEXT DEFAULT NULL,
+  campus dom_name,
+  degree dom_degree,
+  graduation_year DATE,
+  CONSTRAINT pk_banner PRIMARY KEY (undergraduate_id,career),
+  CONSTRAINT uq_email UNIQUE (email,career),
+  CONSTRAINT uq_phone_number UNIQUE (phone_number,career)
+);
 
 -- 1
 CREATE TABLE users (
