@@ -274,7 +274,8 @@ CREATE TABLE users_cvs (
     ON DELETE CASCADE,
   CONSTRAINT fk_ucareer_id FOREIGN KEY (ucareer_id) REFERENCES ucareers (ucareer_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE RESTRICT,
+  CONSTRAINT uk_career_name UNIQUE (user_id, ucareer_id, name)
 );
 
 -- 16
