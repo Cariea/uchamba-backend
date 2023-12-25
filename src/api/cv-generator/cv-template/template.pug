@@ -21,7 +21,7 @@ html(lang='es')
             h2.cv-header__important-text.cv-header__important-text--subtitle
               | Software Developer
           .cv-header__additional-container
-            p #{residenceAddress}
+            p #{country} - #{state} - #{city} - #{residenceAddress}
             a(href='mailto:' + email) #{email}
 
       hr.section-divider.section-divider--header
@@ -34,8 +34,14 @@ html(lang='es')
             each workExp in workExperiences
               article.cv-article.cv-article--work-experiences
                 h4.cv-article__title #{workExp.jobTitle}
-                strong.cv-article__important-text #{workExp.organizationName} • Entrada #{workExp.entryDate} - Salida #{workExp.departureDate} 
-                strong.cv-article__important-text #{workExp.address}
+                if workExp.departureDate
+                  strong.cv-article__important-text #{workExp.organizationName} • Entrada #{workExp.entryDate} - Salida #{workExp.departureDate}
+                else
+                  strong.cv-article__important-text #{workExp.organizationName} • Entrada #{workExp.entryDate} - Actualidad
+                if workExp.freelancer
+                  strong.cv-article__important-text Trabajador autónomo
+                else
+                  strong.cv-article__important-text #{workExp.country} - #{workExp.state} - #{workExp.city} - #{workExp.address}
                 p
                   | #{workExp.description}
 
@@ -90,4 +96,4 @@ html(lang='es')
       footer.cv-footer
         small.cv-footer__text
           | Para más información, visita mi perfil en: 
-          a.cv-footer__text.cv-footer__text--my-profile-link(href='https://www.UChamba.com/MiCV') https://www.UChamba.com/MiCV
+          a.cv-footer__text.cv-footer__text--my-profile-link(href=profileLink) #{profileLink}

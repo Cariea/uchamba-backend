@@ -18,8 +18,9 @@ import {
   Education
 } from '../../../types/cv'
 import camelizeObject from '../../../utils/camelizeObject'
+import { monthToSpanish } from '../../../utils/month-to-spanish'
 import { compileFile } from 'pug'
-import { HTML_PDF_URL } from '../../../config'
+import { HTML_PDF_URL, FRONTEND_BASE_URL } from '../../../config'
 
 const compiledFunction = compileFile('./src/api/cv-generator/cv-template/template.pug')
 
@@ -33,7 +34,9 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
           name,
           email,
           about_me,
-          phone_number,
+          country,
+          state,
+          city,
           residence_address
         FROM users
         WHERE user_id = $1
@@ -142,14 +145,19 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
     // Work experiences
 
     const { rows: workExperiencesResponse } = await pool.query({
+      // FM in query due to this https://dba.stackexchange.com/questions/175811/why-is-to-char-left-padding-with-spaces
       text: `
         SELECT
           organization_name,
           job_title,
+          freelancer,
+          country,
+          state,
+          city,
           address,
           description,
-          TO_CHAR(entry_date, 'DD/MM/YYYY') AS entry_date,
-          TO_CHAR(departure_date, 'DD/MM/YYYY') AS departure_date
+          TO_CHAR(entry_date, 'FMMonth YYYY') AS entry_date,
+          TO_CHAR(departure_date, 'FMMonth YYYY') AS departure_date
           FROM work_experiences
         WHERE user_id = $1
         ORDER BY work_exp_id ASC
@@ -157,7 +165,7 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
       values: [userId]
     })
 
-    const user = camelizeObject(userResponse.rows[0]) as unknown as User
+    const user = camelizeObject({ ...{ userId }, ...userResponse.rows[0] }) as unknown as User
     const languages = camelizeObject(languagesResponse) as Language[]
     const userHardSkills = camelizeObject(hardSkillsResponse) as FeaturedHardSkills[]
     const personalHardSkills = camelizeObject(personalHardSkillsResponse) as PersonalHardSkills[]
@@ -165,7 +173,23 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
     const personalSoftSkills = camelizeObject(personalSoftSkillsResponse) as PersonalSoftSkills[]
     const featuredCareers = camelizeObject(userUStudiesResponse) as FeaturedCareers[]
     const personalCareers = camelizeObject(foreignStudiesResponse) as PersonalCareers[]
-    const workExperiences = camelizeObject(workExperiencesResponse) as WorkExperience[]
+    const workExperiences = camelizeObject(workExperiencesResponse).map((workExperience: WorkExperience) => {
+      const [entryMonth, entryYear] = workExperience.entryDate.split(' ')
+
+      if (workExperience.departureDate === null) {
+        return {
+          ...workExperience,
+          entryDate: `${monthToSpanish(entryMonth)} ${entryYear}`
+        }
+      }
+
+      const [departureMonth, departureYear] = workExperience.departureDate.split(' ')
+      return {
+        ...workExperience,
+        entryDate: `${monthToSpanish(entryMonth)} ${entryYear}`,
+        departureDate: `${monthToSpanish(departureMonth)} ${departureYear}`
+      }
+    }) as WorkExperience[]
 
     const hardSkills: HardSkills = { featured: userHardSkills, personal: personalHardSkills }
     const softSkills: SoftSkills = { featured: userSoftSkill, personal: personalSoftSkills }
@@ -181,7 +205,9 @@ export const cvGenerator = async (req: Request, res: Response): Promise<Response
       workExperiences
     }
 
-    const htmlContent = compiledFunction(CV)
+    const profileLink = `${FRONTEND_BASE_URL as string}/profile/${userId}`
+
+    const htmlContent = compiledFunction({ ...CV, profileLink })
     // ${HTML_PDF_URL as string}
     const pdfResponse = await fetch(`${HTML_PDF_URL as string}/convert`, {
       method: 'POST',

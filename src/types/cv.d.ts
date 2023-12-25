@@ -1,8 +1,11 @@
 export interface User {
+  userId: number
   name: string
   email: string
   aboutMe: string
-  phoneNumber: string
+  country: string
+  state: string
+  city: string
   residenceAddress: string
 }
 
@@ -66,8 +69,12 @@ export interface PersonalCareers {
 export interface WorkExperience {
   organizationName: string
   jobTitle: string
+  freelancer: boolean
+  country: string
+  state: string
+  city: string
   address: string
   description: string
   entryDate: string
-  departureDate: string
+  departureDate: string | null
 }
