@@ -20,7 +20,7 @@ export const logIn = async (
       const { rows: response } = await pool.query({
         text: `
           SELECT
-            count(*)
+            COUNT(*)
           FROM users
           WHERE
             role IN ('admin', 'graduated') AND
@@ -82,10 +82,9 @@ export const logIn = async (
           INSERT INTO users(
             email,
             name,
-            password,
             residence_address,
             phone_number
-          ) VALUES ($1, $2, $3, $4, $5)
+          ) VALUES ($1, $2, $3, $4)
           RETURNING
             user_id,
             email,
@@ -95,13 +94,21 @@ export const logIn = async (
         values: [
           bannerResponse[0].email,
           bannerResponse[0].name,
-          'no pass',
           bannerResponse[0].residence_address,
           bannerResponse[0].phone_number
         ]
       })
 
-      let graduated: Graduated = { undergraduateId: 0, email: '', name: '', phoneNumber: '', residenceAddress: '', career: '', degree: '', graduation_year: '' }
+      let graduated: Graduated = {
+        undergraduateId: 0,
+        email: '',
+        name: '',
+        phoneNumber: '',
+        residenceAddress: '',
+        career: '',
+        degree: '',
+        graduation_year: ''
+      }
 
       for (graduated of bannerResponse) {
         const careerId = await pool.query({

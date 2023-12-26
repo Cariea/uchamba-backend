@@ -30,5 +30,6 @@ export async function generateToken (email: string): Promise<any> {
     expiresIn: AUTH_EXPIRE
   })
   const dataToken = { ...userForToken, token }
+
   return dataToken
 }
