@@ -5,7 +5,6 @@ BEGIN;
 INSERT INTO users (
   name,
   email,
-  password,
   about_me,
   phone_number,
   country,
@@ -15,14 +14,14 @@ INSERT INTO users (
   role,
   is_active
 ) VALUES
-  ('Jose Andres', 'jarodriguez.21@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy luffy', '04147664397', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 1', 'admin', TRUE),
-  ('Maria Paula', 'mpforero.21@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Boa', '04129873912', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 2', 'admin', TRUE),
-  ('Eduardo Arzolay', 'ejarzolay.21@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Sanji', '04165887448', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 3', 'admin', TRUE),
-  ('Alejandro Rosas', 'ajrosas.19@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Chopper', '04141919875', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 4', 'admin', TRUE),
-  ('Eduardo Sucre', 'ejsucre.19@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Daz Bonez', '04121320792', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 5', 'admin', TRUE),
-  ('Carmelo Naim', 'usuario6@example.com', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Panda Man', '04124992818', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 6', 'admin', TRUE),
-  ('Maria Gioretti ', 'mggiorgetti.17@est.ucab.edu.ve', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Soy Nami', '04249033451', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 7', 'admin', TRUE),
-  ('Acosta Carrion', 'yeniffer.acosta3097@gmail.com', '$2b$10$.pmTkQ1lZV2D0o2tWPNcN.7DTJFVo3DZmaMhcIuWZuOkEzYkmvbKG', 'Bibi', '04121856049', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 8', 'admin', TRUE);
+  ('Jose Andres', 'jarodriguez.21@est.ucab.edu.ve', 'Soy luffy', '04147664397', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 1', 'admin', TRUE),
+  ('Maria Paula', 'mpforero.21@est.ucab.edu.ve', 'Soy Boa', '04129873912', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 2', 'admin', TRUE),
+  ('Eduardo Arzolay', 'ejarzolay.21@est.ucab.edu.ve', 'Soy Sanji', '04165887448', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 3', 'admin', TRUE),
+  ('Alejandro Rosas', 'ajrosas.19@est.ucab.edu.ve', 'Soy Chopper', '04141919875', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 4', 'admin', TRUE),
+  ('Eduardo Sucre', 'ejsucre.19@est.ucab.edu.ve', 'Soy Daz Bonez', '04121320792', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 5', 'admin', TRUE),
+  ('Carmelo Naim', 'usuario6@example.com', 'Soy Panda Man', '04124992818', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 6', 'admin', TRUE),
+  ('Maria Gioretti ', 'mggiorgetti.17@est.ucab.edu.ve', 'Soy Nami', '04249033451', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 7', 'admin', TRUE),
+  ('Acosta Carrion', 'yeniffer.acosta3097@gmail.com', 'Bibi', '04121856049', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 8', 'admin', TRUE);
 
 --Languages
 INSERT INTO languages (

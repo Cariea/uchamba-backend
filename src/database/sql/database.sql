@@ -41,7 +41,6 @@ CREATE TABLE users (
   user_id INTEGER GENERATED ALWAYS AS IDENTITY,
   name dom_name NOT NULL,
   email VARCHAR(128) UNIQUE NOT NULL,
-  password dom_password NOT NULL,
   about_me TEXT DEFAULT NULL,
   phone_number dom_phone_number,
   country dom_location DEFAULT NULL,
@@ -158,14 +157,14 @@ CREATE TABLE work_experiences (
   address TEXT DEFAULT NULL,
   freelancer BOOLEAN NOT NULL,
   entry_date DATE NOT NULL,
-  departure_date DATE,
+  departure_date DATE DEFAULT NULL,
   description TEXT DEFAULT NULL,
   created_at dom_created_at,
   CONSTRAINT pk_user_work_xp_id PRIMARY KEY (user_id, work_exp_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
     ON DELETE RESTRICT,
-  CONSTRAINT chk_date CHECK (departure_date > entry_date OR daparture_date IS NULL),
+  CONSTRAINT chk_date CHECK (departure_date > entry_date OR departure_date IS NULL),
   CONSTRAINT chk_freelancer CHECK (
     (
       freelancer IS TRUE AND 

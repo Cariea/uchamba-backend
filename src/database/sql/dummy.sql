@@ -1,3 +1,4 @@
+BEGIN;
 
 INSERT INTO ellucian (
   email, 
@@ -106,3 +107,5 @@ INSERT INTO banner (
   ('00000026', 'jose oscar anderson', 'joanderson.22@est.ucab.edu.ve', NULL, 'Ingenieria Informatica', 'Avenida Libertador 456, Altamira', 'Caracas','maestria','2022-01-01'),
   ('00000027', 'carla alejandra chavez', 'cachavez.23@est.ucab.edu.ve', NULL, 'Administracion de Empresas', NULL, 'Guayana','pregrado', '2023-01-01'),
   ('00000028', 'luis salvador rodriguez', 'lsrodriguez.17@est.ucab.edu.ve', NULL, 'Ingenieria Industrial', 'Calle Bolivar 123, Chacao', 'Caracas','pregrado','2017-01-01');
+
+COMMIT;
