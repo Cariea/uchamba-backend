@@ -20,8 +20,8 @@ export const ProjectSchema = z.object({
 export const ProjectUpdateSchema = ProjectSchema.extend({
   coverImageId: z
     .string()
-    .nullable(),
+    .optional(),
   deletedImages: z
-    .array(z.string())
-    .nullable()
+    .union([z.string(), z.array(z.string())])
+    .optional()
 })

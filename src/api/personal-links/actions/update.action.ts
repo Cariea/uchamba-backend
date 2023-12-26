@@ -11,18 +11,17 @@ export const updatePersonalLink = async (
 ): Promise<Response> => {
   try {
     const { linkId } = req.params
-    const { name, url } = req.body
+    const { url } = req.body
     const response = await pool.query({
       text: `
         UPDATE personal_links
         SET 
-          name = $1,
-          url = $2
+          url = $1
         WHERE
-          user_id = $3 AND
-          link_id = $4
+          user_id = $2 AND
+          link_id = $3
       `,
-      values: [name, url, req.user.id, linkId]
+      values: [url, req.user.id, linkId]
     })
     if (response.rowCount === 0) {
       throw new StatusError({
@@ -30,7 +29,7 @@ export const updatePersonalLink = async (
         statusCode: STATUS.NOT_FOUND
       })
     }
-    return res.status(STATUS.OK).json({ message: 'personal link modificado correctamente' })
+    return res.status(STATUS.OK).json({ message: 'Link Personal modificado correctamente' })
   } catch (error) {
     console.log(error)
     return handleControllerError(error, res)

@@ -2,7 +2,6 @@ export interface User {
   name: string
   email: string
   aboutMe: string
-  phoneNumber: string
   residenceAddress: string
 }
 

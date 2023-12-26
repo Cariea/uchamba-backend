@@ -14,31 +14,33 @@ CREATE TYPE dom_degree AS ENUM ('pregrado', 'postgrado', 'especializacion', 'mae
 CREATE TYPE dom_proficiency_level AS ENUM ('A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native');
 
 -- Dummy
-CREATE TABLE ellucian_ethos (
+CREATE TABLE ellucian (
   email dom_email,
   password dom_password,
   CONSTRAINT pk_ellucian PRIMARY KEY (email)
 );
 
--- Egresados 🔥
--- CREATE TABLE undergraduates (
---   undergraduate_id VARCHAR(16),
---   email dom_email,
---   name dom_name NOT NULL,
---   residence_address TEXT DEFAULT NULL,
---   career VARCHAR(64) NOT NULL,
---   degree dom_degree NOT NULL,
---   graduation_year DATE NOT NULL,
---   CONSTRAINT pk_undergraduate_id PRIMARY KEY (undergraduate_id),
---   CONSTRAINT uk_career_per_undergraduate UNIQUE (undergraduate_id, career)
--- );
+--Egresados 🔥
+CREATE TABLE banner(
+  undergraduate_id VARCHAR(16),
+  name dom_name NOT NULL,
+  email dom_email DEFAULT NULL,
+  phone_number dom_phone_number DEFAULT NULL,
+  career dom_name,
+  residence_address TEXT DEFAULT NULL,
+  campus dom_name,
+  degree dom_degree,
+  graduation_year DATE,
+  CONSTRAINT pk_banner PRIMARY KEY (undergraduate_id,career),
+  CONSTRAINT uq_email UNIQUE (email,career),
+  CONSTRAINT uq_phone_number UNIQUE (phone_number,career)
+);
 
 -- 1
 CREATE TABLE users (
   user_id INTEGER GENERATED ALWAYS AS IDENTITY,
   name dom_name NOT NULL,
   email VARCHAR(128) UNIQUE NOT NULL,
-  password dom_password NOT NULL,
   about_me TEXT DEFAULT NULL,
   phone_number dom_phone_number,
   country dom_location DEFAULT NULL,
@@ -116,7 +118,6 @@ CREATE TABLE personal_soft_skills (
 CREATE TABLE personal_links (
   user_id INTEGER,
   link_id INTEGER GENERATED ALWAYS AS IDENTITY,
-  name dom_name UNIQUE NOT NULL,
   url TEXT DEFAULT NULL,
   created_at dom_created_at,
   updated_at dom_created_at,
@@ -154,14 +155,33 @@ CREATE TABLE work_experiences (
   state dom_location DEFAULT NULL,
   city dom_location DEFAULT NULL,
   address TEXT DEFAULT NULL,
+  freelancer BOOLEAN NOT NULL,
   entry_date DATE NOT NULL,
-  departure_date DATE,
+  departure_date DATE DEFAULT NULL,
   description TEXT DEFAULT NULL,
   created_at dom_created_at,
   CONSTRAINT pk_user_work_xp_id PRIMARY KEY (user_id, work_exp_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
-    ON DELETE CASCADE
+    ON DELETE CASCADE,
+  CONSTRAINT chk_date CHECK (departure_date > entry_date OR departure_date IS NULL),
+  CONSTRAINT chk_freelancer CHECK (
+    (
+      freelancer IS TRUE AND 
+      country IS NULL AND
+      state IS NULL AND
+      city IS NULL AND
+      address IS NULL
+    )
+    OR
+    (
+      freelancer IS FALSE AND 
+      country IS NOT NULL AND
+      state IS NOT NULL AND
+      city IS NOT NULL AND
+      address IS NOT NULL
+    )
+  )
 );
 
 -- 9

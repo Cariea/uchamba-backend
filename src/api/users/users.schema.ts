@@ -23,7 +23,8 @@ export const UserSchema = z.object({
     .string(),
   phoneNumber: z
     .string()
-    .regex(/^[0-9]+$/, 'El numero de telefono solo acepta caracteres alfanumericos'),
+    .regex(/^[0-9]+$/, 'El numero de telefono solo acepta caracteres alfanumericos')
+    .optional(),
   country: z
     .string(),
   state: z
@@ -58,7 +59,6 @@ export const RegisterUserPayload = z.object({
 
 export const UpdateUserSchema = UserSchema.pick({
   aboutMe: true,
-  phoneNumber: true,
   country: true,
   state: true,
   city: true,

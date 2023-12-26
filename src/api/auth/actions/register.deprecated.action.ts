@@ -61,7 +61,7 @@ export const signUp = async (
 
     // función para enviar correo con el código para confirmar cuenta
     await transporter.sendMail({
-      from: `Eduardo Sucre < ${SMTP_MAIL} >`, // sender address
+      from: `Eduardo Sucre < ${SMTP_MAIL as string} >`, // sender address
       to: email, // list of receivers
       subject: 'Código para validar tu correo', // Subject line
       html: `<b>Código para validar tu correo: ${code}</b>` // html body
