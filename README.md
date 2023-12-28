@@ -52,6 +52,74 @@
       - [**GET** Paginated /sskills](#get-paginated-sskills)
       - [**GET**  By id /sskills/\<SoftSkillID\>](#get--by-id-sskillssoftskillid)
   - [User Token for Updating Profile](#user-token-for-updating-profile)
+      - [**GET** App Info /app-info](#get-app-info-app-info)
+    - [Users Personal Info](#users-personal-info)
+      - [**POST** Change Status /users/change-status](#post-change-status-userschange-status)
+      - [Responses](#responses-13)
+      - [**PUT** /users/\<userID\>](#put-usersuserid)
+      - [Responses](#responses-14)
+      - [**GET** Me /users/me](#get-me-usersme)
+      - [Responses](#responses-15)
+    - [Profile Hard Skills](#profile-hard-skills)
+      - [**POST** Create /profile-hard-skills](#post-create-profile-hard-skills)
+      - [Responses](#responses-16)
+      - [**DELETE** /profile-hard-skills/\<SKILL\_NAME\>](#delete-profile-hard-skillsskill_name)
+      - [Responses](#responses-17)
+    - [Profile Soft Skills](#profile-soft-skills)
+      - [**POST** Create /profile-soft-skills](#post-create-profile-soft-skills)
+      - [Responses](#responses-18)
+      - [**DELETE** /profile-soft-skills/\<SKILL\_NAME\>](#delete-profile-soft-skillsskill_name)
+      - [Responses](#responses-19)
+    - [Foreign Studies](#foreign-studies)
+      - [**POST** Create /foreign-studies](#post-create-foreign-studies)
+      - [Responses](#responses-20)
+      - [**PUT** /foreign-studies/\<ForeignStudyID\>](#put-foreign-studiesforeignstudyid)
+      - [Responses](#responses-21)
+      - [**GET** Foreign Study By User and Foreign Study ID /foreign-studies/\<ForeignStudyID\>](#get-foreign-study-by-user-and-foreign-study-id-foreign-studiesforeignstudyid)
+      - [Responses](#responses-22)
+      - [**DELETE** /foreign-studies/\<ForeignStudyID\>](#delete-foreign-studiesforeignstudyid)
+      - [Responses](#responses-23)
+    - [Projects](#projects)
+      - [**POST** Create /projects](#post-create-projects)
+      - [Responses](#responses-24)
+      - [**PUT** /projects/\<ProjectID\>](#put-projectsprojectid)
+      - [Responses](#responses-25)
+      - [**GET** By Project ID /projects/\<ProjectID\>](#get-by-project-id-projectsprojectid)
+      - [Responses](#responses-26)
+      - [**DELETE** /projects/\<ProjectID\>](#delete-projectsprojectid)
+      - [Responses](#responses-27)
+    - [User Languages](#user-languages)
+      - [**POST** Create /user-languages/language\<LanguageID\>](#post-create-user-languageslanguagelanguageid)
+      - [Responses](#responses-28)
+      - [**PUT** /user-languages/language/\<LanguageID\>](#put-user-languageslanguagelanguageid)
+      - [Responses](#responses-29)
+      - [**GET** By Language ID /user-languages/\<LanguageID\>](#get-by-language-id-user-languageslanguageid)
+      - [Responses](#responses-30)
+      - [**DELETE** /user-languages/language/\<LanguageID\>](#delete-user-languageslanguagelanguageid)
+      - [Responses](#responses-31)
+    - [Personal Links](#personal-links)
+      - [**POST** Create /personal-links](#post-create-personal-links)
+      - [Responses](#responses-32)
+      - [**PUT** /personal-links/\<PersonalLinkID\>](#put-personal-linkspersonallinkid)
+      - [Responses](#responses-33)
+      - [**GET** By User ID /personal-links/\<PersonalLinkID\>](#get-by-user-id-personal-linkspersonallinkid)
+      - [Responses](#responses-34)
+      - [**DELETE** /personal-links/\<PersonalLinkID\>](#delete-personal-linkspersonallinkid)
+      - [Responses](#responses-35)
+    - [Work Experiences](#work-experiences)
+      - [**POST** Create /work-experiences](#post-create-work-experiences)
+      - [Responses](#responses-36)
+      - [**PUT** /work-experiences/\<WorkExperienceID\>](#put-work-experiencesworkexperienceid)
+      - [Responses](#responses-37)
+      - [**GET** By Work Experience ID /work-experiences/\<WorkExperienceID\>](#get-by-work-experience-id-work-experiencesworkexperienceid)
+      - [Responses](#responses-38)
+      - [**DELETE** /work-experiences/\<WorkExperienceID\>](#delete-work-experiencesworkexperienceid)
+      - [Responses](#responses-39)
+    - [CVs](#cvs)
+      - [**POST** Create /user-cvs](#post-create-user-cvs)
+      - [Responses](#responses-40)
+      - [**DELETE** /user-cvs/\<CV\_ID\>](#delete-user-cvscv_id)
+      - [Responses](#responses-41)
   - [Public](#public)
       - [**GET** Generar CV /generar-cv/\<user-id\>](#get-generar-cv-generar-cvuser-id)
     - [Auth](#auth)
@@ -60,7 +128,7 @@
       - [**GET** All /users/all](#get-all-usersall)
       - [**GET** Paginated /users?page=\<number\>\&size=\<number\>](#get-paginated-userspagenumbersizenumber)
       - [**GET** Detailed /users/\<id\>](#get-detailed-usersid)
-    - [Projects](#projects)
+    - [Projects](#projects-1)
       - [**GET Detailed** /projects/user/\<user-id\>/project/\<project-id\>](#get-detailed-projectsuseruser-idprojectproject-id)
 
 ---
@@ -1051,6 +1119,704 @@
 ---
 
 ## User Token for Updating Profile
+
+#### <span id='user-token-for-updating-profile-get-app-info' style='color:#23A559'>**GET** App Info /app-info</span>
+
+### Users Personal Info
+
+#### <span id='user-token-for-updating-profile-users-personal-info-post-change-status' style='color:orange'>**POST** Change Status /users/change-status</span>
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "message": ""
+}
+```
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "message": ""
+}
+```
+
+#### <span id='user-token-for-updating-profile-users-personal-info-put' style='color:#9992F4'>**PUT** /users/\<userID></span>
+
+- <span style="color:#9992F4">Body</span>
+```json
+{
+  "aboutMe": "Soy trabajador y organizado",
+  "country": "Venezuela",
+  "state": "Bolivar",
+  "city": "Ciudad Guayana",
+  "residenceAddress": "Urbanización Moreno de Mendoza",
+  "phoneNumber": "04121320792"
+}
+```
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "message": "Usuario modificado correctamente"
+}
+```
+- <span style="color:red">**400** - Bad Request</span>
+```json
+{
+  "message": "Datos invalidos en formulario",
+  "details": [
+    {
+      "field": "phoneNumber",
+      "message": "Required"
+    }
+  ]
+}
+```
+
+#### <span id='user-token-for-updating-profile-users-personal-info-get-me' style='color:#23A559'>**GET** Me /users/me</span>
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "message": ""
+}
+```
+
+### Profile Hard Skills
+
+#### <span id='user-token-for-updating-profile-profile-hard-skills-post-create' style='color:orange'>**POST** Create /profile-hard-skills</span>
+
+- <span style="color:#9992F4">Body</span>
+```json
+[
+  "Java",
+  "C#",
+  "Angular",
+  "C++"
+]
+```
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "message": "Habilidades duras añadidas correctamente"
+}
+```
+- <span style="color:red">**400** - Bad Request</span>
+```json
+{
+  "message": "Las habilidades duras ingresadas ya existen"
+}
+```
+
+#### <span id='user-token-for-updating-profile-profile-hard-skills-delete' style='color:red'>**DELETE** /profile-hard-skills/<SKILL_NAME></span>
+
+#### <span style="color:#9992F4">Responses</span>
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "message": "Habilidad Dura eliminada correctamente"
+}
+```
+
+- <span style="color:red">**404** - Not Found</span>
+```json
+{
+  "message": "No se encontro la habilidad dura Para ver del usuario: 5"
+}
+```
+
+### Profile Soft Skills
+
+#### <span id='user-token-for-updating-profile-profile-soft-skills-post-create' style='color:orange'>**POST** Create /profile-soft-skills</span>
+
+- <span style="color:#9992F4">Body</span>
+```json
+[
+  "Communication",
+  "Teamwork",
+  "Empathy",
+  "Positive Attitude"
+]
+```
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "message": "Habilidades blandas añadidas correctamente"
+}
+```
+- <span style="color:red">**400** - Bad Request</span>
+```json
+{
+  "message": "Las habilidades blandas ingresadas ya existen"
+}
+```
+
+#### <span id='user-token-for-updating-profile-profile-soft-skills-delete' style='color:red'>**DELETE** /profile-soft-skills/<SKILL_NAME></span>
+
+#### <span style="color:#9992F4">Responses</span>
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "message": "Habilidad Blanda eliminada correctamente"
+}
+```
+
+- <span style="color:red">**404** - Not Found</span>
+```json
+{
+  "message": "No se encontro la habilidad blanda Creativity del usuario: 5"
+}
+```
+
+### Foreign Studies
+
+#### <span id='user-token-for-updating-profile-foreign-studies-post-create' style='color:orange'>**POST** Create /foreign-studies</span>
+
+- <span style="color:#9992F4">Body</span>
+```json
+{
+  "name": "Ingeniería Mecánica",
+  "universityName": "UNEXPO",
+  "degree": "pregrado",
+  "graduationYear": "2017"
+}
+```
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "userId": 5,
+  "foreignStudyId": 16,
+  "name": "Ingeniería Mecánica",
+  "universityName": "UNEXPO",
+  "degree": "pregrado",
+  "graduationYear": "2017",
+  "createdAt": "28/12/2023 - 09:50 AM"
+}
+```
+- <span style="color:red">**400** - Bad Request</span>
+```json
+{
+  "message": "Datos invalidos en formulario",
+  "details": [
+    {
+      "field": "name",
+      "message": "Required"
+    }
+  ]
+}
+```
+- <span style="color:red">**500** - Internal Server Error</span>
+```json
+{
+  "message": "Ya existe la llave (user_id, name, university_name, degree)=(5, Ingeniería Mecánica, UNEXPO, pregrado)."
+}
+```
+
+#### <span id='user-token-for-updating-profile-foreign-studies-put' style='color:#9992F4'>**PUT** /foreign-studies/\<ForeignStudyID></span>
+
+- <span style="color:#9992F4">Body</span>
+```json
+{
+  "name":"Fisica",
+  "universityName":"La Santiago",
+  "degree":"especializacion",
+  "graduationYear":"1994"
+}
+```
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "message": "Estudio foraneo modificado correctamente"
+}
+```
+
+- <span style="color:red">**404** - Not Found</span>
+```json
+{
+  "message": "No se encontro el estudio: 18 del usuario: 5"
+}
+```
+
+#### <span id='user-token-for-updating-profile-foreign-studies-get-foreign-study-by-user-and-foreign-study-id' style='color:#23A559'>**GET** Foreign Study By User and Foreign Study ID /foreign-studies/\<ForeignStudyID></span>
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+[
+  {
+    "userId": 5,
+    "foreignStudyId": 16,
+    "name": "Fisica",
+    "universityName": "La Santiago",
+    "degree": "especializacion",
+    "graduationYear": "1994",
+    "createdAt": "28/12/2023 - 09:50 AM"
+  }
+]
+```
+- <span style="color:red">**404** - Not Found</span>
+```json
+{
+  "message": "No se pudo encontrar el registro de id: 5 "
+}
+```
+
+#### <span id='user-token-for-updating-profile-foreign-studies-delete' style='color:red'>**DELETE** /foreign-studies/\<ForeignStudyID></span>
+
+#### <span style="color:#9992F4">Responses</span>
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "message": "Estudio foraneo eliminado correctamente"
+}
+```
+- <span style="color:red">**404** - Not Found</span>
+```json
+{
+  "message": "No se encontro el estudio foraneo: 16 del usuario: 5"
+}
+```
+
+### Projects
+
+#### <span id='user-token-for-updating-profile-projects-post-create' style='color:orange'>**POST** Create /projects</span>
+
+- <span style="color:#9992F4">Body</span>
+```json
+{
+  
+}
+```
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+}
+```
+- <span style="color:red">**500** - Internal Server Error</span>
+```json
+{
+  "message": "Must supply api_key"
+}
+```
+
+#### <span id='user-token-for-updating-profile-projects-put' style='color:#9992F4'>**PUT** /projects/\<ProjectID></span>
+
+- <span style="color:#9992F4">Body</span>
+```json
+{
+
+}
+```
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+}
+```
+
+#### <span id='user-token-for-updating-profile-projects-get-by-project-id' style='color:#23A559'>**GET** By Project ID /projects/\<ProjectID></span>
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+}
+```
+- <span style="color:red">**404** - Not Found</span>
+```json
+{
+  "message": "No se pudo encontrar el registro con el id de usuario: 5 y el id de proyecto: 6"
+}
+```
+
+#### <span id='user-token-for-updating-profile-projects-delete' style='color:red'>**DELETE** /projects/\<ProjectID></span>
+
+#### <span style="color:#9992F4">Responses</span>
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+
+}
+```
+- <span style="color:red">**404** - Not Found</span>
+```json
+{
+  "message": "No se pudo encontrar el registro con el id de usuario: 5 y el id de proyecto: 30"
+}
+```
+
+### User Languages
+
+#### <span id='user-token-for-updating-profile-user-languages-post-create' style='color:orange'>**POST** Create /user-languages/language\<LanguageID></span>
+
+- <span style="color:#9992F4">Body</span>
+```json
+{
+
+}
+```
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "userId": 5,
+  "languageId": 16,
+  "proficientLevel": "B1",
+  "createdAt": "28/12/2023 - 10:23 AM"
+}
+```
+
+- <span style="color:red">**400** - Bad Request</span>
+```json
+{
+  "message": "Datos invalidos en formulario",
+  "details": [
+    {
+      "field": "proficientLevel",
+      "message": "Invalid enum value. Expected 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2' | 'Native', received ''"
+    }
+  ]
+}
+```
+
+- <span style="color:red">**500** - Internal Server Error</span>
+```json
+{
+  "message": "Ya existe la llave (user_id, language_id)=(5, 16)."
+}
+```
+
+#### <span id='user-token-for-updating-profile-user-languages-put' style='color:#9992F4'>**PUT** /user-languages/language/\<LanguageID></span>
+
+- <span style="color:#9992F4">Body</span>
+```json
+{
+
+}
+```
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "message": "idioma modificado correctamente"
+}
+```
+- <span style="color:red">**404** - Not Found</span>
+```json
+{
+  "message": "No se encontro el idioma de id: 17 del usuario: 5"
+}
+```
+
+#### <span id='user-token-for-updating-profile-user-languages-get-by-project-id' style='color:#23A559'>**GET** By Language ID /user-languages/\<LanguageID></span>
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+[
+  {
+    "userId": 5,
+    "languageId": 16,
+    "proficientLevel": "A1",
+    "createdAt": "28/12/2023 - 10:23 AM"
+  }
+]
+```
+- <span style="color:red">**404** - Not Found</span>
+```json
+{
+  "message": "No se pudo encontrar idiomas para el usuario de id: 5 "
+}
+```
+
+#### <span id='user-token-for-updating-profile-user-languages-delete' style='color:red'>**DELETE** /user-languages/language/\<LanguageID></span>
+
+#### <span style="color:#9992F4">Responses</span>
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "message": "Lenguage eliminado correctamente"
+}
+```
+- <span style="color:red">**404** - Not Found</span>
+```json
+{
+  "message": "No se encontro el idioma de id: 16 del usuario de id: 5"
+}
+```
+
+### Personal Links
+
+#### <span id='user-token-for-updating-profile-personal-links-post-create' style='color:orange'>**POST** Create /personal-links</span>
+
+- <span style="color:#9992F4">Body</span>
+```json
+{
+  "name": "Instagram",
+  "url":"https://github.com/"
+}
+```
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "user_id": 5,
+  "link_id": 12,
+  "name": "Instagram",
+  "url": "https://github.com/",
+  "created_at": "28/12/2023 - 10:39 AM",
+  "updated_at": "28/12/2023 - 10:39 AM"
+}
+```
+- <span style="color:red">**500** - Internal Server Error</span>
+```json
+{
+  "message": "Ya existe la llave (name)=(Instagram)."
+}
+```
+
+#### <span id='user-token-for-updating-profile-personal-links-put' style='color:#9992F4'>**PUT** /personal-links/\<PersonalLinkID></span>
+
+- <span style="color:#9992F4">Body</span>
+```json
+{
+  "name":"Instagram",
+  "url":"https://img.freepik.com/premium-vector/betty-boop-cowboys_690789-538.jpg"
+}
+```
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "message": "personal link modificado correctamente"
+}
+```
+- <span style="color:red">**404** - Not Found</span>
+```json
+{
+  "message": "No se encontro el link: 13 del usuario: 5"
+}
+```
+
+#### <span id='user-token-for-updating-profile-personal-links-get-by-user-id' style='color:#23A559'>**GET** By User ID /personal-links/\<PersonalLinkID></span>
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+[
+  {
+    "userId": 5,
+    "linkId": 12,
+    "name": "Instagram",
+    "url": "https://img.freepik.com/premium-vector/betty-boop-cowboys_690789-538.jpg",
+    "createdAt": "28/12/2023 - 10:39 AM",
+    "updatedAt": "28/12/2023 - 10:42 AM"
+  }
+]
+```
+- <span style="color:red">**404** - Not Found</span>
+```json
+{
+  "message": "No se encontro el link de id: 13 para el usuario: 5"
+}
+```
+
+#### <span id='user-token-for-updating-profile-personal-links-delete' style='color:red'>**DELETE** /personal-links/\<PersonalLinkID></span>
+
+#### <span style="color:#9992F4">Responses</span>
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "message": "Link eliminado correctamente"
+}
+```
+- <span style="color:red">**404** - Not Found</span>
+```json
+{
+  "message": "No se encontro el link de id: 12 del usuario: 5"
+}
+```
+
+### Work Experiences
+
+#### <span id='user-token-for-updating-profile-work-experiences-post-create' style='color:orange'>**POST** Create /work-experiences</span>
+
+- <span style="color:#9992F4">Body</span>
+```json
+{
+  "freelancer": false,
+  "organizationName": "Lusitanos",
+  "jobTitle": "Auxiliar de equipo",
+  "entryDate": "2016-04-03",
+  "departureDate": "2020-04-03",
+  "description": "Una recarga de agua al lado de una panadería",
+  "country": "Venezuela",
+  "state": "",
+  "city": "",
+  "address": "Urbanización Moreno de Mendoza"
+}
+```
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "userId": 5,
+  "workExpId": 3,
+  "organizationName": "Lusitanos",
+  "jobTitle": "Auxiliar de equipo",
+  "country": "Venezuela",
+  "state": "",
+  "city": "",
+  "address": "Urbanización Moreno de Mendoza",
+  "entryDate": "03/04/2016",
+  "departureDate": "03/04/2020",
+  "description": "Una recarga de agua al lado de una panadería",
+  "createdAt": "28/12/2023 - 10:49 AM"
+}
+```
+
+#### <span id='user-token-for-updating-profile-work-experiences-put' style='color:#9992F4'>**PUT** /work-experiences/\<WorkExperienceID></span>
+
+- <span style="color:#9992F4">Body</span>
+```json
+{
+  "freelancer": false,
+  "organizationName": "Lusitanos",
+  "jobTitle": "Auxiliar de equipo",
+  "entryDate": "2016-04-03",
+  "departureDate": "2020-04-03",
+  "description": "Una recarga de agua al lado de una panadería",
+  "country": "Venezuela",
+  "state": "Bolivar",
+  "city": "Ciudad Guayana",
+  "address": "Urbanización Moreno de Mendoza"
+}
+```
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "message": "Experiencia de trabajo modificada correctamente"
+}
+```
+- <span style="color:red">**400** - Bad Request</span>
+```json
+{
+  "message": "Ya existe otro registro con datos parecidos"
+}
+```
+- <span style="color:red">**404** - Not Found</span>
+```json
+{
+  "message": "No se pudo encontrar el registro con el id de usuario: 5 y el id de experiencia de trabajo: 4"
+}
+```
+
+#### <span id='user-token-for-updating-profile-work-experiences-get-by-work-experience-id' style='color:#23A559'>**GET** By Work Experience ID /work-experiences/\<WorkExperienceID></span>
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+}
+```
+
+#### <span id='user-token-for-updating-profile-work-experiences-delete' style='color:red'>**DELETE** /work-experiences/\<WorkExperienceID></span>
+
+#### <span style="color:#9992F4">Responses</span>
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+  "message": "Experiencia de trabajo eliminada correctamente"
+}
+```
+- <span style="color:red">**404** - Not Found</span>
+```json
+{
+  "message": "No se pudo encontrar el registro con el id de usuario: 5 y el id de experiencia de trabajo: 1"
+}
+```
+
+### CVs
+
+#### <span id='user-token-for-updating-profile-cvs-post-create' style='color:orange'>**POST** Create /user-cvs</span>
+
+- <span style="color:#9992F4">Body</span>
+```json
+{
+  "careerId": 1,
+  "name": "Test de CV",
+  "entries": {
+    "education": {
+      "featured": [4],
+      "personal": [4, 12]
+    },
+    "experience": [],
+    "languages": [2, 1],
+    "skills": {
+      "soft": ["Empatia", "Resolucion de problemas internos", "Liderazgo"],
+      "hard": ["React", "Gestion de bases de datos", "SQL"]
+    }
+  }
+}
+```
+
+#### <span style="color:#9992F4">Responses</span>
+
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+}
+```
+
+#### <span id='user-token-for-updating-profile-cvs-delete' style='color:red'>**DELETE** /user-cvs/<CV_ID></span>
+
+#### <span style="color:#9992F4">Responses</span>
+- <span style="color:#23A559">**200** - Success</span>
+```json
+{
+}
+```
 
 [<span style='color:orange'>Volver</span>](#table-of-contents)
 
