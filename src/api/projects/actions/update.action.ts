@@ -27,6 +27,10 @@ export const updateProject = async (
       values: [name, description, projectUrl, userId, projectId]
     })
 
+    if (coverImageId === undefined && req.body.deletedImages === undefined) {
+      return res.status(STATUS.CREATED).json({ message: 'Proyecto actualizado correctamente' })
+    }
+
     if (coverImageId !== undefined) {
       if (req.files?.coverImage === undefined) {
         return res.status(STATUS.BAD_REQUEST).json({ message: 'se esperaba un reemplazo para el coverImage' })
