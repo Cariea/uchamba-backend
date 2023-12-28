@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/promise-function-async */
 import { Request, Response } from 'express'
 import { pool } from '../../../database'
 import { DEFAULT_PAGE, STATUS } from '../../../utils/constants'
@@ -46,10 +47,9 @@ export const getUsers = async (
       values: [size, offset]
     })
 
-    const finalItemsResponse = []
-    for (const user of response) {
-      finalItemsResponse.push(await getUserCatalogueInfo(user.user_id))
-    }
+    const finalItemsResponse = await Promise.all(
+      response.map(user => getUserCatalogueInfo(user.user_id))
+    )
 
     const pagination: PaginateSettings = {
       total: Number(rows[0].count),

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/promise-function-async */
 import { Response } from 'express'
 import { ExtendedRequest } from '../../../middlewares/auth'
 import { pool } from '../../../database'
@@ -25,10 +26,9 @@ export const getMe = async (
       values: [userId]
     })
 
-    const cvItemsResponse = []
-    for (const cv of userCvs) {
-      cvItemsResponse.push(await getCVInfo(cv.id))
-    }
+    const cvItemsResponse = await Promise.all(
+      userCvs.map(cv => getCVInfo(cv.id))
+    )
 
     const { rows: careersResponse } = await pool.query({
       text: `

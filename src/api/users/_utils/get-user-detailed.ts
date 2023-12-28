@@ -30,7 +30,7 @@ export async function getUserDetailed (userId: string): Promise<any> {
     })
   }
 
-  const { rows: userHardSkills } = await pool.query({
+  const userHardSkillsQuery = pool.query({
     text: `
       SELECT hs.name
       FROM 
@@ -44,7 +44,7 @@ export async function getUserDetailed (userId: string): Promise<any> {
     values: [userId]
   })
 
-  const { rows: personalHardSkills } = await pool.query({
+  const personalHardSkillsQuery = pool.query({
     text: `
       SELECT name
       FROM personal_hard_skills
@@ -54,7 +54,7 @@ export async function getUserDetailed (userId: string): Promise<any> {
     values: [userId]
   })
 
-  const { rows: userSoftSkills } = await pool.query({
+  const userSoftSkillsQuery = pool.query({
     text: `
       SELECT ss.name
       FROM 
@@ -68,7 +68,7 @@ export async function getUserDetailed (userId: string): Promise<any> {
     values: [userId]
   })
 
-  const { rows: personalSoftSkills } = await pool.query({
+  const personalSoftSkillsQuery = pool.query({
     text: `
       SELECT name
       FROM personal_soft_skills
@@ -78,7 +78,7 @@ export async function getUserDetailed (userId: string): Promise<any> {
     values: [userId]
   })
 
-  const { rows: personalLinks } = await pool.query({
+  const personalLinksQuery = pool.query({
     text: `
       SELECT
         link_id,
@@ -90,7 +90,7 @@ export async function getUserDetailed (userId: string): Promise<any> {
     values: [userId]
   })
 
-  const { rows: userUStudies } = await pool.query({
+  const userUStudiesQuery = pool.query({
     text: `
       SELECT
         uc.ucareer_id,
@@ -108,7 +108,7 @@ export async function getUserDetailed (userId: string): Promise<any> {
     values: [userId]
   })
 
-  const { rows: foreignStudies } = await pool.query({
+  const foreignStudiesQuery = pool.query({
     text: `
       SELECT
         foreign_study_id AS study_id,
@@ -123,7 +123,7 @@ export async function getUserDetailed (userId: string): Promise<any> {
     values: [userId]
   })
 
-  const { rows: workExperiences } = await pool.query({
+  const workExperiencesQuery = pool.query({
     text: `
       SELECT
         work_exp_id,
@@ -182,7 +182,7 @@ export async function getUserDetailed (userId: string): Promise<any> {
     }
   }
 
-  const { rows: languages } = await pool.query({
+  const languagesQuery = pool.query({
     text: `
       SELECT
         l.language_id,
@@ -200,6 +200,28 @@ export async function getUserDetailed (userId: string): Promise<any> {
     `,
     values: [userId]
   })
+
+  const queryResponses = await Promise.all([
+    languagesQuery,
+    personalLinksQuery,
+    userHardSkillsQuery,
+    personalHardSkillsQuery,
+    userSoftSkillsQuery,
+    personalSoftSkillsQuery,
+    userUStudiesQuery,
+    foreignStudiesQuery,
+    workExperiencesQuery
+  ])
+
+  const { rows: languages } = queryResponses[0]
+  const { rows: personalLinks } = queryResponses[1]
+  const { rows: userHardSkills } = queryResponses[2]
+  const { rows: personalHardSkills } = queryResponses[3]
+  const { rows: userSoftSkills } = queryResponses[4]
+  const { rows: personalSoftSkills } = queryResponses[5]
+  const { rows: userUStudies } = queryResponses[6]
+  const { rows: foreignStudies } = queryResponses[7]
+  const { rows: workExperiences } = queryResponses[8]
 
   const userDetailed = {
     ...camelizeObject(user.rows[0]),
