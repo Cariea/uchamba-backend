@@ -299,7 +299,7 @@ CREATE TABLE users_cvs (
 );
 
 -- 16
-CREATE TABLE cv_hard_skill (
+CREATE TABLE cv_hard_skills (
   user_id INTEGER,
   cv_id INTEGER,
   hard_skill_id INTEGER,
@@ -315,7 +315,7 @@ CREATE TABLE cv_hard_skill (
 );
 
 -- 16.1
-CREATE TABLE cv_personal_hard_skill (
+CREATE TABLE cv_personal_hard_skills (
   user_id INTEGER,
   cv_id INTEGER,
   phard_skill_id INTEGER,
@@ -331,7 +331,7 @@ CREATE TABLE cv_personal_hard_skill (
 );
 
 -- 17
-CREATE TABLE cv_soft_skill (
+CREATE TABLE cv_soft_skills (
   user_id INTEGER,
   cv_id INTEGER,
   soft_skill_id INTEGER,
@@ -347,7 +347,7 @@ CREATE TABLE cv_soft_skill (
 );
 
 -- 17.1
-CREATE TABLE cv_personal_soft_skill (
+CREATE TABLE cv_personal_soft_skills (
   user_id INTEGER,
   cv_id INTEGER,
   psoft_skill_id INTEGER,
@@ -369,10 +369,12 @@ CREATE TABLE cv_ustudies (
   ucareer_id INTEGER,
   created_at dom_created_at,
   CONSTRAINT pk_user_cv_uc_id PRIMARY KEY (user_id, cv_id, ucareer_id),
-  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES users_cvs (user_id, cv_id)
+  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) 
+    REFERENCES users_cvs (user_id, cv_id)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
-  CONSTRAINT fk_user_ucareer_id FOREIGN KEY (user_id, ucareer_id) REFERENCES users_ustudies (user_id, ucareer_id)
+  CONSTRAINT fk_user_ucareer_id FOREIGN KEY (user_id, ucareer_id) 
+    REFERENCES users_ustudies (user_id, ucareer_id)
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
@@ -471,7 +473,7 @@ FOR EACH ROW
 EXECUTE FUNCTION update_updated_at();
 
 CREATE TRIGGER update_updated_at_cvs
-BEFORE UPDATE ON cvs
+BEFORE UPDATE ON users_cvs
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at();
 
