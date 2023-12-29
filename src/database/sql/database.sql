@@ -88,7 +88,7 @@ CREATE TABLE personal_hard_skills(
   CONSTRAINT pk_user_phard_skill_id PRIMARY KEY (user_id, phard_skill_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT uk_user_hard_name UNIQUE (user_id, name)
 );
 
@@ -110,7 +110,7 @@ CREATE TABLE personal_soft_skills (
   CONSTRAINT pk_user_psoft_skill_id PRIMARY KEY (user_id, psoft_skill_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT uk_user_soft_name UNIQUE (user_id, name)
 );
 
@@ -124,7 +124,7 @@ CREATE TABLE personal_links (
   CONSTRAINT pk_user_link_id PRIMARY KEY (user_id, link_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT uk_user_url UNIQUE (user_id, url)
 );
 
@@ -141,7 +141,7 @@ CREATE TABLE foreign_studies (
   CONSTRAINT pk_user_foreign_study_id PRIMARY KEY (user_id, foreign_study_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT uk_name_university_degree UNIQUE (user_id, name, university_name, degree)
 );
 
@@ -163,7 +163,7 @@ CREATE TABLE work_experiences (
   CONSTRAINT pk_user_work_xp_id PRIMARY KEY (user_id, work_exp_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT chk_date CHECK (departure_date > entry_date OR departure_date IS NULL),
   CONSTRAINT chk_freelancer CHECK (
     (
@@ -198,7 +198,7 @@ CREATE TABLE projects (
   CONSTRAINT pk_user_project_id PRIMARY KEY (user_id, project_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT uk_user_project_name UNIQUE (user_id, name),
   CONSTRAINT uk_user_project_url UNIQUE (user_id, project_url)
 );
@@ -215,7 +215,7 @@ CREATE TABLE users_languages (
   CONSTRAINT pk_user_language_id PRIMARY KEY (user_id, language_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT fk_language_id FOREIGN KEY (language_id) REFERENCES languages
     ON UPDATE CASCADE
     ON DELETE RESTRICT
@@ -231,7 +231,7 @@ CREATE TABLE users_ustudies (
   CONSTRAINT pk_user_ucareer_id PRIMARY KEY (user_id, ucareer_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT fk_ucareer FOREIGN KEY (ucareer_id) REFERENCES ucareers (ucareer_id)
     ON UPDATE CASCADE
     ON DELETE RESTRICT
@@ -245,7 +245,7 @@ CREATE TABLE users_hard_skills (
   CONSTRAINT pk_user_hard_skill_id PRIMARY KEY (user_id, hard_skill_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT fk_hard_skill_id FOREIGN KEY (hard_skill_id) REFERENCES hard_skills (hard_skill_id)
     ON UPDATE CASCADE
     ON DELETE RESTRICT
@@ -259,7 +259,7 @@ CREATE TABLE users_soft_skills (
   CONSTRAINT pk_user_soft_skill_id PRIMARY KEY (user_id, soft_skill_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT fk_soft_skill_id FOREIGN KEY (soft_skill_id) REFERENCES soft_skills (soft_skill_id)
     ON UPDATE CASCADE
     ON DELETE RESTRICT
@@ -281,76 +281,85 @@ CREATE TABLE projects_images (
 -- Idea Innovadora
 
 -- 15
-CREATE TABLE cvs (
+CREATE TABLE users_cvs (
   user_id INTEGER,
   cv_id INTEGER GENERATED ALWAYS AS IDENTITY,
+  ucareer_id INTEGER,
   name dom_name UNIQUE NOT NULL,
   created_at dom_created_at,
   updated_at dom_created_at,
   CONSTRAINT pk_user_cv_id PRIMARY KEY (user_id, cv_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE CASCADE,
+  CONSTRAINT fk_ucareer_id FOREIGN KEY (ucareer_id) REFERENCES ucareers (ucareer_id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT,
+  CONSTRAINT uk_career_name UNIQUE (user_id, ucareer_id, name)
 );
 
 -- 16
-CREATE TABLE cv_hard_skill (
+CREATE TABLE cv_hard_skills (
   user_id INTEGER,
   cv_id INTEGER,
   hard_skill_id INTEGER,
+  order_index INTEGER NOT NULL,
   created_at dom_created_at,
   CONSTRAINT pk_user_cv_hs_id PRIMARY KEY (user_id, cv_id, hard_skill_id),
-  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES cvs (user_id, cv_id)
+  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES users_cvs (user_id, cv_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT fk_user_hs_id FOREIGN KEY (user_id, hard_skill_id) REFERENCES users_hard_skills (user_id, hard_skill_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
 );
 
 -- 16.1
-CREATE TABLE cv_personal_hard_skill (
+CREATE TABLE cv_personal_hard_skills (
   user_id INTEGER,
   cv_id INTEGER,
   phard_skill_id INTEGER,
+  order_index INTEGER NOT NULL,
   created_at dom_created_at,
   CONSTRAINT pk_user_cv_phs_id PRIMARY KEY (user_id, cv_id, phard_skill_id),
-  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES cvs (user_id, cv_id)
+  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES users_cvs (user_id, cv_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT fk_user_phs_id FOREIGN KEY (user_id, phard_skill_id) REFERENCES personal_hard_skills (user_id, phard_skill_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
 );
 
 -- 17
-CREATE TABLE cv_soft_skill (
+CREATE TABLE cv_soft_skills (
   user_id INTEGER,
   cv_id INTEGER,
   soft_skill_id INTEGER,
+  order_index INTEGER NOT NULL,
   created_at dom_created_at,
   CONSTRAINT pk_user_cv_ss_id PRIMARY KEY (user_id, cv_id, soft_skill_id),
-  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES cvs (user_id, cv_id)
+  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES users_cvs (user_id, cv_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT fk_user_ss_id FOREIGN KEY (user_id, soft_skill_id) REFERENCES users_soft_skills (user_id, soft_skill_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
 );
 
 -- 17.1
-CREATE TABLE cv_personal_soft_skill (
+CREATE TABLE cv_personal_soft_skills (
   user_id INTEGER,
   cv_id INTEGER,
   psoft_skill_id INTEGER,
+  order_index INTEGER NOT NULL,
   created_at dom_created_at,
   CONSTRAINT pk_user_cv_pss_id PRIMARY KEY (user_id, cv_id, psoft_skill_id),
-  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES cvs (user_id, cv_id)
+  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES users_cvs (user_id, cv_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT fk_user_pss_id FOREIGN KEY (user_id, psoft_skill_id) REFERENCES personal_soft_skills (user_id, psoft_skill_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
 );
 
 -- 18
@@ -360,12 +369,14 @@ CREATE TABLE cv_ustudies (
   ucareer_id INTEGER,
   created_at dom_created_at,
   CONSTRAINT pk_user_cv_uc_id PRIMARY KEY (user_id, cv_id, ucareer_id),
-  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES cvs (user_id, cv_id)
+  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) 
+    REFERENCES users_cvs (user_id, cv_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
-  CONSTRAINT fk_user_ucareer_id FOREIGN KEY (user_id, ucareer_id) REFERENCES users_ustudies (user_id, ucareer_id)
+    ON DELETE CASCADE,
+  CONSTRAINT fk_user_ucareer_id FOREIGN KEY (user_id, ucareer_id) 
+    REFERENCES users_ustudies (user_id, ucareer_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
 );
 
 -- 18.1
@@ -375,12 +386,12 @@ CREATE TABLE cv_foreign_studies (
   foreign_study_id INTEGER,
   created_at dom_created_at,
   CONSTRAINT pk_user_cv_fs_id PRIMARY KEY (user_id, cv_id, foreign_study_id),
-  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES cvs (user_id, cv_id)
+  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES users_cvs (user_id, cv_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT fk_user_fs_id FOREIGN KEY (user_id, foreign_study_id) REFERENCES foreign_studies (user_id, foreign_study_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
 );
 
 -- 19
@@ -390,12 +401,12 @@ CREATE TABLE cv_work_experiences (
   work_exp_id INTEGER,
   created_at dom_created_at,
   CONSTRAINT pk_user_cv_we_id PRIMARY KEY (user_id, cv_id, work_exp_id),
-  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES cvs (user_id, cv_id)
+  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES users_cvs (user_id, cv_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT fk_user_we_id FOREIGN KEY (user_id, work_exp_id) REFERENCES work_experiences (user_id, work_exp_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
 );
 
 -- 20
@@ -403,14 +414,15 @@ CREATE TABLE cv_languages (
   user_id INTEGER,
   cv_id INTEGER,
   language_id INTEGER,
+  order_index INTEGER NOT NULL,
   created_at dom_created_at,
   CONSTRAINT pk_user_cv_language_id PRIMARY KEY (user_id, cv_id, language_id),
-  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES cvs (user_id, cv_id)
+  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES users_cvs (user_id, cv_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+    ON DELETE CASCADE,
   CONSTRAINT fk_user_language_id FOREIGN KEY (user_id, language_id) REFERENCES users_languages (user_id, language_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
 );
 
 -- --------------------
@@ -461,7 +473,7 @@ FOR EACH ROW
 EXECUTE FUNCTION update_updated_at();
 
 CREATE TRIGGER update_updated_at_cvs
-BEFORE UPDATE ON cvs
+BEFORE UPDATE ON users_cvs
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at();
 

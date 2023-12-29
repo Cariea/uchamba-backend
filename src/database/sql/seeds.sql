@@ -20,7 +20,7 @@ INSERT INTO users (
   ('Alejandro Rosas', 'ajrosas.19@est.ucab.edu.ve', 'Soy Chopper', '04141919875', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 4', 'admin', TRUE),
   ('Eduardo Sucre', 'ejsucre.19@est.ucab.edu.ve', 'Soy Daz Bonez', '04121320792', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 5', 'admin', TRUE),
   ('Carmelo Naim', 'usuario6@example.com', 'Soy Panda Man', '04124992818', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 6', 'admin', TRUE),
-  ('Maria Gioretti ', 'mggiorgetti.17@est.ucab.edu.ve', 'Soy Nami', '04249033451', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 7', 'admin', TRUE),
+  ('Maria Giorgetti ', 'mggiorgetti.17@est.ucab.edu.ve', 'Soy Nami', '04249033451', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 7', 'admin', TRUE),
   ('Acosta Carrion', 'yeniffer.acosta3097@gmail.com', 'Bibi', '04121856049', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 8', 'admin', TRUE);
 
 --Languages
@@ -117,7 +117,7 @@ INSERT INTO personal_hard_skills (
 ) VALUES
   (1, 'Programacion'),
   (2, 'Analisis de datos'),
-  (3, 'Aprendizaje automatico (Machine Learning)'),
+  (3, 'Aprendizaje de Maquina'),
   (4, 'Gestion de bases de datos'),
   (5, 'Desarrollo web'),
   (6, 'Seguridad de redes'),
@@ -153,19 +153,12 @@ INSERT INTO personal_soft_skills (
 ) VALUES
   (1, 'Comunicacion efectiva'),
   (2, 'Colaboracion en equipo'),
-  (3, 'Adaptabilidad'),
-  (4, 'Resolucion de problemas'),
-  (5, 'Creatividad'),
-  (6, 'Gestion del tiempo'),
-  (7, 'Liderazgo'),
-  (8, 'Empatia'),
-  (1, 'Resolucion de conflictos'),
-  (2, 'Pensamiento critico'),
-  (3, 'Gestion del estres'),
-  (4, 'Toma de decisiones'),
-  (5, 'Flexibilidad'),
-  (6, 'Actitud positiva'),
-  (7, 'Networking');
+  (3, 'Adaptable'),
+  (4, 'Resolucion de problemas internos'),
+  (5, 'Creatividad en Producto'),
+  (6, 'Organizacion del tiempo'),
+  (7, 'Liderazgo de Equipos'),
+  (8, 'Asertividad');
 
 INSERT INTO personal_links (
   user_id, 
@@ -219,8 +212,8 @@ INSERT INTO work_experiences (
   departure_date,
   description
 ) VALUES
-  (5, 'Lusitanos', 'Auxiliar de equipo', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Urbanizacion Moreno De Mendoza', FALSE, '2016-04-13', '2022-10-31', 'Una recarga de agua con una panaderia al lado'),
-  (5, 'Santo Tome', 'Empaquetador', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Los olivos', FALSE, '2010-10-10', '2015-04-12', 'Embolsaba las compras de los clientes y los ayudaba a llevarlas');
+  (4, 'Lusitanos', 'Auxiliar de equipo', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Urbanizacion Moreno De Mendoza', FALSE, '2016-04-13', '2022-10-31', 'Una recarga de agua con una panaderia al lado'),
+  (4, 'Santo Tome', 'Empaquetador', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Los olivos', FALSE, '2010-10-10', '2015-04-12', 'Embolsaba las compras de los clientes y los ayudaba a llevarlas');
 
 -- Projects
 INSERT INTO projects (
