@@ -43,7 +43,7 @@ export async function insertEntries (userId: number, cvId: number, entries: Entr
     })
   }
 
-  for (const workExpId of entries.experience) {
+  for (const workExpId of entries.experiences) {
     await pool.query({
       text: `
         INSERT INTO cv_work_experiences (

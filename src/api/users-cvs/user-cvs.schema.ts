@@ -7,7 +7,7 @@ const EntriesSchema = z.object({
     personal: z
       .array(z.number())
   }),
-  experience: z
+  experiences: z
     .array(z.number()),
   languages: z
     .array(z.number()),
