@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import path from 'path'
 import { compileFile } from 'pug'
 
-export const compiledFunction = compileFile('./src/api/generators/cv-generator/cv-template/template.pug')
+export const compiledFunction = compileFile('./src/api/cv-generator/cv-template/template.pug')
 
 dotenv.config()
 dotenv.config({ path: path.join(__dirname, '..', '..', `.env.${process.env.NODE_ENV}`) })
