@@ -10,12 +10,29 @@ export const updateProject = async (
   res: Response
 ): Promise<Response | undefined> => {
   try {
-    const { name, description, projectUrl, coverImageId, deletedImages } = req.body
+    const { name, description, projectUrl, coverImageId } = req.body
     const userId = req.user.id
     const { projectId } = req.params
 
-    if (coverImageId !== null) {
-      if (req.files?.coverImage === null) {
+    await pool.query({
+      text: `
+        UPDATE projects SET
+          name = $1,
+          description = $2,
+          project_url = $3
+        WHERE 
+          user_id = $4 AND 
+          project_id = $5
+      `,
+      values: [name, description, projectUrl, userId, projectId]
+    })
+
+    if (coverImageId === undefined && req.body.deletedImages === undefined) {
+      return res.status(STATUS.CREATED).json({ message: 'Proyecto actualizado correctamente' })
+    }
+
+    if (coverImageId !== undefined) {
+      if (req.files?.coverImage === undefined) {
         return res.status(STATUS.BAD_REQUEST).json({ message: 'se esperaba un reemplazo para el coverImage' })
       }
 
@@ -32,20 +49,7 @@ export const updateProject = async (
         values: [userId, projectId]
       })
 
-      await pool.query({
-        text: `
-          UPDATE projects SET
-            name = $1,
-            description = $2,
-            project_url = $3
-          WHERE 
-            user_id = $4 AND 
-            project_id = $5
-        `,
-        values: [name, description, projectUrl, userId, projectId]
-      })
-
-      if (req.files?.coverImage != null) {
+      if (req.files?.coverImage !== undefined) {
         const projectCoverCloudResponse = await uploadImage(req.files?.coverImage)
         if (projectCoverCloudResponse === null) {
           return res.status(STATUS.BAD_REQUEST).json({ message: 'error al cargar el cover' })
@@ -65,7 +69,9 @@ export const updateProject = async (
       }
     }
 
-    if (deletedImages.length > 0) {
+    const deletedImages = Array.isArray(req.body.deletedImages) ? req.body.deletedImages : [req.body.deletedImages]
+
+    if (deletedImages?.length > 0) {
       for (const image of deletedImages) {
         await deleteImage(image)
         await pool.query({
@@ -82,7 +88,7 @@ export const updateProject = async (
       }
     }
 
-    if (req.files?.images != null) {
+    if (req.files?.images !== undefined) {
       const images = Array.isArray(req.files?.images) ? req.files?.images : [req.files?.images]
 
       for (const image of images) {
@@ -93,21 +99,20 @@ export const updateProject = async (
 
         await pool.query({
           text: `
-              INSERT INTO projects_images (
-                user_id,
-                project_id,
-                image_cloud_id,
-                image_url
-              )
-              VALUES ($1, $2, $3, $4)
-              `,
+            INSERT INTO projects_images (
+              user_id,
+              project_id,
+              image_cloud_id,
+              image_url
+            )
+            VALUES ($1, $2, $3, $4)
+          `,
           values: [userId, projectId, cloudinaryResponse.public_id, cloudinaryResponse.url]
         })
       }
-
-      return res.status(STATUS.CREATED).json({ message: 'Proyecto actualizado correctamente' })
     }
-    return res.status(STATUS.CREATED).json({ message: 'Debe cargar una imagen' })
+
+    return res.status(STATUS.CREATED).json({ message: 'Proyecto actualizado correctamente' })
   } catch (error: unknown) {
     return handleControllerError(error, res)
   }

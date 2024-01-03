@@ -14,6 +14,7 @@ export const addWorkExperience = async (
     const {
       organizationName,
       jobTitle,
+      freelancer,
       country,
       state,
       city,
@@ -51,6 +52,7 @@ export const addWorkExperience = async (
           user_id,
           organization_name,
           job_title,
+          freelancer,
           country,
           state,
           city,
@@ -59,18 +61,19 @@ export const addWorkExperience = async (
           departure_date,
           description
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
         RETURNING
           user_id,
           work_exp_id,
           organization_name,
           job_title,
+          freelancer,
           country,
           state,
           city,
           address,
-          TO_CHAR(entry_date, 'DD/MM/YYYY') AS entry_date,
-          TO_CHAR(departure_date, 'DD/MM/YYYY') AS departure_date,
+          TO_CHAR(entry_date, 'YYYY-MM-DD') AS entry_date,
+          TO_CHAR(departure_date, 'YYYY-MM-DD') AS departure_date,
           description,
           TO_CHAR(created_at, 'DD/MM/YYYY - HH12:MI AM') AS created_at
       `,
@@ -78,12 +81,13 @@ export const addWorkExperience = async (
         userId,
         organizationName,
         jobTitle,
-        country,
-        state,
-        city,
-        address,
+        freelancer,
+        (freelancer === true ? null : country),
+        (freelancer === true ? null : state),
+        (freelancer === true ? null : city),
+        (freelancer === true ? null : address),
         entryDate,
-        departureDate,
+        (departureDate === '' ? null : departureDate),
         description
       ]
     })

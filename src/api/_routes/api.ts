@@ -20,12 +20,19 @@ import projectRouter from '../projects/projects.routes'
 import userLanguagesRouter from '../user-languages/user-languages.routes'
 import userStudiesRouter from '../user-studies/user-studies.routes'
 import cvGeneratorRoutes from '../cv-generator/cv.routes'
+import userCvsRouter from '../users-cvs/user-cvs.routes'
+import appInfoRouter from '../app-info/app-info.routes'
+import { testEP } from './test'
+
 export const router = Router()
 
 // Test endpoint
 router.get('/ping', (_req, res) => {
   res.status(200).json({ test: 'todo piola' })
 })
+
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
+router.post('/test', testEP)
 
 // Public Routes
 router.use('/auth', authRouter)
@@ -48,3 +55,5 @@ router.use('/work-experiences', workExperiencesRouter)
 router.use('/projects', projectRouter)
 router.use('/user-languages', userLanguagesRouter)
 router.use('/user-studies', userStudiesRouter)
+router.use('/user-cvs', userCvsRouter)
+router.use('/app-info', appInfoRouter)

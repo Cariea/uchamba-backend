@@ -11,6 +11,7 @@ export const deleteProfileSoftSkill = async (
 ): Promise<Response | undefined> => {
   try {
     const { name } = req.params
+    const userId: number = req.user.id
 
     const featuredDeletion = await pool.query({
       text: `
@@ -23,7 +24,7 @@ export const deleteProfileSoftSkill = async (
             WHERE name = $2
           )
       `,
-      values: [req.user.id, name]
+      values: [userId, name]
     })
 
     const personalDeletion = await pool.query({
@@ -33,12 +34,12 @@ export const deleteProfileSoftSkill = async (
           user_id = $1 AND
           name = $2
       `,
-      values: [req.user.id, name]
+      values: [userId, name]
     })
 
     if (featuredDeletion.rowCount === 0 && personalDeletion.rowCount === 0) {
       throw new StatusError({
-        message: `No se encontro la habilidad blanda ${name} del usuario: ${req.user.id as number}`,
+        message: `No se encontro la habilidad blanda ${name} del usuario: ${userId}`,
         statusCode: STATUS.NOT_FOUND
       })
     }

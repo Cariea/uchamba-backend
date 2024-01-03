@@ -1,69 +1,159 @@
 import { Response, Request } from 'express'
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 import { pool } from '../../../database'
-import { AUTH_EXPIRE, AUTH_SECRET } from '../../../config'
 import { STATUS } from '../../../utils/constants'
-import { User } from '../../../types/index'
 import { StatusError } from '../../../utils/responses/status-error'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
-import camelizeObject from '../../../utils/camelizeObject'
-
-const getLoginDataFromRequestBody = (req: Request): any[] => {
-  const { email, password } = req.body
-  const loginData = [email, password]
-  return loginData
-}
+import { loginWithEllucian } from '../_utils/loginWithEllucian'
+import { Graduated } from '../../../types/banner'
+import { generateToken } from '../_utils/generateToken'
 
 export const logIn = async (
   req: Request,
   res: Response
 ): Promise<Response | undefined> => {
   try {
-    const loginData = getLoginDataFromRequestBody(req)
-    const { rows } = await pool.query({
-      text: `
-        SELECT
-          user_id,
-          email,
-          name,
-          role,
-          password
-        FROM users
-        WHERE
-          role IN ('admin', 'graduated') AND
-          email = $1
-      `,
-      values: [loginData[0]]
-    })
+    const { email, password } = req.body
 
-    const data: User = camelizeObject(rows[0]) as User
+    const existInEllucian = await loginWithEllucian(email, password)
 
-    const isPasswordCorrect =
-      rows.length > 0
-        ? await bcrypt.compare(loginData[1], data.password)
-        : false
+    if (existInEllucian === true) {
+      const { rows: response } = await pool.query({
+        text: `
+          SELECT
+            COUNT(*)
+          FROM users
+          WHERE
+            role IN ('admin', 'graduated') AND
+            email = $1
+        `,
+        values: [email]
+      })
 
-    if (rows.length === 0 || !isPasswordCorrect) {
+      if (response[0].count !== '0') {
+        return res.status(STATUS.OK).json(await generateToken(email))
+      }
+
+      const { rows: degreeQuantity } = await pool.query({
+        text: `
+          SELECT
+            COUNT(*)
+          FROM banner
+          WHERE
+            email = $1 AND
+            degree = 'pregrado'
+        `,
+        values: [email]
+      })
+
+      if (degreeQuantity[0].count === '0') {
+        throw new StatusError({
+          message: 'Usted no cuenta con un pregrado en la UCAB',
+          statusCode: STATUS.UNAUTHORIZED
+        })
+      }
+
+      const { rows: bannerResponse } = await pool.query({
+        text: `
+          SELECT
+            undergraduate_id,
+            email,
+            name,
+            phone_number,
+            residence_address,
+            career,
+            degree,
+            graduation_year
+          FROM banner
+          WHERE
+            email = $1
+        `,
+        values: [email]
+      })
+
+      if (bannerResponse.length === 0) {
+        throw new StatusError({
+          message: 'Usted no es egresado de la UCAB',
+          statusCode: STATUS.UNAUTHORIZED
+        })
+      }
+
+      const { rows: insertUser } = await pool.query({
+        text: `
+          INSERT INTO users(
+            email,
+            name,
+            residence_address,
+            phone_number
+          ) VALUES ($1, $2, $3, $4)
+          RETURNING
+            user_id,
+            email,
+            name,
+            role
+        `,
+        values: [
+          bannerResponse[0].email,
+          bannerResponse[0].name,
+          bannerResponse[0].residence_address,
+          bannerResponse[0].phone_number
+        ]
+      })
+
+      let graduated: Graduated = {
+        undergraduateId: 0,
+        email: '',
+        name: '',
+        phoneNumber: '',
+        residenceAddress: '',
+        career: '',
+        degree: '',
+        graduation_year: ''
+      }
+
+      for (graduated of bannerResponse) {
+        const careerId = await pool.query({
+          text: `
+              SELECT
+                ucareer_id
+              FROM ucareers
+              WHERE
+                name = $1
+            `,
+          values: [graduated.career]
+        })
+
+        await pool.query({
+          text: `
+            INSERT INTO users_ustudies(
+              user_id,
+              ucareer_id,
+              degree,
+              graduation_year
+            ) VALUES ($1, $2, $3, $4)
+            RETURNING
+              user_id,
+              ucareer_id,
+              degree,
+              graduation_year
+          `,
+          values: [
+            insertUser[0].user_id,
+            careerId.rows[0].ucareer_id,
+            graduated.degree,
+            graduated.graduation_year
+          ]
+        })
+      }
+
+      return res.status(STATUS.OK).json(await generateToken(email))
+    } else {
       throw new StatusError({
         message: 'Email o Contraseña Incorrecta',
         statusCode: STATUS.UNAUTHORIZED
       })
     }
-
-    const userForToken = {
-      id: data.userId,
-      name: data.name,
-      email: data.email,
-      role: data.role
-    }
-
-    const token = jwt.sign(userForToken, String(AUTH_SECRET), {
-      expiresIn: String(AUTH_EXPIRE)
-    })
-
-    return res.status(STATUS.ACCEPTED).json({ ...userForToken, token })
   } catch (error: unknown) {
+    console.log('error', error)
     return handleControllerError(error, res)
   }
 }
