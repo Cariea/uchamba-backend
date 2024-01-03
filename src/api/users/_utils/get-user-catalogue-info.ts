@@ -93,7 +93,7 @@ export async function getUserCatalogueInfo (userId: string): Promise<any> {
       SELECT
         uc.cv_id,
         c.name AS career_name,
-        uc.name AS cv_name
+        uc.name
       FROM users_cvs AS uc
       INNER JOIN ucareers AS c ON
         c.ucareer_id = uc.ucareer_id
