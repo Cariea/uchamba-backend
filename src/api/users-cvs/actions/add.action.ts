@@ -28,8 +28,10 @@ export const addUserCV = async (
     await insertEntries(userId, userCvResponse[0].cv_id, entries)
 
     return res.status(STATUS.CREATED).json({ message: 'Curriculum Vitae creado correctamente' })
-  } catch (error: unknown) {
-    console.log(error)
+  } catch (error: any) {
+    if (error.code === '23503') {
+      return res.status(STATUS.CONFLICT).json({ message: 'Está intentando crearle un cv a alguien que no se tiene registrado' })
+    }
     return handleControllerError(error, res)
   }
 }

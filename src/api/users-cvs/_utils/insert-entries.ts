@@ -4,21 +4,20 @@ import { getHSOccurrencesArrays } from './get-hs-occurrences-arrays'
 import { getSSOccurrencesArrays } from './get-ss-occurrences-arrays'
 
 export async function insertEntries (userId: number, cvId: number, entries: Entries): Promise<void> {
-  for (let index = 0; index < entries.languages.length; index++) {
+  for (const languageId of entries.languages) {
     await pool.query({
       text: `
         INSERT INTO cv_languages (
           user_id,
           cv_id,
-          language_id,
-          order_index
-        ) VALUES ($1, $2, $3, $4)
+          language_id
+        ) VALUES ($1, $2, $3)
       `,
-      values: [userId, cvId, entries.languages[index], index]
+      values: [userId, cvId, languageId]
     })
   }
 
-  for (const featured of entries.education.featured) {
+  for (const ucareerId of entries.education.featured) {
     await pool.query({
       text: `
         INSERT INTO cv_ustudies (
@@ -27,11 +26,11 @@ export async function insertEntries (userId: number, cvId: number, entries: Entr
           ucareer_id
         ) VALUES ($1, $2, $3)
       `,
-      values: [userId, cvId, featured]
+      values: [userId, cvId, ucareerId]
     })
   }
 
-  for (const personal of entries.education.personal) {
+  for (const foreignStudyId of entries.education.personal) {
     await pool.query({
       text: `
         INSERT INTO cv_foreign_studies (
@@ -40,11 +39,11 @@ export async function insertEntries (userId: number, cvId: number, entries: Entr
           foreign_study_id
         ) VALUES ($1, $2, $3)
       `,
-      values: [userId, cvId, personal]
+      values: [userId, cvId, foreignStudyId]
     })
   }
 
-  for (const experience of entries.experience) {
+  for (const workExpId of entries.experience) {
     await pool.query({
       text: `
         INSERT INTO cv_work_experiences (
@@ -53,7 +52,7 @@ export async function insertEntries (userId: number, cvId: number, entries: Entr
           work_exp_id
         ) VALUES ($1, $2, $3)
       `,
-      values: [userId, cvId, experience]
+      values: [userId, cvId, workExpId]
     })
   }
 
@@ -102,6 +101,7 @@ export async function insertEntries (userId: number, cvId: number, entries: Entr
       values: [userId, cvId, skill.id, skill.index]
     })
   }
+
   for (const skill of softSkillsArrays.personal) {
     await pool.query({
       text: `

@@ -22,12 +22,10 @@ export async function getUserCatalogueInfo (userId: string): Promise<any> {
       SELECT
         l.name,
         ul.proficient_level
-      FROM
-        users_languages AS ul,
-        languages AS l
-      WHERE
-        ul.user_id = $1 AND
+      FROM users_languages AS ul
+      INNER JOIN languages AS l ON
         ul.language_id = l.language_id
+      WHERE ul.user_id = $1
       ORDER BY l.language_id ASC
     `,
     values: [userId]
@@ -36,12 +34,10 @@ export async function getUserCatalogueInfo (userId: string): Promise<any> {
   const userHardSkillsQuery = pool.query({
     text: `
       SELECT hs.name
-      FROM 
-        users_hard_skills AS uhs,
-        hard_skills AS hs
-      WHERE 
-        uhs.user_id = $1 AND
+      FROM users_hard_skills AS uhs
+      INNER JOIN hard_skills AS hs ON
         uhs.hard_skill_id = hs.hard_skill_id
+      WHERE uhs.user_id = $1
       ORDER BY hs.hard_skill_id ASC
     `,
     values: [userId]
@@ -60,12 +56,10 @@ export async function getUserCatalogueInfo (userId: string): Promise<any> {
   const userSoftSkillsQuery = pool.query({
     text: `
       SELECT ss.name
-      FROM 
-        users_soft_skills AS uss,
-        soft_skills AS ss
-      WHERE 
-        uss.user_id = $1 AND
+      FROM users_soft_skills AS uss
+      INNER JOIN soft_skills AS ss ON
         uss.soft_skill_id = ss.soft_skill_id
+      WHERE uss.user_id = $1
       ORDER BY ss.soft_skill_id ASC
     `,
     values: [userId]
@@ -85,13 +79,11 @@ export async function getUserCatalogueInfo (userId: string): Promise<any> {
     text: `
       SELECT
         uc.name
-      FROM
-        users_ustudies AS uus,
-        ucareers AS uc
-      WHERE
-        uus.user_id = $1 AND
+      FROM users_ustudies AS uus
+      INNER JOIN ucareers AS uc ON
         uus.ucareer_id = uc.ucareer_id
-      ORDER BY uc.ucareer_id ASC
+      WHERE uus.user_id = $1
+      ORDER BY graduation_year DESC
     `,
     values: [userId]
   })
@@ -102,12 +94,10 @@ export async function getUserCatalogueInfo (userId: string): Promise<any> {
         uc.cv_id,
         c.name AS career_name,
         uc.name AS cv_name
-      FROM
-        users_cvs AS uc,
-        ucareers AS c
-      WHERE
-        user_id = $1 AND
+      FROM users_cvs AS uc
+      INNER JOIN ucareers AS c ON
         c.ucareer_id = uc.ucareer_id
+      WHERE user_id = $1
       ORDER BY cv_id ASC
     `,
     values: [userId]

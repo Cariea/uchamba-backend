@@ -2,6 +2,8 @@ import { pool } from '../../../database'
 import { StatusError } from '../../../utils/responses/status-error'
 import { STATUS } from '../../../utils/constants'
 import camelizeObject from '../../../utils/camelizeObject'
+import { getSortedEducationObject } from '../../cv-generator/_utils/get-sorted-education-object'
+import { Education } from '../../../types/cv'
 
 export async function getUserDetailed (userId: string): Promise<any> {
   const user = await pool.query({
@@ -33,12 +35,10 @@ export async function getUserDetailed (userId: string): Promise<any> {
   const userHardSkillsQuery = pool.query({
     text: `
       SELECT hs.name
-      FROM 
-        users_hard_skills AS uhs,
-        hard_skills AS hs
-      WHERE 
-        uhs.user_id = $1 AND
+      FROM users_hard_skills AS uhs
+      INNER JOIN hard_skills AS hs ON
         uhs.hard_skill_id = hs.hard_skill_id
+      WHERE uhs.user_id = $1
       ORDER BY hs.hard_skill_id ASC
     `,
     values: [userId]
@@ -57,12 +57,10 @@ export async function getUserDetailed (userId: string): Promise<any> {
   const userSoftSkillsQuery = pool.query({
     text: `
       SELECT ss.name
-      FROM 
-        users_soft_skills AS uss,
-        soft_skills AS ss
-      WHERE 
-        uss.user_id = $1 AND
+      FROM users_soft_skills AS uss
+      INNER JOIN soft_skills AS ss ON
         uss.soft_skill_id = ss.soft_skill_id
+      WHERE uss.user_id = $1
       ORDER BY ss.soft_skill_id ASC
     `,
     values: [userId]
@@ -93,17 +91,15 @@ export async function getUserDetailed (userId: string): Promise<any> {
   const userUStudiesQuery = pool.query({
     text: `
       SELECT
-        uc.ucareer_id,
+        uc.ucareer_id AS id,
         uc.name,
         uus.degree,
         TO_CHAR(uus.graduation_year, 'YYYY') AS graduation_year
-      FROM
-        users_ustudies AS uus,
-        ucareers AS uc
-      WHERE
-        uus.user_id = $1 AND
+      FROM users_ustudies AS uus
+      INNER JOIN ucareers AS uc ON
         uus.ucareer_id = uc.ucareer_id
-      ORDER BY graduation_year DESC
+      WHERE uus.user_id = $1
+      ORDER BY uus.graduation_year DESC
     `,
     values: [userId]
   })
@@ -111,7 +107,7 @@ export async function getUserDetailed (userId: string): Promise<any> {
   const foreignStudiesQuery = pool.query({
     text: `
       SELECT
-        foreign_study_id AS study_id,
+        foreign_study_id AS id,
         name,
         university_name,
         degree,
@@ -192,12 +188,10 @@ export async function getUserDetailed (userId: string): Promise<any> {
         ul.proficient_level,
         ul.certificate_image_id,
         ul.certificate_image_url
-      FROM
-        users_languages AS ul,
-        languages AS l
-      WHERE
-        ul.user_id = $1 AND
+      FROM users_languages AS ul
+      INNER JOIN languages AS l ON
         ul.language_id = l.language_id
+      WHERE ul.user_id = $1
       ORDER BY
         proficient_level DESC,
         name ASC
@@ -231,12 +225,14 @@ export async function getUserDetailed (userId: string): Promise<any> {
     ...camelizeObject(user.rows[0]),
     languages: camelizeObject(languages),
     personalLinks: camelizeObject(personalLinks),
-    hardSkills: [...userHardSkills, ...personalHardSkills].map(item => item.name),
-    softSkills: [...userSoftSkills, ...personalSoftSkills].map(item => item.name),
-    education: {
-      featured: camelizeObject(userUStudies),
-      personal: camelizeObject(foreignStudies)
+    skills: {
+      hard: [...userHardSkills, ...personalHardSkills].map(item => item.name),
+      soft: [...userSoftSkills, ...personalSoftSkills].map(item => item.name)
     },
+    education: getSortedEducationObject(
+      camelizeObject(userUStudies) as Education[],
+      camelizeObject(foreignStudies) as Education[]
+    ),
     workExperiences: camelizeObject(workExperiences),
     projects: camelizeObject(projects)
   }

@@ -30,6 +30,7 @@ export interface Skill {
 }
 
 export interface Education {
+  id: string | undefined
   name: string
   universityName: string
   degree: string
