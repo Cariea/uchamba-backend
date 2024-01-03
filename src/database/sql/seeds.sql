@@ -80,15 +80,15 @@ INSERT INTO languages (
 INSERT INTO ucareers (
   name
 ) VALUES
-  ('Ingenieria Informatica'),
+  ('Administracion de Empresas'),
+  ('Comunicacion Social'),
+  ('Contaduria Publica'),
+  ('Derecho'),
+  ('Educacion'),
   ('Ingenieria Civil'),
   ('Ingenieria Industrial'),
-  ('Relaciones Industriales'),
-  ('Educacion'),
-  ('Comunicacion Social'),
-  ('Derecho'),
-  ('Administracion de Empresas'),
-  ('Contaduria Publica');
+  ('Ingenieria Informatica'),
+  ('Relaciones Industriales');
   
 --Hard Skills
 INSERT INTO hard_skills (
@@ -118,7 +118,11 @@ INSERT INTO personal_hard_skills (
   (1, 'Programacion'),
   (2, 'Analisis de datos'),
   (3, 'Aprendizaje de Maquina'),
+
   (4, 'Gestion de bases de datos'),
+  (4, 'Generador de seeds'),
+  (4, 'Godot'),
+
   (5, 'Desarrollo web'),
   (6, 'Seguridad de redes'),
   (7, 'Pruebas de software'),
@@ -154,7 +158,11 @@ INSERT INTO personal_soft_skills (
   (1, 'Comunicacion efectiva'),
   (2, 'Colaboracion en equipo'),
   (3, 'Adaptable'),
+
   (4, 'Resolucion de problemas internos'),
+  (4, 'Creatividad en producto'),
+  (4, 'Preocuparse por el otro'),
+
   (5, 'Creatividad en Producto'),
   (6, 'Organizacion del tiempo'),
   (7, 'Liderazgo de Equipos'),
@@ -185,7 +193,8 @@ INSERT INTO foreign_studies (
   (1, 'Study Abroad 1', 'Foreign University 1', 'pregrado', '2023-01-01'),
   (2, 'Study Abroad 2', 'Foreign University 2', 'maestria', '2024-01-01'),
   (3, 'Study Abroad 3', 'Foreign University 3', 'pregrado', '2022-01-01'),
-  (4, 'Study Abroad 4', 'Foreign University 4', 'doctorado', '2025-01-01'),
+  (4, 'Desarrollo Web/Frontend', 'UNIR Colombia', 'maestria', '2019-01-01'),
+  (4, 'Biotecnologia Avanzada', 'UAB Barcelona', 'postgrado', '2024-01-01'),
   (5, 'Study Abroad 5', 'Foreign University 5', 'postgrado', '2024-01-01'),
   (6, 'Study Abroad 6', 'Foreign University 6', 'pregrado', '2023-01-01'),
   (7, 'Study Abroad 7', 'Foreign University 7', 'maestria', '2024-01-01'),
@@ -212,8 +221,12 @@ INSERT INTO work_experiences (
   departure_date,
   description
 ) VALUES
-  (4, 'Lusitanos', 'Auxiliar de equipo', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Urbanizacion Moreno De Mendoza', FALSE, '2016-04-13', '2022-10-31', 'Una recarga de agua con una panaderia al lado'),
-  (4, 'Santo Tome', 'Empaquetador', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Los olivos', FALSE, '2010-10-10', '2015-04-12', 'Embolsaba las compras de los clientes y los ayudaba a llevarlas');
+  (4, 'JDM', 'Desarrollador', null, null, null, null, TRUE, '2022-07-20', null, 'Estoy actualmente trabajando como Desarrollador Fullstack para el desarrollo de una aplicacion de gestion de inventario/ventas/compras de la empresa y balance general'),
+  (4, 'UChamba', 'Lider/Desarrollador Back-end', null, null, null, null, TRUE, '2023-04-20', null, 'Actualmente apoyo en el desarrollo de una aplicacion que busca permitirle a los egresados generar sus Curriculums Vitae y mostrarse al mundo para aumentar sus niveles de empleabilidad, soy desarrollador pero ademas gestiono y delego tareas a los distintos integrantes del equipo de back-end'),
+  (4, 'Leafeon App', 'Lider/Desarrollador Back-end', null, null, null, null, TRUE, '2023-04-20', '2023-07-17', 'Trabaje como Lider y Desarrollador en esta aplicacion que tenia como objetivo gestionar todos los flujos de una empresa que se encargaba en la prestacion de servicios de mantenimiento a vehiculos'),
+  (4, 'Offside', 'Desarrollador Front-end', null, null, null, null, TRUE, '2022-09-20', '2023-01-14', 'Me centre en el desarrollo del Front-end de la aplicacion movil de Offside haciendo uso de React Native como tecnologia de desarrollo'),
+  (5, 'Lusitanos', 'Auxiliar de equipo', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Urbanizacion Moreno De Mendoza', FALSE, '2016-04-13', '2022-10-31', 'Una recarga de agua con una panaderia al lado'),
+  (5, 'Santo Tome', 'Empaquetador', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Los olivos', FALSE, '2010-10-10', '2015-04-12', 'Embolsaba las compras de los clientes y los ayudaba a llevarlas');
 
 -- Projects
 INSERT INTO projects (
@@ -258,21 +271,28 @@ INSERT INTO users_languages (
   certificate_image_id,
   certificate_image_url
 ) VALUES
-  (1, 1, 'Native', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (1, 2, 'B1', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (2, 1, 'Native', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (2, 2, 'B1', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (3, 1, 'Native', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (3, 2, 'B2', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (4, 1, 'Native', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (4, 2, 'B2', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (5, 1, 'Native', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (5, 2, 'C1', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (6, 1, 'Native', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (6, 2, 'C2', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (7, 1, 'Native', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (7, 2, 'A1', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (8, 1, 'Native', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg');
+  (1, 1, 'Native', null, null),
+  (1, 2, 'B1', null, null),
+  (2, 1, 'Native', null, null),
+  (2, 2, 'B1', null, null),
+  (3, 1, 'Native', null, null),
+  (3, 2, 'B2', null, null),
+
+  -- Alejandro Rosas
+  (4, 1, 'Native', null, null),
+  (4, 2, 'B2', null, null),
+  (4, 3, 'B2', null, null),
+  (4, 4, 'A1', null, null),
+  (4, 5, 'A2', null, null),
+  (4, 6, 'C1', null, null),
+
+  (5, 1, 'Native', null, null),
+  (5, 2, 'C1', null, null),
+  (6, 1, 'Native', null, null),
+  (6, 2, 'C2', null, null),
+  (7, 1, 'Native', null, null),
+  (7, 2, 'A1', null, null),
+  (8, 1, 'Native', null, null);
 
 --User Studies
 INSERT INTO users_ustudies (
@@ -282,11 +302,14 @@ INSERT INTO users_ustudies (
   graduation_year
 ) VALUES
   (1, 1, 'pregrado', '2022-01-01'),
-  (2, 2, 'postgrado', '2021-01-01'),
-  (3, 3, 'maestria', '2022-01-01'),
-  (4, 4, 'especializacion', '2023-01-01'),
-  (5, 5, 'maestria', '2021-01-01'),
-  (6, 6, 'doctorado', '2022-01-01'),
+  (2, 2, 'pregrado', '2021-01-01'),
+  (3, 3, 'pregrado', '2022-01-01'),
+
+  (4, 8, 'pregrado', '2023-01-01'),
+  (4, 9, 'pregrado', '2022-01-01'),
+
+  (5, 5, 'pregrado', '2021-01-01'),
+  (6, 6, 'pregrado', '2022-01-01'),
   (7, 7, 'pregrado', '2023-01-01'),
   (8, 8, 'pregrado', '2023-01-01'),
   (1, 2, 'pregrado', '2022-01-01'),
@@ -302,8 +325,10 @@ INSERT INTO users_hard_skills (
   (2, 4),
   (3, 5),
   (3, 6),
+
   (4, 7),
   (4, 8),
+
   (5, 9),
   (5, 10),
   (6, 11),
@@ -322,8 +347,10 @@ INSERT INTO users_soft_skills (
   (2, 4),
   (3, 5),
   (3, 6),
+
   (4, 7),
   (4, 8),
+
   (5, 9),
   (5, 10),
   (6, 11),
@@ -331,5 +358,137 @@ INSERT INTO users_soft_skills (
   (7, 13),
   (7, 14),
   (8, 15);
+
+INSERT INTO users_cvs (
+  user_id,
+  ucareer_id,
+  name
+) VALUES
+  (4, 8, 'Desarrollador Fullstack'),
+  (4, 8, 'Desarrollador Back-end'),
+  (4, 8, 'Desarrollador Front-end');
+
+INSERT INTO cv_hard_skills (
+  user_id,
+  cv_id,
+  hard_skill_id,
+  order_index
+) VALUES
+  (4, 1, 7, 0),
+  (4, 1, 8, 4),
+
+  (4, 2, 7, 1),
+  (4, 2, 8, 3),
+
+  (4, 3, 7, 2),
+  (4, 3, 8, 0);
+
+INSERT INTO cv_personal_hard_skills (
+  user_id,
+  cv_id,
+  phard_skill_id,
+  order_index
+) VALUES
+  (4, 1, 4, 1),
+  (4, 1, 6, 2),
+  (4, 1, 5, 3),
+
+  (4, 2, 4, 0),
+  (4, 2, 6, 2),
+  (4, 2, 5, 4),
+
+  (4, 3, 4, 3),
+  (4, 3, 6, 4),
+  (4, 3, 5, 1);
+
+INSERT INTO cv_soft_skills (
+  user_id,
+  cv_id,
+  soft_skill_id,
+  order_index
+) VALUES
+  (4, 1, 7, 4),
+  (4, 1, 8, 0),
+
+  (4, 2, 7, 1),
+  (4, 2, 8, 3),
+
+  (4, 3, 7, 2),
+  (4, 3, 8, 0);
+
+INSERT INTO cv_personal_soft_skills (
+  user_id,
+  cv_id,
+  psoft_skill_id,
+  order_index
+) VALUES
+  (4, 1, 4, 1),
+  (4, 1, 6, 2),
+  (4, 1, 5, 3),
+
+  (4, 2, 4, 0),
+  (4, 2, 6, 2),
+  (4, 2, 5, 4),
+
+  (4, 3, 4, 3),
+  (4, 3, 6, 4),
+  (4, 3, 5, 1);
+
+INSERT INTO cv_ustudies (
+  user_id,
+  cv_id,
+  ucareer_id
+) VALUES
+  (4, 1, 8),
+  (4, 2, 8),
+  (4, 3, 8);
+
+INSERT INTO cv_foreign_studies (
+  user_id,
+  cv_id,
+  foreign_study_id
+) VALUES
+  (4, 1, 4),
+  (4, 1, 5),
+  (4, 2, 5),
+  (4, 3, 4);
+
+INSERT INTO cv_work_experiences (
+  user_id,
+  cv_id,
+  work_exp_id
+) VALUES
+  (4, 1, 1),
+  (4, 1, 2),
+  (4, 1, 3),
+  (4, 1, 4),
+
+  (4, 2, 1),
+  (4, 2, 2),
+  (4, 2, 3),
+
+  (4, 3, 1),
+  (4, 3, 4);
+
+INSERT INTO cv_languages (
+  user_id,
+  cv_id,
+  language_id
+) VALUES
+  (4, 1, 1),
+  (4, 1, 2),
+  (4, 1, 3),
+  (4, 1, 4),
+  (4, 1, 5),
+
+  (4, 2, 5),
+  (4, 2, 4),
+  (4, 2, 3),
+  (4, 2, 2),
+  (4, 2, 1),
+
+  (4, 3, 1),
+  (4, 3, 6),
+  (4, 3, 2);
 
 COMMIT;
