@@ -8,7 +8,7 @@ html(lang='es')
     link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='')
     link(href='https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Raleway:wght@800;900&display=swap', rel='stylesheet')
     link(rel='preload', as='image', href='https://res.cloudinary.com/dypukp3t0/image/upload/v1702855845/bz68psr6k3iq9nziwooe.png', type='image/png')
-    title Currículum de #{name} como Software Developer
+    title Currículum de #{name} como #{cvName}
   body
     .cv
       header.cv-header
@@ -19,7 +19,7 @@ html(lang='es')
             h1.cv-header__important-text.cv-header__important-text--title
               | #{name}
             h2.cv-header__important-text.cv-header__important-text--subtitle
-              | Software Developer
+              | #{cvName}
           .cv-header__additional-container
             p #{country} - #{state} - #{city} - #{residenceAddress}
             a(href='mailto:' + email) #{email}

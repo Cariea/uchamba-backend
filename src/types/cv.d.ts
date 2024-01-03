@@ -10,6 +10,8 @@ export interface User {
 }
 
 export interface Curriculum extends User {
+  careerName: string
+  cvName: string
   languages: Language[]
   hardSkills: HardSkills
   softSkills: SoftSkills

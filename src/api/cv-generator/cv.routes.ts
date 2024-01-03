@@ -3,6 +3,6 @@ import { Router } from 'express'
 import { cvGenerator } from '../cv-generator/actions/get.action'
 const router = Router()
 
-router.get('/:userId', cvGenerator)
+router.get('/user/:userId/cv/:cvId', cvGenerator)
 
 export default router
