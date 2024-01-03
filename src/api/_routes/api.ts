@@ -28,7 +28,7 @@ export const router = Router()
 
 // Test endpoint
 router.get('/ping', (_req, res) => {
-  res.status(200).json({ test: 'todo piola' })
+  res.status(418).json({ test: 'todo piola' })
 })
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
