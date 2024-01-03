@@ -24,7 +24,8 @@ export const addLanguage = async (
     })
 
     return res.status(STATUS.OK).json(camelizeObject(response.rows[0]))
-  } catch (error: unknown) {
+  } catch (error: any) {
+    console.log(error)
     return handleControllerError(error, res)
   }
 }
