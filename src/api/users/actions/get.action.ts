@@ -1,12 +1,12 @@
-/* eslint-disable @typescript-eslint/promise-function-async */
 import { Request, Response } from 'express'
 import { pool } from '../../../database'
 import { DEFAULT_PAGE, STATUS } from '../../../utils/constants'
 import { PaginateSettings, paginatedItemsResponse } from '../../../utils/responses'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
-// import camelizeObject from '../../../utils/camelizeObject'
 import { getDailyRandomSeed } from '../_utils/get-daily-random-seed'
 import { getUserCatalogueInfo } from '../_utils/get-user-catalogue-info'
+import { validateFilters } from '../_utils/validateFilters'
+import { findFilterUsers } from '../_utils/findFilterUsers'
 
 export const getUsers = async (
   req: Request,
@@ -14,24 +14,31 @@ export const getUsers = async (
 ): Promise<Response> => {
   const { page = DEFAULT_PAGE.page, size = DEFAULT_PAGE.size } = req.query
 
+  const validFilters = validateFilters(req.query)
   try {
+    let carry = ''
     let offset = (Number(page) - 1) * Number(size)
 
     if (Number(page) < 1) {
       offset = 0
     }
 
-    const { rows } = await pool.query({
-      text: `
-        SELECT COUNT(*) 
-        FROM users
-        WHERE is_active = TRUE
-      `
-    })
-
     await pool.query({
       text: 'SELECT SETSEED($1)',
       values: [getDailyRandomSeed()]
+    })
+
+    carry = await findFilterUsers(validFilters, req)
+
+    const { rows } = await pool.query({
+      text: `
+        SELECT
+          count(*)
+        FROM users
+        WHERE
+        user_id IN (${carry})
+        AND is_active = TRUE
+      `
     })
 
     const { rows: response } = await pool.query({
@@ -40,7 +47,7 @@ export const getUsers = async (
           user_id
         FROM users
         WHERE
-          is_active = TRUE
+          user_id IN (${carry})
         ORDER BY random()
         LIMIT $1 OFFSET $2
       `,
@@ -48,7 +55,7 @@ export const getUsers = async (
     })
 
     const finalItemsResponse = await Promise.all(
-      response.map(user => getUserCatalogueInfo(user.user_id))
+      response.map(async user => await getUserCatalogueInfo(user.user_id))
     )
 
     const pagination: PaginateSettings = {
@@ -59,6 +66,7 @@ export const getUsers = async (
 
     return paginatedItemsResponse(res, STATUS.OK, finalItemsResponse, pagination)
   } catch (error: unknown) {
+    console.log(error)
     return handleControllerError(error, res)
   }
 }
