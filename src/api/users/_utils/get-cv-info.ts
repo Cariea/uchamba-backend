@@ -1,7 +1,6 @@
 import { pool } from '../../../database'
-import { Education, Skill } from '../../../types/cv'
+import { Skill } from '../../../types/cv'
 import camelizeObject from '../../../utils/camelizeObject'
-import { getSortedEducationObject } from '../../cv-generator/_utils/get-sorted-education-object'
 import { getSortedSkillsArray } from '../../cv-generator/_utils/get-sorted-skills-array'
 
 export async function getCVInfo (cvId: string): Promise<any> {
@@ -162,10 +161,10 @@ export async function getCVInfo (cvId: string): Promise<any> {
         )
       },
       experiences: experiences.map(item => item.id),
-      education: getSortedEducationObject(
-        camelizeObject(userUStudies) as Education[],
-        camelizeObject(foreignStudies) as Education[]
-      ).map(item => item.id)
+      education: {
+        featured: userUStudies.map(item => item.id),
+        personal: foreignStudies.map(item => item.id)
+      }
     }
   }
 
