@@ -165,8 +165,7 @@ export async function getCVInfo (userId: string, cvId: string): Promise<Curricul
       WHERE
         cvu.user_id = $1 AND
         cvu.cv_id = $2
-      ORDER BY
-        uus.graduation_year DESC
+      ORDER BY uus.graduation_year DESC
     `,
     values: [userId, cvId]
   })
@@ -184,8 +183,7 @@ export async function getCVInfo (userId: string, cvId: string): Promise<Curricul
       WHERE
         cvfs.user_id = $1 AND
         cvfs.cv_id = $2
-      ORDER BY
-        fs.graduation_year DESC
+      ORDER BY fs.graduation_year DESC
     `,
     values: [userId, cvId]
   })

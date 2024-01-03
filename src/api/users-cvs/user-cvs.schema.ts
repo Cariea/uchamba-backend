@@ -34,6 +34,6 @@ export const UserCVSchema = z.object({
   name: z
     .string()
     .min(1, 'Debe indicar un nombre')
-    .max(64, 'El nombre no puede superar los 64 carácteres'),
+    .max(40, 'El nombre no puede superar los 64 carácteres'),
   entries: EntriesSchema
 })

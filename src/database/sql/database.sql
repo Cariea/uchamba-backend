@@ -285,7 +285,7 @@ CREATE TABLE users_cvs (
   user_id INTEGER,
   cv_id INTEGER GENERATED ALWAYS AS IDENTITY,
   ucareer_id INTEGER,
-  name dom_name UNIQUE NOT NULL,
+  name VARCHAR(40) UNIQUE NOT NULL,
   created_at dom_created_at,
   updated_at dom_created_at,
   CONSTRAINT pk_user_cv_id PRIMARY KEY (user_id, cv_id),
