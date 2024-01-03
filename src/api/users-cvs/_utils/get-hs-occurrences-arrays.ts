@@ -12,22 +12,25 @@ export async function getHSOccurrencesArrays (
 ): Promise<InsertionArrays> {
   const { rows: featuredHardSkills } = await pool.query({
     text: `
-    SELECT
-      hard_skill_id AS id,
-      name
-    FROM hard_skills
-  `
+      SELECT
+        uhs.hard_skill_id AS id,
+        hs.name
+      FROM users_hard_skills AS uhs
+      INNER JOIN hard_skills AS hs ON
+        uhs.hard_skill_id = hs.hard_skill_id
+      WHERE uhs.user_id = $1
+    `,
+    values: [userId]
   })
 
   const { rows: personalHardSkills } = await pool.query({
     text: `
-    SELECT
-      phard_skill_id AS id,
-      name
-    FROM personal_hard_skills
-    WHERE
-      user_id = $1
-  `,
+      SELECT
+        phard_skill_id AS id,
+        name
+      FROM personal_hard_skills
+      WHERE user_id = $1
+    `,
     values: [userId]
   })
 
