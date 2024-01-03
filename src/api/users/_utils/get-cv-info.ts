@@ -149,22 +149,24 @@ export async function getCVInfo (cvId: string): Promise<any> {
 
   const userCatalogue = {
     ...camelizeObject(userCvs[0]),
-    languages: languages.map(item => item.id),
-    skills: {
-      hard: getSortedSkillsArray(
-        camelizeObject(hardSkills) as Skill[],
-        camelizeObject(personalHardSkills) as Skill[]
-      ),
-      soft: getSortedSkillsArray(
-        camelizeObject(softSkills) as Skill[],
-        camelizeObject(personalSoftSkills) as Skill[]
-      )
-    },
-    experiences: experiences.map(item => item.id),
-    education: getSortedEducationObject(
-      camelizeObject(userUStudies) as Education[],
-      camelizeObject(foreignStudies) as Education[]
-    ).map(item => item.id)
+    entries: {
+      languages: languages.map(item => item.id),
+      skills: {
+        hard: getSortedSkillsArray(
+          camelizeObject(hardSkills) as Skill[],
+          camelizeObject(personalHardSkills) as Skill[]
+        ),
+        soft: getSortedSkillsArray(
+          camelizeObject(softSkills) as Skill[],
+          camelizeObject(personalSoftSkills) as Skill[]
+        )
+      },
+      experiences: experiences.map(item => item.id),
+      education: getSortedEducationObject(
+        camelizeObject(userUStudies) as Education[],
+        camelizeObject(foreignStudies) as Education[]
+      ).map(item => item.id)
+    }
   }
 
   return userCatalogue
