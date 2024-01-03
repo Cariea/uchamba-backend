@@ -114,7 +114,6 @@ export const updateProject = async (
 
     return res.status(STATUS.CREATED).json({ message: 'Proyecto actualizado correctamente' })
   } catch (error: unknown) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }

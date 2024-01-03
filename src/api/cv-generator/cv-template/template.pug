@@ -1,0 +1,99 @@
+html(lang='es')
+  head
+    style
+      include styles.css
+    meta(charset='UTF-8') 
+    meta(name='viewport', content='width=device-width, initial-scale=1.0') 
+    link(rel='preconnect', href='https://fonts.googleapis.com')  
+    link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='')
+    link(href='https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Raleway:wght@800;900&display=swap', rel='stylesheet')
+    link(rel='preload', as='image', href='https://res.cloudinary.com/dypukp3t0/image/upload/v1702855845/bz68psr6k3iq9nziwooe.png', type='image/png')
+    title Currículum de #{name} como #{cvName}
+  body
+    .cv
+      header.cv-header
+        .cv-header__logo-container
+          img.cv-header__logo(src='https://res.cloudinary.com/dypukp3t0/image/upload/v1702855845/bz68psr6k3iq9nziwooe.png', alt='', loading="eager")
+        .cv-header__info-container
+          .cv-header__important-container
+            h1.cv-header__important-text.cv-header__important-text--title
+              | #{name}
+            h2.cv-header__important-text.cv-header__important-text--subtitle
+              | #{cvName}
+          .cv-header__additional-container
+            p #{country} - #{state} - #{city} - #{residenceAddress}
+            a(href='mailto:' + email) #{email}
+
+      hr.section-divider.section-divider--header
+
+      main.cv-main
+
+        section.cv-section.cv-section--work-experiences
+          h3.cv-section__important-text Experiencia Laboral           
+          div
+            each workExp in workExperiences
+              article.cv-article.cv-article--work-experiences
+                h4.cv-article__title #{workExp.jobTitle}
+                if workExp.departureDate
+                  strong.cv-article__important-text #{workExp.organizationName} • Entrada #{workExp.entryDate} - Salida #{workExp.departureDate}
+                else
+                  strong.cv-article__important-text #{workExp.organizationName} • Entrada #{workExp.entryDate} - Actualidad
+                if workExp.freelancer
+                  strong.cv-article__important-text Trabajador autónomo
+                else
+                  strong.cv-article__important-text #{workExp.country} - #{workExp.state} - #{workExp.city} - #{workExp.address}
+                p
+                  | #{workExp.description}
+
+        hr.section-divider
+
+        section.cv-section
+          h3.cv-section__important-text Formación Académica   
+          .cv-section.cv-section--education
+            each ed in [...education.featured, ...education.personal]
+              article.cv-article
+                h4.cv-article__title.cv-article__title--education
+                  | #{ed.name} - 
+                  strong.cv-article__important-text.cv-article__important-text--education 
+                    | #{ed.degree}
+                if ed.universityName
+                  p.cv-article__important-text.cv-article__important-text--education_place
+                    | #{ed.universityName}
+                else 
+                  p.cv-article__important-text.cv-article__important-text--education_place
+                    | Universidad Católica Andrés Bello
+                p 
+                  | Año de graduación #{ed.graduationYear}
+
+        hr.section-divider
+
+        section.cv-section
+          h3.cv-section__important-text Habilidades
+          .flex
+
+            section.cv-section.cv-section--skills
+              h4.cv-section__important-text.cv-section__important-text--subtitle
+                | Blandas
+              ul.cv-section__list.cv-section__list--soft-skills
+                each soft in [...softSkills.featured, ...softSkills.personal]
+                  li #{soft.name}
+
+            section.cv-section.cv-section--skills
+              h4.cv-section__important-text.cv-section__important-text--subtitle
+                | Duras
+              ul.cv-section__list.cv-section__list--hard-skills
+                each hard in [...hardSkills.featured, ...hardSkills.personal]
+                  li #{hard.name}
+
+        hr.section-divider.section-divider--skills
+
+        section.cv-section.cv-section--languages
+          h3.cv-section__important-text Idiomas
+          ul.cv-section__list.cv-section__list--languages
+            each lang in languages
+              li #{lang.name} - #{lang.proficientLevel}
+
+      footer.cv-footer
+        small.cv-footer__text
+          | Para más información, visita mi perfil en: 
+          a.cv-footer__text.cv-footer__text--my-profile-link(href=profileLink) #{profileLink}

@@ -1,11 +1,17 @@
 export interface User {
+  userId: number
   name: string
   email: string
   aboutMe: string
+  country: string
+  state: string
+  city: string
   residenceAddress: string
 }
 
 export interface Curriculum extends User {
+  careerName: string
+  cvName: string
   languages: Language[]
   hardSkills: HardSkills
   softSkills: SoftSkills
@@ -65,8 +71,12 @@ export interface PersonalCareers {
 export interface WorkExperience {
   organizationName: string
   jobTitle: string
+  freelancer: boolean
+  country: string
+  state: string
+  city: string
   address: string
   description: string
   entryDate: string
-  departureDate: string
+  departureDate: string | null
 }

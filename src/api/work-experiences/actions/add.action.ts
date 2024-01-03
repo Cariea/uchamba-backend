@@ -94,7 +94,6 @@ export const addWorkExperience = async (
 
     return res.status(STATUS.CREATED).json(camelizeObject(response.rows[0]))
   } catch (error: unknown) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }

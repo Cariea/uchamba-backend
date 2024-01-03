@@ -31,7 +31,6 @@ export const updatePersonalLink = async (
     }
     return res.status(STATUS.OK).json({ message: 'Link Personal modificado correctamente' })
   } catch (error) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }
