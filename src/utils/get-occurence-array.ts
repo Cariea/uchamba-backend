@@ -42,7 +42,7 @@ export function getOccurrenceArray (
   const occurrenceArray: SkillOccurrenceWithIndex[] = []
   const inputArrayCurated = removeDuplicates(InputArray)
 
-  for (let index = 1; index < inputArrayCurated.length; index++) {
+  for (let index = 0; index < inputArrayCurated.length; index++) {
     const value = ComparisonArray.filter(item => item.name === inputArrayCurated[index])
     if (value.length > 0) {
       occurrenceArray.push({
