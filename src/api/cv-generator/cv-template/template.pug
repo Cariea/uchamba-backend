@@ -50,7 +50,7 @@ html(lang='es')
         section.cv-section
           h3.cv-section__important-text Formación Académica   
           .cv-section.cv-section--education
-            each ed in [...education.featured, ...education.personal]
+            each ed in education
               article.cv-article
                 h4.cv-article__title.cv-article__title--education
                   | #{ed.name} - 
@@ -75,15 +75,15 @@ html(lang='es')
               h4.cv-section__important-text.cv-section__important-text--subtitle
                 | Blandas
               ul.cv-section__list.cv-section__list--soft-skills
-                each soft in [...softSkills.featured, ...softSkills.personal]
-                  li #{soft.name}
+                each skill in softSkills
+                  li #{skill}
 
             section.cv-section.cv-section--skills
               h4.cv-section__important-text.cv-section__important-text--subtitle
                 | Duras
               ul.cv-section__list.cv-section__list--hard-skills
-                each hard in [...hardSkills.featured, ...hardSkills.personal]
-                  li #{hard.name}
+                each skill in hardSkills
+                  li #{skill}
 
         hr.section-divider.section-divider--skills
 

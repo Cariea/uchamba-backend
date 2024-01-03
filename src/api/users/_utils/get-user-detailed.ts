@@ -103,7 +103,7 @@ export async function getUserDetailed (userId: string): Promise<any> {
       WHERE
         uus.user_id = $1 AND
         uus.ucareer_id = uc.ucareer_id
-      ORDER BY uc.ucareer_id ASC
+      ORDER BY graduation_year DESC
     `,
     values: [userId]
   })
@@ -118,7 +118,7 @@ export async function getUserDetailed (userId: string): Promise<any> {
         TO_CHAR(graduation_year, 'YYYY') AS graduation_year
       FROM foreign_studies
       WHERE user_id = $1
-      ORDER BY foreign_study_id ASC
+      ORDER BY graduation_year DESC
     `,
     values: [userId]
   })
@@ -139,7 +139,9 @@ export async function getUserDetailed (userId: string): Promise<any> {
         TO_CHAR(departure_date, 'YYYY-MM-DD') AS departure_date
       FROM work_experiences
       WHERE user_id = $1
-      ORDER BY work_exp_id ASC
+      ORDER BY
+        departure_date DESC,
+        entry_date DESC
     `,
     values: [userId]
   })
@@ -196,7 +198,9 @@ export async function getUserDetailed (userId: string): Promise<any> {
       WHERE
         ul.user_id = $1 AND
         ul.language_id = l.language_id
-      ORDER BY l.language_id ASC
+      ORDER BY
+        proficient_level DESC,
+        name ASC
     `,
     values: [userId]
   })
@@ -227,14 +231,8 @@ export async function getUserDetailed (userId: string): Promise<any> {
     ...camelizeObject(user.rows[0]),
     languages: camelizeObject(languages),
     personalLinks: camelizeObject(personalLinks),
-    hardSkills: {
-      featured: camelizeObject(userHardSkills),
-      personal: camelizeObject(personalHardSkills)
-    },
-    softSkills: {
-      featured: camelizeObject(userSoftSkills),
-      personal: camelizeObject(personalSoftSkills)
-    },
+    hardSkills: [...userHardSkills, ...personalHardSkills].map(item => item.name),
+    softSkills: [...userSoftSkills, ...personalSoftSkills].map(item => item.name),
     education: {
       featured: camelizeObject(userUStudies),
       personal: camelizeObject(foreignStudies)

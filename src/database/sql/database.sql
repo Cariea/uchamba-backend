@@ -285,7 +285,7 @@ CREATE TABLE users_cvs (
   user_id INTEGER,
   cv_id INTEGER GENERATED ALWAYS AS IDENTITY,
   ucareer_id INTEGER,
-  name dom_name UNIQUE NOT NULL,
+  name VARCHAR(40) UNIQUE NOT NULL,
   created_at dom_created_at,
   updated_at dom_created_at,
   CONSTRAINT pk_user_cv_id PRIMARY KEY (user_id, cv_id),
@@ -414,7 +414,6 @@ CREATE TABLE cv_languages (
   user_id INTEGER,
   cv_id INTEGER,
   language_id INTEGER,
-  order_index INTEGER NOT NULL,
   created_at dom_created_at,
   CONSTRAINT pk_user_cv_language_id PRIMARY KEY (user_id, cv_id, language_id),
   CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES users_cvs (user_id, cv_id)

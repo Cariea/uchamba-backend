@@ -96,6 +96,23 @@ export async function getUserCatalogueInfo (userId: string): Promise<any> {
     values: [userId]
   })
 
+  const userCvsQuery = pool.query({
+    text: `
+      SELECT
+        uc.cv_id,
+        c.name AS career_name,
+        uc.name AS cv_name
+      FROM
+        users_cvs AS uc,
+        ucareers AS c
+      WHERE
+        user_id = $1 AND
+        c.ucareer_id = uc.ucareer_id
+      ORDER BY cv_id ASC
+    `,
+    values: [userId]
+  })
+
   const queryResponses = await Promise.all([
     userQuery,
     languagesQuery,
@@ -103,7 +120,8 @@ export async function getUserCatalogueInfo (userId: string): Promise<any> {
     personalHardSkillsQuery,
     userSoftSkillsQuery,
     personalSoftSkillsQuery,
-    userUStudiesQuery
+    userUStudiesQuery,
+    userCvsQuery
   ])
 
   const { rows: user } = queryResponses[0]
@@ -113,6 +131,7 @@ export async function getUserCatalogueInfo (userId: string): Promise<any> {
   const { rows: userSoftSkills } = queryResponses[4]
   const { rows: personalSoftSkills } = queryResponses[5]
   const { rows: userUStudies } = queryResponses[6]
+  const { rows: userCvs } = queryResponses[7]
 
   const userCatalogue = {
     ...camelizeObject(user[0]),
@@ -121,7 +140,8 @@ export async function getUserCatalogueInfo (userId: string): Promise<any> {
       hard: [...userHardSkills, ...personalHardSkills].map(item => item.name),
       soft: [...userSoftSkills, ...personalSoftSkills].map(item => item.name)
     },
-    education: userUStudies.map(item => item.name)
+    education: userUStudies.map(item => item.name),
+    cvs: camelizeObject(userCvs)
   }
 
   return userCatalogue

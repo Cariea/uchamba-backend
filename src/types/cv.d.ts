@@ -13,9 +13,9 @@ export interface Curriculum extends User {
   careerName: string
   cvName: string
   languages: Language[]
-  hardSkills: HardSkills
-  softSkills: SoftSkills
-  education: Education
+  hardSkills: string[]
+  softSkills: string[]
+  education: Education[]
   workExperiences: WorkExperience[]
 }
 
@@ -24,44 +24,12 @@ export interface Language {
   proficientLevel: string
 }
 
-export interface HardSkills {
-  featured: FeaturedHardSkills[]
-  personal: PersonalHardSkills[]
-}
-
-export interface FeaturedHardSkills {
+export interface Skill {
   name: string
-}
-
-export interface PersonalHardSkills {
-  name: string
-}
-
-export interface SoftSkills {
-  featured: FeaturedSoftSkills[]
-  personal: PersonalSoftSkills[]
-}
-
-export interface FeaturedSoftSkills {
-  name: string
-}
-
-export interface PersonalSoftSkills {
-  name: string
+  orderIndex: number
 }
 
 export interface Education {
-  featured: FeaturedCareers[]
-  personal: PersonalCareers[]
-}
-
-export interface FeaturedCareers {
-  name: string
-  degree: string
-  graduationYear: string
-}
-
-export interface PersonalCareers {
   name: string
   universityName: string
   degree: string
