@@ -1,11 +1,8 @@
 import { Response, Request } from 'express'
-import { compileFile } from 'pug'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { STATUS } from '../../../utils/constants'
-import { HTML_PDF_URL, FRONTEND_BASE_URL } from '../../../config'
+import { HTML_PDF_URL, FRONTEND_BASE_URL, compiledFunction } from '../../../config'
 import { getCVInfo } from '../_utils/get-cv-info'
-
-const compiledFunction = compileFile('./src/api/cv-generator/cv-template/template.pug')
 
 export const cvGenerator = async (
   req: Request, res: Response
