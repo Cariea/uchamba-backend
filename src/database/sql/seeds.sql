@@ -1,4 +1,18 @@
 -- For Seeding the Database
+
+-- Á 🐘 ├ü
+-- á 🐘 ├í
+-- É 🐘 ├ë
+-- é 🐘 ├®
+-- Í 🐘 ├ì
+-- í 🐘 ├¡
+-- Ó 🐘 ├ô
+-- ó 🐘 ├│
+-- Ú 🐘 ├Ü
+-- ú 🐘 ├║
+-- ñ 🐘 ├▒
+-- ¿ 🐘 ┬┐
+
 BEGIN;
 
 --Users
@@ -14,62 +28,62 @@ INSERT INTO users (
   role,
   is_active
 ) VALUES
-  ('Jose Andres', 'jarodriguez.21@est.ucab.edu.ve', 'Soy luffy', '04147664397', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 1', 'admin', TRUE),
-  ('Maria Paula', 'mpforero.21@est.ucab.edu.ve', 'Soy Boa', '04129873912', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 2', 'admin', TRUE),
-  ('Eduardo Arzolay', 'ejarzolay.21@est.ucab.edu.ve', 'Soy Sanji', '04165887448', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 3', 'admin', TRUE),
-  ('Alejandro Rosas', 'ajrosas.19@est.ucab.edu.ve', 'Soy Chopper', '04141919875', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 4', 'admin', TRUE),
-  ('Eduardo Sucre', 'ejsucre.19@est.ucab.edu.ve', 'Soy Daz Bonez', '04121320792', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 5', 'admin', TRUE),
-  ('Carmelo Naim', 'usuario6@example.com', 'Soy Panda Man', '04124992818', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 6', 'admin', TRUE),
-  ('Maria Giorgetti ', 'mggiorgetti.17@est.ucab.edu.ve', 'Soy Nami', '04249033451', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 7', 'admin', TRUE),
-  ('Acosta Carrion', 'yeniffer.acosta3097@gmail.com', 'Bibi', '04121856049', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Direccion 8', 'admin', TRUE);
+  ('Jos├® Andr├®s', 'jarodriguez.21@est.ucab.edu.ve', 'Soy luffy', '04147664397', 'Venezuela', 'Bol├¡var', 'Ciudad Guayana', 'Direcci├│n 1', 'admin', TRUE),
+  ('Mar├¡a Paula', 'mpforero.21@est.ucab.edu.ve', 'Soy Boa', '04129873912', 'Venezuela', 'Bol├¡var', 'Ciudad Guayana', 'Direcci├│n 2', 'admin', TRUE),
+  ('Eduardo Arzolay', 'ejarzolay.21@est.ucab.edu.ve', 'Soy Sanji', '04165887448', 'Venezuela', 'Bol├¡var', 'Ciudad Guayana', 'Direcci├│n 3', 'admin', TRUE),
+  ('Alejandro Rosas', 'ajrosas.19@est.ucab.edu.ve', 'Soy Chopper', '04141919875', 'Venezuela', 'Bol├¡var', 'Ciudad Guayana', 'Direcci├│n 4', 'admin', TRUE),
+  ('Eduardo Sucre', 'ejsucre.19@est.ucab.edu.ve', 'Soy Daz Bonez', '04121320792', 'Venezuela', 'Bol├¡var', 'Ciudad Guayana', 'Direcci├│n 5', 'admin', TRUE),
+  ('Carmelo Naim', 'usuario6@example.com', 'Soy Panda Man', '04124992818', 'Venezuela', 'Bol├¡var', 'Ciudad Guayana', 'Direcci├│n 6', 'admin', TRUE),
+  ('Mar├¡a Giorgetti ', 'mggiorgetti.17@est.ucab.edu.ve', 'Soy Nami', '04249033451', 'Venezuela', 'Bol├¡var', 'Ciudad Guayana', 'Direcci├│n 7', 'admin', TRUE),
+  ('Acosta Carrion', 'yeniffer.acosta3097@gmail.com', 'Bibi', '04121856049', 'Venezuela', 'Bol├¡var', 'Ciudad Guayana', 'Direcci├│n 8', 'admin', TRUE);
 
 --Languages
 INSERT INTO languages (
   name
 ) VALUES
-  ('Espanol'),
-  ('Ingles'),
-  ('Frances'),
-  ('Aleman'),
+  ('Espa├▒ol'),
+  ('Ingl├®s'),
+  ('Franc├®s'),
+  ('Alem├ín'),
   ('Italiano'),
-  ('Portugues'),
+  ('Portugu├®s'),
   ('Chino'),
-  ('Japones'),
+  ('Japon├®s'),
   ('Coreano'),
   ('Ruso'),
-  ('Arabe'),
+  ('├ürabe'),
   ('Hindi'),
-  ('Bengali'),
+  ('Bengal├¡'),
   ('Urdu'),
   ('Persa'),
   ('Turco'),
   ('Hebreo'),
   ('Griego'),
-  ('Hungaro'),
+  ('H├║ngaro'),
   ('Polaco'),
   ('Checo'),
   ('Sueco'),
   ('Noruego'),
-  ('Finlandes'),
-  ('Danes'),
-  ('Holandes'),
-  ('Brasileno'),
+  ('Finland├®s'),
+  ('Dan├®s'),
+  ('Holand├®s'),
+  ('Brasile├▒o'),
   ('Rumano'),
-  ('Bulgaro'),
+  ('B├║lgaro'),
   ('Croata'),
   ('Serbio'),
   ('Esloveno'),
   ('Macedonio'),
-  ('Albanes'),
+  ('Alban├®s'),
   ('Lituano'),
-  ('Leton'),
+  ('Let├│n'),
   ('Estonio'),
   ('Eslovaco'),
   ('Esperanto'),
   ('Mongol'),
   ('Swahili'),
   ('Vietnamita'),
-  ('Tailandes'),
+  ('Tailand├®s'),
   ('Malayo'),
   ('Tagalo'),
   ('Indonesio'),
@@ -80,14 +94,14 @@ INSERT INTO languages (
 INSERT INTO ucareers (
   name
 ) VALUES
-  ('Administracion de Empresas'),
-  ('Comunicacion Social'),
-  ('Contaduria Publica'),
+  ('Administraci├│n de Empresas'),
+  ('Comunicaci├│n Social'),
+  ('Contadur├¡a P├║blica'),
   ('Derecho'),
-  ('Educacion'),
-  ('Ingenieria Civil'),
-  ('Ingenieria Industrial'),
-  ('Ingenieria Informatica'),
+  ('Educaci├│n'),
+  ('Ingenier├¡a Civil'),
+  ('Ingenier├¡a Industrial'),
+  ('Ingenier├¡a Inform├ítica'),
   ('Relaciones Industriales');
   
 --Hard Skills
@@ -106,45 +120,45 @@ INSERT INTO hard_skills (
   ('Node.js'),
   ('Git'),
   ('Docker'),
-  ('Aprendizaje automatico (Machine Learning)'),
-  ('Analisis de datos (Data Analysis)'),
-  ('Metodologia agil (Agile Methodology)');
+  ('Aprendizaje autom├ítico (Machine Learning)'),
+  ('An├ílisis de datos (Data Analysis)'),
+  ('Metodolog├¡a ├ígil (Agile Methodology)');
   
 -- Personal Hard Skills 
 INSERT INTO personal_hard_skills (
   user_id, 
   name
 ) VALUES
-  (1, 'Programacion'),
-  (2, 'Analisis de datos'),
-  (3, 'Aprendizaje de Maquina'),
+  (1, 'Programaci├│n'),
+  (2, 'An├ílisis de datos'),
+  (3, 'Aprendizaje de M├íquina'),
 
-  (4, 'Gestion de bases de datos'),
+  (4, 'Gesti├│n de bases de datos'),
   (4, 'Generador de seeds'),
   (4, 'Godot'),
 
   (5, 'Desarrollo web'),
   (6, 'Seguridad de redes'),
   (7, 'Pruebas de software'),
-  (8, 'Administracion de sistemas'),
-  (1, 'Computacion en la nube'),
-  (2, 'Desarrollo de aplicaciones moviles');
+  (8, 'Administraci├│n de sistemas'),
+  (1, 'Computaci├│n en la nube'),
+  (2, 'Desarrollo de aplicaciones m├│viles');
   
 -- Soft Skills
 INSERT INTO soft_skills (
   name
 ) VALUES
-  ('Comunicacion'),
+  ('Comunicaci├│n'),
   ('Trabajo en equipo'),
   ('Adaptabilidad'),
-  ('Resolucion de problemas'),
+  ('Resoluci├│n de problemas'),
   ('Creatividad'),
-  ('Gestion del tiempo'),
+  ('Gesti├│n del tiempo'),
   ('Liderazgo'),
-  ('Empatia'),
-  ('Resolucion de conflictos'),
-  ('Pensamiento critico'),
-  ('Gestion del estres'),
+  ('Empat├¡a'),
+  ('Resoluci├│n de conflictos'),
+  ('Pensamiento cr├¡tico'),
+  ('Gesti├│n del estres'),
   ('Toma de decisiones'),
   ('Flexibilidad'),
   ('Actitud positiva'),
@@ -155,16 +169,16 @@ INSERT INTO personal_soft_skills (
   user_id, 
   name
 ) VALUES
-  (1, 'Comunicacion efectiva'),
-  (2, 'Colaboracion en equipo'),
+  (1, 'Comunicaci├│n efectiva'),
+  (2, 'Colaboraci├│n en equipo'),
   (3, 'Adaptable'),
 
-  (4, 'Resolucion de problemas internos'),
+  (4, 'Resoluci├│n de problemas internos'),
   (4, 'Creatividad en producto'),
   (4, 'Preocuparse por el otro'),
 
   (5, 'Creatividad en Producto'),
-  (6, 'Organizacion del tiempo'),
+  (6, 'Organizaci├│n del tiempo'),
   (7, 'Liderazgo de Equipos'),
   (8, 'Asertividad');
 
@@ -194,7 +208,7 @@ INSERT INTO foreign_studies (
   (2, 'Study Abroad 2', 'Foreign University 2', 'maestria', '2024-01-01'),
   (3, 'Study Abroad 3', 'Foreign University 3', 'pregrado', '2022-01-01'),
   (4, 'Desarrollo Web/Frontend', 'UNIR Colombia', 'maestria', '2019-01-01'),
-  (4, 'Biotecnologia Avanzada', 'UAB Barcelona', 'postgrado', '2024-01-01'),
+  (4, 'Biotecnolog├¡a Avanzada', 'UAB Barcelona', 'postgrado', '2024-01-01'),
   (5, 'Study Abroad 5', 'Foreign University 5', 'postgrado', '2024-01-01'),
   (6, 'Study Abroad 6', 'Foreign University 6', 'pregrado', '2023-01-01'),
   (7, 'Study Abroad 7', 'Foreign University 7', 'maestria', '2024-01-01'),
@@ -221,12 +235,12 @@ INSERT INTO work_experiences (
   departure_date,
   description
 ) VALUES
-  (4, 'JDM', 'Desarrollador', null, null, null, null, TRUE, '2022-07-20', null, 'Estoy actualmente trabajando como Desarrollador Fullstack para el desarrollo de una aplicacion de gestion de inventario/ventas/compras de la empresa y balance general'),
-  (4, 'UChamba', 'Lider/Desarrollador Back-end', null, null, null, null, TRUE, '2023-04-20', null, 'Actualmente apoyo en el desarrollo de una aplicacion que busca permitirle a los egresados generar sus Curriculums Vitae y mostrarse al mundo para aumentar sus niveles de empleabilidad, soy desarrollador pero ademas gestiono y delego tareas a los distintos integrantes del equipo de back-end'),
-  (4, 'Leafeon App', 'Lider/Desarrollador Back-end', null, null, null, null, TRUE, '2023-04-20', '2023-07-17', 'Trabaje como Lider y Desarrollador en esta aplicacion que tenia como objetivo gestionar todos los flujos de una empresa que se encargaba en la prestacion de servicios de mantenimiento a vehiculos'),
-  (4, 'Offside', 'Desarrollador Front-end', null, null, null, null, TRUE, '2022-09-20', '2023-01-14', 'Me centre en el desarrollo del Front-end de la aplicacion movil de Offside haciendo uso de React Native como tecnologia de desarrollo'),
-  (5, 'Lusitanos', 'Auxiliar de equipo', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Urbanizacion Moreno De Mendoza', FALSE, '2016-04-13', '2022-10-31', 'Una recarga de agua con una panaderia al lado'),
-  (5, 'Santo Tome', 'Empaquetador', 'Venezuela', 'Bolivar', 'Ciudad Guayana', 'Los olivos', FALSE, '2010-10-10', '2015-04-12', 'Embolsaba las compras de los clientes y los ayudaba a llevarlas');
+  (4, 'JDM', 'Desarrollador', null, null, null, null, TRUE, '2022-07-20', null, 'Estoy actualmente trabajando como Desarrollador Fullstack para el desarrollo de una aplicaci├│n de gesti├│n de inventario/ventas/compras de la empresa y balance general'),
+  (4, 'UChamba', 'L├¡der/Desarrollador Back-end', null, null, null, null, TRUE, '2023-04-20', null, 'Actualmente apoyo en el desarrollo de una aplicaci├│n que busca permitirle a los egresados generar sus Curriculums Vitae y mostrarse al mundo para aumentar sus niveles de empleabilidad, soy desarrollador pero ademas gesti├│no y delego tareas a los distintos integrantes del equipo de back-end'),
+  (4, 'Leafeon App', 'L├¡der/Desarrollador Back-end', null, null, null, null, TRUE, '2023-04-20', '2023-07-17', 'Trabaj├® como L├¡der y Desarrollador en esta aplicaci├│n que ten├¡a como objetivo gesti├│nar todos los flujos de una empresa que se encargaba en la prestaci├│n de servicios de mantenimiento a veh├¡culos'),
+  (4, 'Offside', 'Desarrollador Front-end', null, null, null, null, TRUE, '2022-09-20', '2023-01-14', 'Me centr├® en el desarrollo del Front-end de la aplicacion m├│vil de Offside haciendo uso de React Native como tecnolog├¡a de desarrollo'),
+  (5, 'Lusitanos', 'Auxiliar de equipo', 'Venezuela', 'Bol├¡var', 'Ciudad Guayana', 'Urbanizaci├│n Moreno De Mendoza', FALSE, '2016-04-13', '2022-10-31', 'Una recarga de agua con una panader├¡a al lado'),
+  (5, 'Santo Tome', 'Empaquetador', 'Venezuela', 'Bol├¡var', 'Ciudad Guayana', 'Los olivos', FALSE, '2010-10-10', '2015-04-12', 'Embolsaba las compras de los clientes y los ayudaba a llevarlas');
 
 -- Projects
 INSERT INTO projects (
@@ -239,13 +253,13 @@ INSERT INTO projects (
 ) VALUES
   (1, 'Proyecto de Base de Datos', 'Llevar el registro de los autos que llegan a un concesionario', null, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
   (2, 'Proyecto de Arquitectura', 'Armar un contador de 12 horas', 'https://arquicomberna.blogspot.com/2008/12/contador.html', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (3, 'Proyecto de Ingenieria de Requisitos', 'Realizar una pagina donde las empresas puedan contratar egresados ucabistas', 'https://www.mayoclinic.org/es/diseases-conditions/schizophrenia/symptoms-causes/syc-20354443', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (3, 'Proyecto de Ingenier├¡a de Requisitos', 'Realizar una pagina donde las empresas puedan contratar egresados ucabistas', 'https://www.mayoclinic.org/es/diseases-conditions/schizophrenia/symptoms-causes/syc-20354443', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
   (4, 'Offside', 'Album de barajitas del mundial', 'https://reglasdelfutbol.club/que-es-el-offiside/', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
   (5, 'Offside', 'Album de barajitas del mundial', 'https://reglasdelfutbol.club/que-es-el-offiside/', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (5, 'Proyecto de IHC', 'Sistema de gestion de la biblioteca UCAB', null, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
+  (5, 'Proyecto de IHC', 'Sistema de gesti├│n de la biblioteca UCAB', null, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
   (6, 'Proyecto de Contabilidad', 'Relacionar la Contabilidad con 3 ODS', null, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
   (7, 'Proyecto de Estructura', 'Calculadora en ensamblador', 'https://www.tecnologia-informatica.com/el-lenguaje-ensamblador/', 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg'),
-  (8, 'Proyecto de Sistemas de operacion', 'Sistema Operativo', null, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg');
+  (8, 'Proyecto de Sistemas de operaci├│n', 'Sistema Operativo', null, 'sxtl224gg4723ddlkp6e', 'https://res.cloudinary.com/dypukp3t0/image/upload/v1701854318/replit/sxtl224gg4723ddlkp6e.jpg');
 
 INSERT INTO projects_images (
   user_id,
