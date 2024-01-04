@@ -1,14 +1,14 @@
 import { pool } from '../../../database'
-import { DEFAULT_PAGE } from '../../../utils/constants'
 import { compoundFilter, generalFilter, inclusiveCompoundFilter, inclusiveGeneralFilter } from './GenerateSearchQuery'
 import { languagesLevelList } from './languagesLevelList'
 import { transformToCommaSeparatedString } from './transformToCommaSeparatedString'
 import { Request } from 'express'
 import { createHashMap } from './generateLanguageLevelPair'
 
-export const findFilterUsers = async (validFilters: Array<{ [key: string]: string }>, req: Request): Promise<string> => {
+export const findFilterUsers = async (
+  validFilters: Array<{ [key: string]: string }>, req: Request
+): Promise<string> => {
   let levelList = ''
-  const { page = DEFAULT_PAGE.page, size = DEFAULT_PAGE.size } = req.query
   let { inclusiveH, inclusiveS } = req.query
   if (inclusiveH === undefined || (inclusiveH !== 'true' && inclusiveH !== 'false')) {
     inclusiveH = 'false'
@@ -16,11 +16,7 @@ export const findFilterUsers = async (validFilters: Array<{ [key: string]: strin
   if (inclusiveS === undefined || (inclusiveS !== 'true' && inclusiveS !== 'false')) {
     inclusiveS = 'false'
   }
-  let offset = (Number(page) - 1) * Number(size)
 
-  if (Number(page) < 1) {
-    offset = 0
-  }
   let carry = ''
   let isfirst = true
 
@@ -82,9 +78,7 @@ export const findFilterUsers = async (validFilters: Array<{ [key: string]: strin
         FROM users
         WHERE is_active = TRUE
         ORDER BY random()
-        LIMIT $1 OFFSET $2
-      `,
-      values: [size, offset]
+      `
     })
     carry = transformToCommaSeparatedString(rows)
   }

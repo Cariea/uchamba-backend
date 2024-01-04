@@ -2,8 +2,6 @@ import { pool } from '../../../database'
 import { StatusError } from '../../../utils/responses/status-error'
 import { STATUS } from '../../../utils/constants'
 import camelizeObject from '../../../utils/camelizeObject'
-import { getSortedEducationObject } from '../../cv-generator/_utils/get-sorted-education-object'
-import { Education } from '../../../types/cv'
 
 export async function getUserDetailed (userId: string): Promise<any> {
   const user = await pool.query({
@@ -229,10 +227,7 @@ export async function getUserDetailed (userId: string): Promise<any> {
       hard: [...userHardSkills, ...personalHardSkills].map(item => item.name),
       soft: [...userSoftSkills, ...personalSoftSkills].map(item => item.name)
     },
-    education: getSortedEducationObject(
-      camelizeObject(userUStudies) as Education[],
-      camelizeObject(foreignStudies) as Education[]
-    ),
+    education: camelizeObject([...userUStudies, ...foreignStudies]),
     workExperiences: camelizeObject(workExperiences),
     projects: camelizeObject(projects)
   }

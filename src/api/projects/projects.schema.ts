@@ -15,6 +15,7 @@ export const ProjectSchema = z.object({
     .string(),
   projectUrl: z
     .string()
+    .optional()
 })
 
 export const ProjectUpdateSchema = ProjectSchema.extend({

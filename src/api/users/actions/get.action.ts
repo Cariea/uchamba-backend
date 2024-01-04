@@ -32,22 +32,17 @@ export const getUsers = async (
 
     const { rows } = await pool.query({
       text: `
-        SELECT
-          count(*)
+        SELECT COUNT(*)
         FROM users
-        WHERE
-        user_id IN (${carry})
-        AND is_active = TRUE
+        WHERE user_id IN (${carry})
       `
     })
 
     const { rows: response } = await pool.query({
       text: `
-        SELECT
-          user_id
+        SELECT user_id
         FROM users
-        WHERE
-          user_id IN (${carry})
+        WHERE user_id IN (${carry})
         ORDER BY random()
         LIMIT $1 OFFSET $2
       `,
