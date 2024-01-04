@@ -2,7 +2,7 @@ import { WorkExperience } from '../../../types/cv'
 import { monthToSpanish } from '../../../utils/month-to-spanish'
 
 export function convertMonthToSpanish (workExperiences: WorkExperience[]): WorkExperience[] {
-  workExperiences.map((workExperience: WorkExperience) => {
+  return workExperiences.map((workExperience: WorkExperience) => {
     const [entryMonth, entryYear] = workExperience.entryDate.split(' ')
 
     if (workExperience.departureDate === null) {
@@ -19,6 +19,4 @@ export function convertMonthToSpanish (workExperiences: WorkExperience[]): WorkE
       departureDate: `${monthToSpanish(departureMonth)} ${departureYear}`
     }
   })
-
-  return workExperiences
 }

@@ -17,15 +17,13 @@ export function handlePostgresError (
 ): Response {
   if (error.code === POSTGRES_ERROR.UNIQUE_VIOLATION) {
     return res.status(STATUS.BAD_REQUEST).json({
-      message: 'Mensaje de Error Personalizado para usuario',
-      specific: error.message
+      message: 'Mensaje de Error Personalizado para usuario'
     })
   }
 
   if (error.code === POSTGRES_ERROR.FOREIGN_KEY_VIOLATION) {
     return res.status(STATUS.CONFLICT).json({
-      message: 'Mensaje de Error Personalizado para usuario',
-      specific: error.message
+      message: 'Mensaje de Error Personalizado para usuario'
     })
   }
 

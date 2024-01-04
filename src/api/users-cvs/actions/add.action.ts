@@ -1,3 +1,4 @@
+import fs from 'fs'
 import { Response } from 'express'
 import { ExtendedRequest } from '../../../middlewares/auth'
 import { pool } from '../../../database'
@@ -5,6 +6,8 @@ import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { insertEntries } from '../_utils/insert-entries'
 import { generateCv } from '../../../utils/generate-cv'
+import { getCVPath } from '../_utils/get-cv-path'
+import { StatusError } from '../../../utils/responses/status-error'
 
 export const addUserCV = async (
   req: ExtendedRequest,
@@ -27,7 +30,21 @@ export const addUserCV = async (
     })
 
     await insertEntries(userId, userCvResponse[0].cv_id, entries)
-    await generateCv(String(userId), userCvResponse[0].cv_Id)
+    let isCreated: boolean
+    let attempts = 0
+    do {
+      if (attempts > 3) {
+        throw new StatusError({
+          message: 'Ha ocurrido un error al generar el CV, intente de nuevo más tarde',
+          statusCode: STATUS.INTERNAL_SERVER_ERROR
+        })
+      }
+      isCreated = await generateCv(String(userId), userCvResponse[0].cv_id)
+      attempts++
+    } while (
+      !isCreated &&
+      fs.readFileSync(getCVPath(String(userId), userCvResponse[0].cv_id)).length > 0
+    )
 
     return res.status(STATUS.CREATED).json({ message: 'Curriculum Vitae creado correctamente' })
   } catch (error: any) {

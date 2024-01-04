@@ -142,7 +142,8 @@ CREATE TABLE foreign_studies (
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
-  CONSTRAINT uk_name_university_degree UNIQUE (user_id, name, university_name, degree)
+  CONSTRAINT uk_name_university_degree UNIQUE (user_id, name, university_name, degree),
+  CONSTRAINT chk_graduation_year CHECK (graduation_year > CURRENT_TIMESTAMP())
 );
 
 -- 8
@@ -181,6 +182,10 @@ CREATE TABLE work_experiences (
       city IS NOT NULL AND
       address IS NOT NULL
     )
+  ),
+  CONSTRAINT chk_graduation_year CHECK (
+    departure_date > CURRENT_TIMESTAMP(), 
+    entry_date > CURRENT_TIMESTAMP()
   )
 );
 

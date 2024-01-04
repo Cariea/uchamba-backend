@@ -33,17 +33,24 @@ export const cvGenerator = async (
 
     const cvPath = getCVPath(userId, cvId)
 
-    if (!fs.existsSync(cvPath)) {
-      if (await generateCv(userId, cvId)) {
-        const pdf = fs.readFileSync(cvPath)
-        return res.set({ 'Content-Type': 'application/pdf' }).status(STATUS.OK).send(pdf)
-      }
-      throw new StatusError({
-        message: 'Error generando el cv',
-        statusCode: STATUS.INTERNAL_SERVER_ERROR
-      })
+    let pdf = fs.readFileSync(cvPath)
+    if (!fs.existsSync(cvPath) || pdf.length === 0) {
+      let isCreated: boolean
+      let attempts = 0
+      do {
+        if (attempts > 3) {
+          throw new StatusError({
+            message: 'Ha ocurrido un error al generar el CV, intente de nuevo más tarde',
+            statusCode: STATUS.INTERNAL_SERVER_ERROR
+          })
+        }
+        isCreated = await generateCv(userId, cvId)
+        pdf = fs.readFileSync(cvPath)
+        console.log(pdf.length)
+        attempts++
+      } while (!isCreated && fs.readFileSync(cvPath).length === 0)
     }
-    const pdf = fs.readFileSync(getCVPath(userId, cvId))
+
     return res.set({ 'Content-Type': 'application/pdf' }).status(STATUS.OK).send(pdf)
   } catch (error: unknown) {
     return handleControllerError(error, res)
