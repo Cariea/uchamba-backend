@@ -4,6 +4,7 @@ import { languagesLevelList } from './languagesLevelList'
 import { transformToCommaSeparatedString } from './transformToCommaSeparatedString'
 import { Request } from 'express'
 import { createHashMap } from './generateLanguageLevelPair'
+import { getDailyRandomSeed } from './get-daily-random-seed'
 
 export const findFilterUsers = async (
   validFilters: Array<{ [key: string]: string }>, req: Request
@@ -72,6 +73,11 @@ export const findFilterUsers = async (
       }
     }
   } else {
+    await pool.query({
+      text: 'SELECT SETSEED($1)',
+      values: [getDailyRandomSeed()]
+    })
+
     const { rows } = await pool.query({
       text: `
         SELECT user_id

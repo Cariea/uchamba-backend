@@ -15,6 +15,7 @@ export const getUsers = async (
   const { page = DEFAULT_PAGE.page, size = DEFAULT_PAGE.size } = req.query
 
   const validFilters = validateFilters(req.query)
+
   try {
     let carry = ''
     let offset = (Number(page) - 1) * Number(size)
@@ -43,7 +44,6 @@ export const getUsers = async (
         SELECT user_id
         FROM users
         WHERE user_id IN (${carry})
-        ORDER BY random()
         LIMIT $1 OFFSET $2
       `,
       values: [size, offset]
@@ -61,7 +61,6 @@ export const getUsers = async (
 
     return paginatedItemsResponse(res, STATUS.OK, finalItemsResponse, pagination)
   } catch (error: unknown) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }

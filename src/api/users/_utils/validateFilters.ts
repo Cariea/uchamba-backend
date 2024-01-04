@@ -1,9 +1,21 @@
 import { Request } from 'express'
 import { languagesLevelList } from './languagesLevelList'
 
-export const validateFilters = (filters: Request['query']): Array<{ [key: string]: string }> => {
-  const { careers, languages, hskills, sskills, country, state, city, languageLevel } = filters
+export const validateFilters = (
+  filters: Request['query']): Array<{ [key: string]: string
+}> => {
+  const {
+    careers,
+    languages,
+    hskills,
+    sskills,
+    country,
+    state,
+    city,
+    languageLevel
+  } = filters
   const levelList = languagesLevelList(languageLevel as string)
+
   const filtersData = [
     { name: 'careers', value: careers, tableName: 'users_ustudies', columnName: 'ucareer_id', languageLevels: levelList, country, state, city },
     { name: 'languages', value: languages, tableName: 'users_languages', columnName: 'language_id', languageLevels: levelList, country, state, city },
