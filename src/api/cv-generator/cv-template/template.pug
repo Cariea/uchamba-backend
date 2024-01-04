@@ -91,8 +91,7 @@ html(lang='es')
           h3.cv-section__important-text Idiomas
           ul.cv-section__list.cv-section__list--languages
             each lang in languages
-              li #{lang.name} - #{lang.proficientLevel}
-
+              li #{lang.name} - #{lang.proficientLevel === 'Native' ? 'Nativo' : lang.proficientLevel}
       footer.cv-footer
         small.cv-footer__text
           | Para más información, visita mi perfil en: 
