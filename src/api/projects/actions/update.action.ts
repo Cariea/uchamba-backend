@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Response } from 'express'
 import { ExtendedRequest } from '../../../middlewares/auth'
 import { pool } from '../../../database'
 import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { uploadImage, deleteImage } from '../../../utils/cloudinary'
+import { isValidImageFormat } from '../../../utils/validate-image'
 
 export const updateProject = async (
   req: ExtendedRequest,
@@ -35,7 +37,13 @@ export const updateProject = async (
       if (req.files?.coverImage === undefined) {
         return res.status(STATUS.BAD_REQUEST).json({ message: 'se esperaba un reemplazo para el coverImage' })
       }
-
+      if ((req.files?.coverImage) != null) {
+        const coverImages = Array.isArray(req.files.coverImage) ? req.files.coverImage : [req.files.coverImage]
+        const imageFileName = coverImages[0].name
+        if (!isValidImageFormat(imageFileName)) {
+          return res.status(STATUS.BAD_REQUEST).json({ message: 'Intento cargar un tipo de archivo no valido' })
+        }
+      }
       await deleteImage(coverImageId)
 
       await pool.query({
@@ -90,7 +98,12 @@ export const updateProject = async (
 
     if (req.files?.images !== undefined) {
       const images = Array.isArray(req.files?.images) ? req.files?.images : [req.files?.images]
-
+      for (const image of images) {
+        const imageFileName = image.name
+        if (!isValidImageFormat(imageFileName)) {
+          return res.status(STATUS.BAD_REQUEST).json({ message: 'Intento cargar un tipo de archivo no valido' })
+        }
+      }
       for (const image of images) {
         const cloudinaryResponse = await uploadImage(image)
         if (cloudinaryResponse === null) {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Response } from 'express'
 import { ExtendedRequest } from '../../../middlewares/auth'
 import { pool } from '../../../database'
@@ -5,6 +6,7 @@ import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { StatusError } from '../../../utils/responses/status-error'
 import { deleteImage, uploadImage } from '../../../utils/cloudinary'
+import { isValidImageFormat } from '../../../utils/validate-image'
 export const updateUserLanguage = async (
   req: ExtendedRequest,
   res: Response
@@ -13,6 +15,15 @@ export const updateUserLanguage = async (
     const { languageId } = req.params
     const { proficientLevel } = req.body
     let certificateImageResponse: any = null
+
+    if ((req.files?.certificateImage) != null) {
+      const certificateImages = Array.isArray(req.files.certificateImage) ? req.files.certificateImage : [req.files.certificateImage]
+      const imageFileName = certificateImages[0].name
+      if (!isValidImageFormat(imageFileName)) {
+        return res.status(STATUS.BAD_REQUEST).json({ message: 'Intento cargar un tipo de archivo no valido' })
+      }
+    }
+
     if (req.files?.certificateImage != null) {
       const { rows } = await pool.query({
         text: `

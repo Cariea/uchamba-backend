@@ -43,9 +43,9 @@ CREATE TABLE users (
   email VARCHAR(128) UNIQUE NOT NULL,
   about_me TEXT DEFAULT NULL,
   phone_number dom_phone_number,
-  country dom_location DEFAULT NULL,
-  state dom_location DEFAULT NULL,
-  city dom_location DEFAULT NULL,
+  country dom_location DEFAULT 'Venezuela',
+  state dom_location DEFAULT 'Bolivar',
+  city dom_location DEFAULT 'Puerto Ordaz',
   residence_address TEXT DEFAULT NULL,
   role dom_role NOT NULL DEFAULT 'graduated',
   is_active BOOLEAN NOT NULL DEFAULT FALSE,
@@ -435,6 +435,20 @@ BEGIN
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION insert_default_language()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO users_languages (user_id, language_id, proficient_level)
+  VALUES (NEW.user_id, 1, 'Native');
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER after_insert_user
+AFTER INSERT ON users
+FOR EACH ROW
+EXECUTE FUNCTION insert_default_language();
 
 CREATE TRIGGER update_updated_at_users
 BEFORE UPDATE ON users

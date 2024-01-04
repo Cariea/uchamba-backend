@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Response } from 'express'
 import { ExtendedRequest } from '../../../middlewares/auth'
 import { pool } from '../../../database'
@@ -6,6 +7,7 @@ import { StatusError } from '../../../utils/responses/status-error'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import camelizeObject from '../../../utils/camelizeObject'
 import { uploadImage } from '../../../utils/cloudinary'
+import { isValidImageFormat } from '../../../utils/validate-image'
 
 export const addProject = async (
   req: ExtendedRequest,
@@ -59,6 +61,21 @@ export const addProject = async (
     }
 
     if (req.files?.coverImage != null && req.files?.images != null) {
+      const coverImages = Array.isArray(req.files?.coverImage) ? req.files?.coverImage : [req.files?.coverImage]
+      for (const coverImage of coverImages) {
+        const coverImageFileName: string = coverImage.name
+        if (!isValidImageFormat(coverImageFileName)) {
+          return res.status(STATUS.BAD_REQUEST).json({ message: 'Intento cargar un tipo de archivo no valido' })
+        }
+      }
+      const images = Array.isArray(req.files?.images) ? req.files?.images : [req.files?.images]
+      for (const image of images) {
+        const imageFileName: string = image.name
+        if (!isValidImageFormat(imageFileName)) {
+          return res.status(STATUS.BAD_REQUEST).json({ message: 'Intento cargar un tipo de archivo no valido' })
+        }
+      }
+
       const projectCoverCloudResponse = await uploadImage(req.files?.coverImage)
       if (projectCoverCloudResponse === null) {
         return res.status(STATUS.BAD_REQUEST).json({ message: 'error al cargar el cover' })
@@ -86,7 +103,6 @@ export const addProject = async (
       })
       console.log(response.rows[0].cover_image_id, response.rows[0].cover_image_url)
       const responseImages = []
-      const images = Array.isArray(req.files?.images) ? req.files?.images : [req.files?.images]
 
       for (const image of images) {
         const cloudinaryResponse = await uploadImage(image)

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Response } from 'express'
 import { pool } from '../../../database'
 import { STATUS } from '../../../utils/constants'
@@ -5,6 +6,7 @@ import { handleControllerError } from '../../../utils/responses/handleController
 import camelizeObject from '../../../utils/camelizeObject'
 import { ExtendedRequest } from '../../../middlewares/auth'
 import { uploadImage } from '../../../utils/cloudinary'
+import { isValidImageFormat } from '../../../utils/validate-image'
 
 export const addUserLanguage = async (
   req: ExtendedRequest, res: Response
@@ -15,6 +17,11 @@ export const addUserLanguage = async (
     let certificateImageResponse: any = null
 
     if ((req.files?.certificateImage) != null) {
+      const certificateImages = Array.isArray(req.files.certificateImage) ? req.files.certificateImage : [req.files.certificateImage]
+      const imageFileName = certificateImages[0].name
+      if (!isValidImageFormat(imageFileName)) {
+        return res.status(STATUS.BAD_REQUEST).json({ message: 'Intento cargar un tipo de archivo no valido' })
+      }
       certificateImageResponse = await uploadImage(req.files.certificateImage)
       if (certificateImageResponse === null) {
         throw new Error('Error al subir el certificado')
