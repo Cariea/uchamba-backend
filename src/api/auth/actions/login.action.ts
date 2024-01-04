@@ -153,7 +153,6 @@ export const logIn = async (
       })
     }
   } catch (error: unknown) {
-    console.log('error', error)
     return handleControllerError(error, res)
   }
 }

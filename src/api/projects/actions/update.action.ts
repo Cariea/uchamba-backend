@@ -130,5 +130,3 @@ export const updateProject = async (
     return handleControllerError(error, res)
   }
 }
-
-// TO_CHAR(created_at, 'YYYY-MM-DD') AS created_at

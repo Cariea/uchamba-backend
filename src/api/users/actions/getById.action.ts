@@ -19,13 +19,12 @@ export const getUserById = async (
           uc.cv_id,
           uc.ucareer_id AS career_id,
           c.name AS career_name,
-          uc.name
-        FROM
-          users_cvs AS uc,
-          ucareers AS c
-        WHERE
-          user_id = $1 AND
-          c.ucareer_id = uc.ucareer_id
+          uc.name,
+          TO_CHAR(uc.updated_at, 'DD/MM/YYYY') AS created_at
+        FROM users_cvs AS uc
+        INNER JOIN ucareers AS c ON
+          uc.ucareer_id = c.ucareer_id
+        WHERE user_id = $1
         ORDER BY cv_id
       `,
       values: [userId]
@@ -36,7 +35,6 @@ export const getUserById = async (
       cvs: camelizeObject(userCvs)
     })
   } catch (error: unknown) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }

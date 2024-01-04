@@ -46,7 +46,6 @@ export const cvGenerator = async (
         }
         isCreated = await generateCv(userId, cvId)
         pdf = fs.readFileSync(cvPath)
-        console.log(pdf.length)
         attempts++
       } while (!isCreated && fs.readFileSync(cvPath).length === 0)
     }

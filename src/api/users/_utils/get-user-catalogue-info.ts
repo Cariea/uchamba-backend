@@ -93,7 +93,8 @@ export async function getUserCatalogueInfo (userId: string): Promise<any> {
       SELECT
         uc.cv_id,
         c.name AS career_name,
-        uc.name
+        uc.name,
+        TO_CHAR(uc.updated_at, 'DD/MM/YYYY') AS created_at
       FROM users_cvs AS uc
       INNER JOIN ucareers AS c ON
         c.ucareer_id = uc.ucareer_id
