@@ -6,3 +6,5 @@ files
 .env.local
 .env.staging
 .env.production
+
+public

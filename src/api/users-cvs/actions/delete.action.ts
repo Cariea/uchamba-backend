@@ -4,6 +4,8 @@ import { pool } from '../../../database'
 import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { StatusError } from '../../../utils/responses/status-error'
+import { getCVPath } from '../_utils/get-cv-path'
+import { deleteCv } from '../_utils/delete-cv'
 
 export const deleteUserCV = async (
   req: ExtendedRequest, res: Response
@@ -28,6 +30,9 @@ export const deleteUserCV = async (
         statusCode: STATUS.NOT_FOUND
       })
     }
+
+    deleteCv(getCVPath(String(userId), cvId))
+
     return res.status(STATUS.OK).json({ message: 'Curriculum Vitae eliminado correctamente' })
   } catch (error: unknown) {
     return handleControllerError(error, res)
