@@ -4,6 +4,7 @@ import { pool } from '../../../database'
 import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { insertEntries } from '../_utils/insert-entries'
+import { generateCv } from '../../../utils/generate-cv'
 
 export const addUserCV = async (
   req: ExtendedRequest,
@@ -26,6 +27,7 @@ export const addUserCV = async (
     })
 
     await insertEntries(userId, userCvResponse[0].cv_id, entries)
+    await generateCv(String(userId), userCvResponse[0].cv_Id)
 
     return res.status(STATUS.CREATED).json({ message: 'Curriculum Vitae creado correctamente' })
   } catch (error: any) {

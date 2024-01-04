@@ -4,6 +4,7 @@ import cors from 'cors'
 import fileUpload from 'express-fileupload'
 import { PORT } from './config'
 import { router } from './api/_routes/api'
+import { validatePDFFolder } from './utils/validate-pdf-folder'
 
 // App Declaration
 const app = express()
@@ -19,6 +20,7 @@ app.use(fileUpload({
   useTempFiles: false,
   tempFileDir: ''
 }))
+
 // Routes
 app.use('/', router)
 
@@ -26,3 +28,6 @@ app.use('/', router)
 app.listen(app.get('port'), () => {
   console.log('Server on port', app.get('port'))
 })
+
+// Validating/Creating Upload PDF folder
+validatePDFFolder()

@@ -1,3 +1,9 @@
+CREATE TABLE test_cv (
+  id INTEGER GENERATED ALWAYS AS IDENTITY,
+  pdf OID
+);
+
+
 -- For SQL Querie Creation
 SELECT
   uc.cv_id,

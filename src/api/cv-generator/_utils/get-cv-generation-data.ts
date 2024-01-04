@@ -14,7 +14,10 @@ import { convertMonthToSpanish } from './convert-month-to-spanish'
 import { getSortedEducationObject } from './get-sorted-education-object'
 import { getSortedSkillsArray } from './get-sorted-skills-array'
 
-export async function getCVInfo (userId: string, cvId: string): Promise<Curriculum> {
+export async function getCVGenerationData (
+  userId: string,
+  cvId: string
+): Promise<Curriculum> {
   const { rows: cvInfo } = await pool.query({
     text: `
       SELECT
