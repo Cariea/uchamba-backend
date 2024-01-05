@@ -33,8 +33,8 @@ export const cvGenerator = async (
 
     const cvPath = getCVPath(userId, cvId)
 
-    let pdf = fs.readFileSync(cvPath)
-    if (!fs.existsSync(cvPath) || pdf.length === 0) {
+    let pdf: Buffer
+    if (!fs.existsSync(cvPath) || (pdf = fs.readFileSync(cvPath)).length === 0) {
       let isCreated: boolean
       let attempts = 0
       do {
@@ -44,7 +44,22 @@ export const cvGenerator = async (
             statusCode: STATUS.INTERNAL_SERVER_ERROR
           })
         }
+
+        const timeoutId = setTimeout(function () {
+          try {
+            throw new StatusError({
+              message: 'Tiempo de espera agotado al generar CV',
+              statusCode: STATUS.INTERNAL_SERVER_ERROR
+            })
+          } catch (error: unknown) {
+            return handleControllerError(error, res)
+          }
+        }, 40000)
+
         isCreated = await generateCv(userId, cvId)
+
+        clearTimeout(timeoutId)
+
         pdf = fs.readFileSync(cvPath)
         attempts++
       } while (!isCreated && fs.readFileSync(cvPath).length === 0)

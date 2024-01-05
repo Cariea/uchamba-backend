@@ -39,7 +39,21 @@ export const addUserCV = async (
           statusCode: STATUS.INTERNAL_SERVER_ERROR
         })
       }
+      const timeoutId = setTimeout(function () {
+        try {
+          throw new StatusError({
+            message: 'Tiempo de espera agotado al generar CV',
+            statusCode: STATUS.INTERNAL_SERVER_ERROR
+          })
+        } catch (error: unknown) {
+          return handleControllerError(error, res)
+        }
+      }, 40000)
+
       isCreated = await generateCv(String(userId), userCvResponse[0].cv_id)
+
+      clearTimeout(timeoutId)
+
       attempts++
     } while (
       !isCreated &&
