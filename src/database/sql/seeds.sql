@@ -35,7 +35,7 @@ INSERT INTO users (
   ('Eduardo Sucre', 'ejsucre.19@est.ucab.edu.ve', 'Soy Daz Bonez', '04121320792', 'Venezuela', 'Bol├¡var', 'Ciudad Guayana', 'Direcci├│n 5', 'admin', TRUE),
   ('Carmelo Naim', 'cjnaim.16@est.ucab.edu.ve', 'Soy Panda Man', '04124992818', 'Venezuela', 'Bol├¡var', 'Ciudad Guayana', 'Direcci├│n 6', 'admin', TRUE),
   ('Mar├¡a Giorgetti ', 'mggiorgetti.17@est.ucab.edu.ve', 'Soy Nami', '04249033451', 'Venezuela', 'Bol├¡var', 'Ciudad Guayana', 'Direcci├│n 7', 'admin', TRUE),
-  ('Acosta Carrion', 'yeniffer.acosta3097@gmail.com', 'Bibi', '04121856049', 'Venezuela', 'Bol├¡var', 'Ciudad Guayana', 'Direcci├│n 8', 'admin', TRUE);
+  ('Acosta Carrion', 'ynacosta.15@est.ucab.edu.ve', 'Bibi', '04121856049', 'Venezuela', 'Bol├¡var', 'Ciudad Guayana', 'Direcci├│n 8', 'admin', TRUE);
 
 --Languages
 INSERT INTO languages (
