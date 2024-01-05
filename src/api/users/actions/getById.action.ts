@@ -20,7 +20,7 @@ export const getUserById = async (
           uc.ucareer_id AS career_id,
           c.name AS career_name,
           uc.name,
-          TO_CHAR(uc.updated_at, 'DD/MM/YYYY') AS created_at
+          TO_CHAR(uc.updated_at, 'DD/MM/YYYY') AS updated_at
         FROM users_cvs AS uc
         INNER JOIN ucareers AS c ON
           uc.ucareer_id = c.ucareer_id

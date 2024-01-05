@@ -10,10 +10,11 @@ export async function getCVInfo (cvId: string): Promise<any> {
         uc.cv_id,
         uc.ucareer_id AS career_id,
         c.name AS career_name,
-        uc.name
+        uc.name,
+        TO_CHAR(uc.updated_at, 'DD/MM/YYYY') AS updated_at
       FROM users_cvs AS uc
       INNER JOIN ucareers AS c ON
-        c.ucareer_id = uc.ucareer_id
+        uc.ucareer_id = c.ucareer_id
       WHERE cv_id = $1
       ORDER BY cv_id
     `,
