@@ -1,12 +1,18 @@
+import { Request } from 'express'
 import { createHashMap } from '../generateLanguageLevelPair'
 import { languagesLevelList } from '../languagesLevelList'
 
 export function queryConstructor (
+  req: Request,
   validFilters: Array<{ [key: string]: string }>,
   exceptionTable: string | undefined
 ): string {
   try {
     const andAttachment = ' AND '
+
+    let countryFilter = ''
+    let stateFilter = ''
+    let cityFilter = ''
 
     let careersJoinAttachment = ''
     let careersActiveFilters = ''
@@ -21,10 +27,19 @@ export function queryConstructor (
     let softSkillsActiveFilters = ''
 
     if (validFilters.length > 0) {
+      if (validFilters[0].country !== undefined) {
+        countryFilter += `u.country LIKE '%${validFilters[0].country}%'`
+      }
+      if (validFilters[0].state !== undefined) {
+        stateFilter += `u.state LIKE '%${validFilters[0].state}%'`
+      }
+      if (validFilters[0].city !== undefined) {
+        cityFilter += `u.city LIKE '%${validFilters[0].city}%'`
+      }
       for (const filter of validFilters) {
         if (exceptionTable !== 'careers' && Object.keys(filter)[0] === 'careers') {
           careersActiveFilters =
-            'uc.ucareer_id IN (' + filter[Object.keys(filter)[0]] + ')'
+            `uc.ucareer_id IN (${filter[Object.keys(filter)[0]]})`
           careersJoinAttachment =
             'INNER JOIN users_ustudies AS uc ON u.user_id = uc.user_id'
         }
@@ -36,24 +51,46 @@ export function queryConstructor (
             const levels = languagesLevelList(pairs[languageId])
             if (pairs[languageId] === pairs[ultimaClave]) {
               languagesActiveFilters +=
-                'ul.language_id = ' + languageId + ' AND proficient_level IN (' + levels + ')'
+                `ul.language_id = ${languageId} AND proficient_level IN (${levels})`
             } else {
               languagesActiveFilters +=
-                'ul.language_id = ' + languageId + ' AND proficient_level IN (' + levels + ') OR '
+                `ul.language_id = ${languageId} AND proficient_level IN (${levels}) OR `
             }
           }
           languagesJoinAttachment =
             'INNER JOIN users_languages AS ul ON u.user_id = ul.user_id'
         }
         if (exceptionTable !== 'hskills' && Object.keys(filter)[0] === 'hskills') {
-          hardSkillsActiveFilters +=
-            'uhs.hard_skill_id IN (' + filter[Object.keys(filter)[0]] + ')'
+          if (req.query.inclusiveH === 'true') {
+            const ids = filter[Object.keys(filter)[0]].split(',')
+            for (let index = 0; index < ids.length; index++) {
+              if (index === ids.length - 1) {
+                hardSkillsActiveFilters += `uhs.hard_skill_id = ${ids[index]}`
+              } else {
+                hardSkillsActiveFilters += `uhs.hard_skill_id = ${ids[index]} AND `
+              }
+            }
+          } else {
+            hardSkillsActiveFilters +=
+            `uhs.hard_skill_id IN (${filter[Object.keys(filter)[0]]})`
+          }
           hardSkillsJoinAttachment =
             'INNER JOIN users_hard_skills AS uhs ON u.user_id = uhs.user_id'
         }
         if (exceptionTable !== 'sskills' && Object.keys(filter)[0] === 'sskills') {
-          softSkillsActiveFilters +=
-            'uss.soft_skill_id IN (' + filter[Object.keys(filter)[0]] + ')'
+          if (req.query.inclusiveS === 'true') {
+            const ids = filter[Object.keys(filter)[0]].split(',')
+            for (let index = 0; index < ids.length; index++) {
+              if (index === ids.length - 1) {
+                softSkillsActiveFilters += `uss.soft_skill_id = ${ids[index]}`
+              } else {
+                softSkillsActiveFilters += `uss.soft_skill_id = ${ids[index]} AND `
+              }
+            }
+          } else {
+            softSkillsActiveFilters +=
+              `uss.soft_skill_id IN (${filter[Object.keys(filter)[0]]})`
+          }
           softSkillsJoinAttachment =
             'INNER JOIN users_soft_skills AS uss ON u.user_id = uss.user_id'
         }
@@ -76,13 +113,19 @@ export function queryConstructor (
       ${hardSkillsJoinAttachment}
       ${softSkillsJoinAttachment}
       WHERE u.user_id IN (${defaultValidation})
+      ${countryFilter !== '' ? andAttachment : ''}
+      ${countryFilter}
+      ${stateFilter !== '' ? andAttachment : ''}
+      ${stateFilter}
+      ${cityFilter !== '' ? andAttachment : ''}
+      ${cityFilter}
       ${careersActiveFilters !== '' ? andAttachment : ''}
       ${careersActiveFilters}
-      ${careersActiveFilters !== '' && languagesActiveFilters !== '' ? andAttachment : ''}
+      ${languagesActiveFilters !== '' ? andAttachment : ''}
       ${languagesActiveFilters}
-      ${languagesActiveFilters !== '' && hardSkillsActiveFilters !== '' ? andAttachment : ''}
+      ${hardSkillsActiveFilters !== '' ? andAttachment : ''}
       ${hardSkillsActiveFilters}
-      ${hardSkillsActiveFilters !== '' && softSkillsActiveFilters !== '' ? andAttachment : ''}
+      ${softSkillsActiveFilters !== '' ? andAttachment : ''}
       ${softSkillsActiveFilters}
       ORDER BY u.user_id
     `

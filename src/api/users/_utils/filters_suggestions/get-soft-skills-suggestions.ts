@@ -1,11 +1,13 @@
+import { Request } from 'express'
 import { pool } from '../../../../database'
 import { queryConstructor } from './query-constructor'
 
 export async function getSoftSkillsSuggestions (
+  req: Request,
   validFilters: Array<{ [key: string]: string }>
 ): Promise<any[]> {
   try {
-    const carry = queryConstructor(validFilters, 'hskills')
+    const carry = queryConstructor(req, validFilters, 'hskills')
 
     const { rows: softSkillsSuggestions } = await pool.query({
       text: `
@@ -18,7 +20,7 @@ export async function getSoftSkillsSuggestions (
           users_soft_skills.soft_skill_id = soft_skills.soft_skill_id
         WHERE users_soft_skills.user_id IN (${carry})
         GROUP BY users_soft_skills.soft_skill_id, soft_skills.name
-        ORDER BY total DESC, users_soft_skills.soft_skill_id ASC
+        ORDER BY soft_skills.name ASC
       `
     })
 

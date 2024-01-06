@@ -25,12 +25,8 @@ export const getUsers = async (
       offset = 0
     }
 
-    await pool.query({
-      text: 'SELECT SETSEED($1)',
-      values: [getDailyRandomSeed()]
-    })
-
-    const filteredQuery = queryConstructor(validFilters, undefined)
+    const filteredQuery = queryConstructor(req, validFilters, undefined)
+    console.log(filteredQuery)
 
     const { rows } = await pool.query({
       text: `
@@ -38,6 +34,11 @@ export const getUsers = async (
         FROM users
         WHERE user_id IN (${filteredQuery})
       `
+    })
+
+    await pool.query({
+      text: 'SELECT SETSEED($1)',
+      values: [getDailyRandomSeed()]
     })
 
     const { rows: response } = await pool.query({
@@ -48,7 +49,7 @@ export const getUsers = async (
       values: [size, offset]
     })
 
-    const suggestions = await getFiltersSuggestion(validFilters)
+    const suggestions = await getFiltersSuggestion(req, validFilters)
 
     const finalItemsResponse = await Promise.all(
       response.map(async user => await getUserCatalogueInfo(user.user_id))
@@ -70,6 +71,7 @@ export const getUsers = async (
       finalItemsResponse
     )
   } catch (error: unknown) {
+    console.log(error)
     return handleControllerError(error, res)
   }
 }

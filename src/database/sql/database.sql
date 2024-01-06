@@ -7,7 +7,8 @@ CREATE DOMAIN dom_phone_number VARCHAR(16);
 CREATE DOMAIN dom_location VARCHAR(64);
 CREATE DOMAIN dom_email VARCHAR(64);
 CREATE DOMAIN dom_password VARCHAR(64);
-CREATE DOMAIN dom_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+-- FIX a razon de desfase de hora en el servidor
+CREATE DOMAIN dom_created_at TIMESTAMP DEFAULT (CURRENT_TIMESTAMP + INTERVAL '4' HOUR);
 
 CREATE TYPE dom_role AS ENUM ('admin', 'graduated');
 CREATE TYPE dom_degree AS ENUM ('pregrado', 'postgrado', 'especializacion', 'maestria', 'doctorado');
@@ -48,7 +49,7 @@ CREATE TABLE users (
   city dom_location DEFAULT 'Ciudad Guayana',
   residence_address TEXT DEFAULT NULL,
   role dom_role NOT NULL DEFAULT 'graduated',
-  is_active BOOLEAN NOT NULL DEFAULT FALSE,
+  is_active BOOLEAN NOT NULL DEFAULT TRUE,
   created_at dom_created_at,
   updated_at dom_created_at,
   CONSTRAINT pk_user_id PRIMARY KEY (user_id)
@@ -436,7 +437,8 @@ CREATE TABLE cv_languages (
 CREATE FUNCTION update_updated_at ()
 RETURNS TRIGGER AS $$
 BEGIN
-  NEW.updated_at = CURRENT_TIMESTAMP;
+  -- FIX a razon de desfase de hora en servidor
+  NEW.updated_at = CURRENT_TIMESTAMP + INTERVAL '4' HOUR;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;

@@ -1,11 +1,13 @@
+import { Request } from 'express'
 import { pool } from '../../../../database'
 import { queryConstructor } from './query-constructor'
 
 export async function getLanguagesSuggestions (
+  req: Request,
   validFilters: Array<{ [key: string]: string }>
 ): Promise<any[]> {
   try {
-    const carry = queryConstructor(validFilters, 'languages')
+    const carry = queryConstructor(req, validFilters, 'languages')
 
     const languageQuery = `
       WITH AllLevels AS (
@@ -37,7 +39,6 @@ export async function getLanguagesSuggestions (
       WHERE ul.user_id IN (${carry})
       GROUP BY al.language_id, languages.name, al.level
       ORDER BY
-        total DESC,
         al.language_id ASC,
         CASE al.level
           WHEN 'Native' THEN 1
