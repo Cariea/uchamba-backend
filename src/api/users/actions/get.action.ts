@@ -1,14 +1,14 @@
 import { Request, Response } from 'express'
 import { pool } from '../../../database'
 import { DEFAULT_PAGE, STATUS } from '../../../utils/constants'
-import { PaginateSettings, paginatedItemsResponse, paginatedItemsResponseWithSuggestions } from '../../../utils/responses'
+import { PaginateSettings, paginatedItemsResponseWithSuggestions } from '../../../utils/responses'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { getDailyRandomSeed } from '../_utils/get-daily-random-seed'
 import { getUserCatalogueInfo } from '../_utils/get-user-catalogue-info'
 import { validateFilters } from '../_utils/validateFilters'
-import { findFilterUsers } from '../_utils/findFilterUsers'
 import { getFiltersSuggestion } from '../_utils/filters_suggestions'
 import camelizeObject from '../../../utils/camelizeObject'
+import { queryConstructor } from '../_utils/filters_suggestions/query-constructor'
 
 export const getUsers = async (
   req: Request,
@@ -19,7 +19,6 @@ export const getUsers = async (
   const validFilters = validateFilters(req.query)
 
   try {
-    let carry = ''
     let offset = (Number(page) - 1) * Number(size)
 
     if (Number(page) < 1) {
@@ -31,21 +30,19 @@ export const getUsers = async (
       values: [getDailyRandomSeed()]
     })
 
-    carry = await findFilterUsers(validFilters, req)
+    const filteredQuery = queryConstructor(validFilters, undefined)
 
     const { rows } = await pool.query({
       text: `
         SELECT COUNT(*)
         FROM users
-        WHERE user_id IN (${carry})
+        WHERE user_id IN (${filteredQuery})
       `
     })
 
     const { rows: response } = await pool.query({
       text: `
-        SELECT user_id
-        FROM users
-        WHERE user_id IN (${carry})
+        ${filteredQuery}
         LIMIT $1 OFFSET $2
       `,
       values: [size, offset]
