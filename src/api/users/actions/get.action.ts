@@ -1,12 +1,14 @@
 import { Request, Response } from 'express'
 import { pool } from '../../../database'
 import { DEFAULT_PAGE, STATUS } from '../../../utils/constants'
-import { PaginateSettings, paginatedItemsResponse } from '../../../utils/responses'
+import { PaginateSettings, paginatedItemsResponse, paginatedItemsResponseWithSuggestions } from '../../../utils/responses'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { getDailyRandomSeed } from '../_utils/get-daily-random-seed'
 import { getUserCatalogueInfo } from '../_utils/get-user-catalogue-info'
 import { validateFilters } from '../_utils/validateFilters'
 import { findFilterUsers } from '../_utils/findFilterUsers'
+import { getFiltersSuggestion } from '../_utils/filters_suggestions'
+import camelizeObject from '../../../utils/camelizeObject'
 
 export const getUsers = async (
   req: Request,
@@ -49,6 +51,8 @@ export const getUsers = async (
       values: [size, offset]
     })
 
+    const suggestions = await getFiltersSuggestion(validFilters)
+
     const finalItemsResponse = await Promise.all(
       response.map(async user => await getUserCatalogueInfo(user.user_id))
     )
@@ -59,7 +63,15 @@ export const getUsers = async (
       perPage: Number(size)
     }
 
-    return paginatedItemsResponse(res, STATUS.OK, finalItemsResponse, pagination)
+    const camelizedSuggestions = camelizeObject(suggestions)
+
+    return paginatedItemsResponseWithSuggestions(
+      res,
+      STATUS.OK,
+      pagination,
+      camelizedSuggestions,
+      finalItemsResponse
+    )
   } catch (error: unknown) {
     return handleControllerError(error, res)
   }

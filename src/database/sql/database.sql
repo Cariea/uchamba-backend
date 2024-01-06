@@ -143,7 +143,7 @@ CREATE TABLE foreign_studies (
     ON UPDATE CASCADE
     ON DELETE CASCADE,
   CONSTRAINT uk_name_university_degree UNIQUE (user_id, name, university_name, degree),
-  CONSTRAINT chk_graduation_year CHECK (graduation_year > CURRENT_TIMESTAMP())
+  CONSTRAINT chk_graduation_year CHECK (CURRENT_TIMESTAMP > graduation_year)
 );
 
 -- 8
@@ -184,8 +184,8 @@ CREATE TABLE work_experiences (
     )
   ),
   CONSTRAINT chk_graduation_year CHECK (
-    departure_date > CURRENT_TIMESTAMP(), 
-    entry_date > CURRENT_TIMESTAMP()
+    CURRENT_TIMESTAMP > departure_date AND
+    CURRENT_TIMESTAMP > entry_date
   )
 );
 
