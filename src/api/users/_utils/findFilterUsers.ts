@@ -17,7 +17,7 @@ export const findFilterUsers = async (
   if (inclusiveS === undefined || (inclusiveS !== 'true' && inclusiveS !== 'false')) {
     inclusiveS = 'false'
   }
-
+  const { country, state, city } = req.query
   let carry = ''
   let isfirst = true
 
@@ -77,16 +77,92 @@ export const findFilterUsers = async (
       text: 'SELECT SETSEED($1)',
       values: [getDailyRandomSeed()]
     })
-
-    const { rows } = await pool.query({
-      text: `
+    if (country !== undefined && state === undefined && city === undefined) {
+      const { rows } = await pool.query({
+        text: `
+          SELECT user_id
+          FROM users
+          WHERE is_active = TRUE
+          AND country = '${String(country)}'
+          ORDER BY random()
+        `
+      })
+      carry = transformToCommaSeparatedString(rows)
+    }
+    if (state !== undefined && city === undefined && country === undefined) {
+      const { rows } = await pool.query({
+        text: `
+          SELECT user_id
+          FROM users
+          WHERE is_active = TRUE
+          AND state = '${String(state)}'
+          ORDER BY random()
+        `
+      })
+      carry = transformToCommaSeparatedString(rows)
+    }
+    if (city !== undefined && state === undefined && country === undefined) {
+      const { rows } = await pool.query({
+        text: `
+          SELECT user_id
+          FROM users
+          WHERE is_active = TRUE
+          AND city = '${String(city)}'
+          ORDER BY random()
+        `
+      })
+      carry = transformToCommaSeparatedString(rows)
+    }
+    if (country !== undefined && state !== undefined && city === undefined) {
+      const { rows } = await pool.query({
+        text: `
+          SELECT user_id
+          FROM users
+          WHERE is_active = TRUE
+          AND country = '${String(country)}'
+          AND state = '${String(state)}'
+          ORDER BY random()
+        `
+      })
+      carry = transformToCommaSeparatedString(rows)
+    }
+    if (country !== undefined && state === undefined && city !== undefined) {
+      const { rows } = await pool.query({
+        text: `
+          SELECT user_id
+          FROM users
+          WHERE is_active = TRUE
+          AND country = '${String(country)}'
+          AND city = '${String(city)}'
+          ORDER BY random()
+        `
+      })
+      carry = transformToCommaSeparatedString(rows)
+    }
+    if (country === undefined && state !== undefined && city !== undefined) {
+      const { rows } = await pool.query({
+        text: `
+          SELECT user_id
+          FROM users
+          WHERE is_active = TRUE
+          AND state = '${String(state)}'
+          AND city = '${String(city)}'
+          ORDER BY random()
+        `
+      })
+      carry = transformToCommaSeparatedString(rows)
+    }
+    if (country === undefined && state === undefined && city === undefined) {
+      const { rows } = await pool.query({
+        text: `
         SELECT user_id
         FROM users
         WHERE is_active = TRUE
         ORDER BY random()
       `
-    })
-    carry = transformToCommaSeparatedString(rows)
+      })
+      carry = transformToCommaSeparatedString(rows)
+    }
   }
   return carry
 }
