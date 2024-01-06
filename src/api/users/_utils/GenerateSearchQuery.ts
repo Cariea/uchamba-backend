@@ -99,3 +99,13 @@ export const inclusiveCompoundFilter = (filterIds: string, crossTableName: strin
     JOIN users u ON co.user_id = u.user_id;`
   return query
 }
+
+export const onlyWithCvFilter = (ids: string): string => {
+  const query =
+    `SELECT user_id
+      FROM users_cvs
+      WHERE user_id IN (${ids})
+      GROUP BY user_id
+      ORDER BY random();`
+  return query
+}

@@ -1,5 +1,5 @@
 import { pool } from '../../../database'
-import { compoundFilter, generalFilter, inclusiveCompoundFilter, inclusiveGeneralFilter } from './GenerateSearchQuery'
+import { compoundFilter, generalFilter, inclusiveCompoundFilter, inclusiveGeneralFilter, onlyWithCvFilter } from './GenerateSearchQuery'
 import { languagesLevelList } from './languagesLevelList'
 import { transformToCommaSeparatedString } from './transformToCommaSeparatedString'
 import { Request } from 'express'
@@ -164,5 +164,10 @@ export const findFilterUsers = async (
       carry = transformToCommaSeparatedString(rows)
     }
   }
+  console.log('carry', carry)
+  console.log('query', onlyWithCvFilter(carry))
+  const { rows } = await pool.query(onlyWithCvFilter(carry))
+  carry = transformToCommaSeparatedString(rows)
+  console.log('carry con cv', carry)
   return carry
 }
