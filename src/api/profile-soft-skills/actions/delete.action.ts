@@ -4,6 +4,7 @@ import { pool } from '../../../database'
 import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { StatusError } from '../../../utils/responses/status-error'
+import { regenerate } from '../../../utils/regenerate-cv/regenerate'
 
 export const deleteProfileSoftSkill = async (
   req: ExtendedRequest,
@@ -43,6 +44,9 @@ export const deleteProfileSoftSkill = async (
         statusCode: STATUS.NOT_FOUND
       })
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    regenerate()
 
     return res.status(STATUS.OK).json({ message: 'Habilidad Blanda eliminada correctamente' })
   } catch (error: unknown) {

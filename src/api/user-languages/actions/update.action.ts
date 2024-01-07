@@ -7,6 +7,7 @@ import { handleControllerError } from '../../../utils/responses/handleController
 import { StatusError } from '../../../utils/responses/status-error'
 import { deleteImage, uploadImage } from '../../../utils/cloudinary'
 import { isValidImageFormat } from '../../../utils/validate-image'
+import { regenerate } from '../../../utils/regenerate-cv/regenerate'
 export const updateUserLanguage = async (
   req: ExtendedRequest,
   res: Response
@@ -60,6 +61,10 @@ export const updateUserLanguage = async (
         statusCode: STATUS.NOT_FOUND
       })
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    regenerate()
+
     return res.status(STATUS.OK).json({ message: 'idioma modificado correctamente' })
   } catch (error) {
     return handleControllerError(error, res)
