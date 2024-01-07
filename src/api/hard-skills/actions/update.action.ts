@@ -3,6 +3,7 @@ import { pool } from '../../../database'
 import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { StatusError } from '../../../utils/responses/status-error'
+import { regenerate } from '../../../utils/regenerate-cv/regenerate'
 
 export const updateHardSkill = async (
   req: Request,
@@ -27,6 +28,10 @@ export const updateHardSkill = async (
         statusCode: STATUS.NOT_FOUND
       })
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    regenerate()
+
     return res.status(STATUS.OK).json({ message: 'Skill modificado correctamente' })
   } catch (error) {
     return handleControllerError(error, res)

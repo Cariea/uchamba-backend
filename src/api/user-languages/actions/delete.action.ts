@@ -5,6 +5,7 @@ import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { StatusError } from '../../../utils/responses/status-error'
 import { deleteImage } from '../../../utils/cloudinary'
+import { regenerate } from '../../../utils/regenerate-cv/regenerate'
 
 export const deleteUserLanguage = async (
   req: ExtendedRequest, res: Response
@@ -45,6 +46,10 @@ export const deleteUserLanguage = async (
         statusCode: STATUS.NOT_FOUND
       })
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    regenerate()
+
     return res.status(STATUS.OK).json({ message: 'Lenguage eliminado correctamente' })
   } catch (error: unknown) {
     return handleControllerError(error, res)

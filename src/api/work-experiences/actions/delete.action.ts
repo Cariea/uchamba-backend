@@ -4,6 +4,7 @@ import { pool } from '../../../database'
 import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { StatusError } from '../../../utils/responses/status-error'
+import { regenerate } from '../../../utils/regenerate-cv/regenerate'
 
 export const deleteWorkExperience = async (
   req: ExtendedRequest, res: Response
@@ -27,6 +28,10 @@ export const deleteWorkExperience = async (
         statusCode: STATUS.NOT_FOUND
       })
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    regenerate()
+
     return res.status(STATUS.OK).json({ message: 'Experiencia de trabajo eliminada correctamente' })
   } catch (error: unknown) {
     return handleControllerError(error, res)

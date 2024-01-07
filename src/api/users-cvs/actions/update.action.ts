@@ -6,9 +6,10 @@ import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { insertEntries } from '../_utils/insert-entries'
 import { tidyUpCV } from '../_utils/tidy-up-cv'
-import { generateCv } from '../../../utils/generate-cv'
+import { generateCv } from '../../../utils/regenerate-cv/generate-cv'
 import { getCVPath } from '../_utils/get-cv-path'
 import { StatusError } from '../../../utils/responses/status-error'
+import { uploadCV } from '../../../utils/regenerate-cv/upload-cv'
 
 export const updateUserCV = async (
   req: ExtendedRequest,
@@ -31,8 +32,10 @@ export const updateUserCV = async (
 
     await tidyUpCV(Number(cvId))
     await insertEntries(userId, Number(cvId), entries)
-    let isCreated: boolean
+
+    let pdf
     let attempts = 0
+    const cvPath = getCVPath(String(userId), String(cvId))
     do {
       if (attempts > 3) {
         throw new StatusError({
@@ -49,16 +52,19 @@ export const updateUserCV = async (
         } catch (error: unknown) {
           return handleControllerError(error, res)
         }
-      }, 40000)
+      }, 20000)
 
-      isCreated = await generateCv(String(userId), String(cvId))
+      pdf = await generateCv(String(userId), String(cvId))
+      if (pdf !== null) {
+        uploadCV(cvPath, pdf)
+      }
 
       clearTimeout(timeoutId)
 
       attempts++
     } while (
-      !isCreated &&
-      fs.readFileSync(getCVPath(String(userId), String(cvId))).length > 0
+      (pdf === null) ||
+      fs.readFileSync(cvPath).length === 0
     )
 
     return res.status(STATUS.CREATED).json({ message: 'Curriculum Vitae creado correctamente' })

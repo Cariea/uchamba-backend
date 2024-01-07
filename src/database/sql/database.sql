@@ -7,7 +7,8 @@ CREATE DOMAIN dom_phone_number VARCHAR(16);
 CREATE DOMAIN dom_location VARCHAR(64);
 CREATE DOMAIN dom_email VARCHAR(64);
 CREATE DOMAIN dom_password VARCHAR(64);
-CREATE DOMAIN dom_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+-- FIX a razon de desfase de hora en el servidor
+CREATE DOMAIN dom_created_at TIMESTAMP DEFAULT (CURRENT_TIMESTAMP - INTERVAL '4' HOUR);
 
 CREATE TYPE dom_role AS ENUM ('admin', 'graduated');
 CREATE TYPE dom_degree AS ENUM ('pregrado', 'postgrado', 'especializacion', 'maestria', 'doctorado');
@@ -48,7 +49,7 @@ CREATE TABLE users (
   city dom_location DEFAULT 'Ciudad Guayana',
   residence_address TEXT DEFAULT NULL,
   role dom_role NOT NULL DEFAULT 'graduated',
-  is_active BOOLEAN NOT NULL DEFAULT FALSE,
+  is_active BOOLEAN NOT NULL DEFAULT TRUE,
   created_at dom_created_at,
   updated_at dom_created_at,
   CONSTRAINT pk_user_id PRIMARY KEY (user_id)
@@ -143,7 +144,7 @@ CREATE TABLE foreign_studies (
     ON UPDATE CASCADE
     ON DELETE CASCADE,
   CONSTRAINT uk_name_university_degree UNIQUE (user_id, name, university_name, degree),
-  CONSTRAINT chk_graduation_year CHECK (graduation_year > CURRENT_TIMESTAMP())
+  CONSTRAINT chk_graduation_year CHECK (CURRENT_TIMESTAMP > graduation_year)
 );
 
 -- 8
@@ -161,6 +162,7 @@ CREATE TABLE work_experiences (
   departure_date DATE DEFAULT NULL,
   description TEXT DEFAULT NULL,
   created_at dom_created_at,
+  updated_at dom_created_at,
   CONSTRAINT pk_user_work_xp_id PRIMARY KEY (user_id, work_exp_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
@@ -184,8 +186,8 @@ CREATE TABLE work_experiences (
     )
   ),
   CONSTRAINT chk_graduation_year CHECK (
-    departure_date > CURRENT_TIMESTAMP(), 
-    entry_date > CURRENT_TIMESTAMP()
+    CURRENT_TIMESTAMP > departure_date AND
+    CURRENT_TIMESTAMP > entry_date
   )
 );
 
@@ -429,59 +431,48 @@ CREATE TABLE cv_languages (
     ON DELETE CASCADE
 );
 
+-- 21
+CREATE TABLE cv_queue (
+  id INTEGER GENERATED ALWAYS AS IDENTITY,
+  user_id INTEGER,
+  cv_id INTEGER,
+  CONSTRAINT pk_id PRIMARY KEY (id),
+  CONSTRAINT fk_user_cv_id FOREIGN KEY (user_id, cv_id) REFERENCES users_cvs (user_id, cv_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
 -- --------------------
 -- TRIGGERS
+-- --------------------
+
+-- CREATE OR REPLACE FUNCTION insert_default_language()
+-- RETURNS TRIGGER AS $$
+-- BEGIN
+--   INSERT INTO users_languages (user_id, language_id, proficient_level)
+--   VALUES (NEW.user_id, 1, 'Native');
+--   RETURN NEW;
+-- END;
+-- $$ LANGUAGE plpgsql;
+
+-- CREATE TRIGGER after_insert_user
+-- AFTER INSERT ON users
+-- FOR EACH ROW
+-- EXECUTE FUNCTION insert_default_language();
+
 -- --------------------
 
 CREATE FUNCTION update_updated_at ()
 RETURNS TRIGGER AS $$
 BEGIN
-  NEW.updated_at = CURRENT_TIMESTAMP;
+  -- FIX a razon de desfase de hora en servidor
+  NEW.updated_at = CURRENT_TIMESTAMP - INTERVAL '4' HOUR;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-
-CREATE OR REPLACE FUNCTION insert_default_language()
-RETURNS TRIGGER AS $$
-BEGIN
-  INSERT INTO users_languages (user_id, language_id, proficient_level)
-  VALUES (NEW.user_id, 1, 'Native');
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER after_insert_user
-AFTER INSERT ON users
-FOR EACH ROW
-EXECUTE FUNCTION insert_default_language();
-
-CREATE TRIGGER update_updated_at_users
-BEFORE UPDATE ON users
-FOR EACH ROW
-EXECUTE FUNCTION update_updated_at();
-
-CREATE TRIGGER update_updated_at_personal_hard_skills
-BEFORE UPDATE ON personal_hard_skills
-FOR EACH ROW
-EXECUTE FUNCTION update_updated_at();
-
-CREATE TRIGGER update_updated_at_personal_soft_skills
-BEFORE UPDATE ON personal_soft_skills
-FOR EACH ROW
-EXECUTE FUNCTION update_updated_at();
 
 CREATE TRIGGER update_updated_at_personal_links
 BEFORE UPDATE ON personal_links
-FOR EACH ROW
-EXECUTE FUNCTION update_updated_at();
-
-CREATE TRIGGER update_updated_at_foreign_studies
-BEFORE UPDATE ON foreign_studies
-FOR EACH ROW
-EXECUTE FUNCTION update_updated_at();
-
-CREATE TRIGGER update_updated_at_user_languages
-BEFORE UPDATE ON users_languages
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at();
 
@@ -494,5 +485,355 @@ CREATE TRIGGER update_updated_at_cvs
 BEFORE UPDATE ON users_cvs
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at();
+
+-- --------------------
+
+CREATE FUNCTION updated_at_users ()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE users_cvs
+  SET name = name
+  WHERE cv_id IN (
+    SELECT ucv.cv_id
+    FROM users_cvs AS ucv
+    WHERE ucv.user_id = OLD.user_id
+  );
+
+  INSERT INTO cv_queue (user_id, cv_id)
+  SELECT 
+      user_id,
+      cv_id
+  FROM users_cvs
+  WHERE user_id = OLD.user_id;
+
+  NEW.updated_at = CURRENT_TIMESTAMP - INTERVAL '4' HOUR;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_updated_at_users
+BEFORE UPDATE ON users
+FOR EACH ROW
+EXECUTE FUNCTION updated_at_users();
+
+-- --------------------
+
+CREATE FUNCTION updated_at_users_languages ()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE users_cvs
+  SET name = name
+  WHERE cv_id IN (
+    SELECT ucv.cv_id
+    FROM users_cvs AS ucv
+    INNER JOIN cv_languages AS cvl ON
+      ucv.user_id = cvl.user_id AND
+      ucv.cv_id = cvl.cv_id
+    WHERE
+      ucv.user_id = OLD.user_id AND
+      cvl.language_id = OLD.language_id
+  );
+
+  INSERT INTO cv_queue (user_id, cv_id)
+  SELECT 
+      ucv.user_id,
+      ucv.cv_id
+  FROM users_cvs AS ucv
+  INNER JOIN cv_languages AS cvl ON
+      ucv.user_id = cvl.user_id AND
+      ucv.cv_id = cvl.cv_id
+  WHERE
+      ucv.user_id = OLD.user_id AND
+      cvl.language_id = OLD.language_id;
+
+  IF TG_OP = 'UPDATE' THEN
+    NEW.updated_at = CURRENT_TIMESTAMP - INTERVAL '4' HOUR;
+    RETURN NEW;
+  END IF;
+
+  RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_updated_at_user_languages
+BEFORE UPDATE OR DELETE ON users_languages
+FOR EACH ROW
+EXECUTE FUNCTION updated_at_users_languages();
+
+-- --------------------
+
+CREATE FUNCTION updated_at_work_exp ()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE users_cvs
+  SET name = name
+  WHERE cv_id IN (
+    SELECT ucv.cv_id
+    FROM users_cvs AS ucv
+    INNER JOIN cv_work_experiences AS cvwe ON
+      ucv.user_id = cvwe.user_id AND
+      ucv.cv_id = cvwe.cv_id
+    WHERE
+      ucv.user_id = OLD.user_id AND
+      cvwe.work_exp_id = OLD.work_exp_id
+  );
+
+  INSERT INTO cv_queue (user_id, cv_id)
+  SELECT 
+      ucv.user_id,
+      ucv.cv_id
+  FROM users_cvs AS ucv
+  INNER JOIN cv_work_experiences AS cvwe ON
+      ucv.user_id = cvwe.user_id AND
+      ucv.cv_id = cvwe.cv_id
+  WHERE
+      ucv.user_id = OLD.user_id AND
+      cvwe.work_exp_id = OLD.work_exp_id;
+
+  IF TG_OP = 'UPDATE' THEN
+    NEW.updated_at = CURRENT_TIMESTAMP - INTERVAL '4' HOUR;
+    RETURN NEW;
+  END IF;
+
+  RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_updated_at_work_exp
+BEFORE UPDATE OR DELETE ON work_experiences
+FOR EACH ROW
+EXECUTE FUNCTION updated_at_work_exp();
+
+-- --------------------
+
+CREATE FUNCTION updated_at_foreign_studies ()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE users_cvs
+  SET name = name
+  WHERE cv_id IN (
+    SELECT ucv.cv_id
+    FROM users_cvs AS ucv
+    INNER JOIN cv_foreign_studies AS cvfs ON
+      ucv.user_id = cvfs.user_id AND
+      ucv.cv_id = cvfs.cv_id
+    WHERE
+      ucv.user_id = OLD.user_id AND
+      cvfs.foreign_study_id = OLD.foreign_study_id
+  );
+
+  INSERT INTO cv_queue (user_id, cv_id)
+  SELECT 
+    ucv.user_id,
+    ucv.cv_id
+  FROM users_cvs AS ucv
+  INNER JOIN cv_foreign_studies AS cvfs ON
+    ucv.user_id = cvfs.user_id AND
+    ucv.cv_id = cvfs.cv_id
+  WHERE
+    ucv.user_id = OLD.user_id AND
+    cvfs.foreign_study_id = OLD.foreign_study_id;
+
+  IF TG_OP = 'UPDATE' THEN
+    NEW.updated_at = CURRENT_TIMESTAMP - INTERVAL '4' HOUR;
+    RETURN NEW;
+  END IF;
+
+  RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_updated_at_foreign_studies
+BEFORE UPDATE OR DELETE ON foreign_studies
+FOR EACH ROW
+EXECUTE FUNCTION updated_at_foreign_studies();
+
+-- --------------------
+
+CREATE FUNCTION updated_at_hard_skills ()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE users_cvs
+  SET name = name
+  WHERE cv_id IN (
+    SELECT ucv.cv_id
+    FROM users_cvs AS ucv
+    INNER JOIN cv_hard_skills AS cvhs ON
+      ucv.user_id = cvhs.user_id AND
+      ucv.cv_id = cvhs.cv_id
+    WHERE
+      ucv.user_id = OLD.user_id AND
+      cvhs.hard_skill_id = OLD.hard_skill_id
+  );
+
+  INSERT INTO cv_queue (user_id, cv_id)
+  SELECT 
+      ucv.user_id,
+      ucv.cv_id
+  FROM users_cvs AS ucv
+  INNER JOIN cv_hard_skills AS cvhs ON
+      ucv.user_id = cvhs.user_id AND
+      ucv.cv_id = cvhs.cv_id
+  WHERE
+      ucv.user_id = OLD.user_id AND
+      cvhs.hard_skill_id = OLD.hard_skill_id;
+
+  IF TG_OP = 'UPDATE' THEN
+    NEW.updated_at = CURRENT_TIMESTAMP - INTERVAL '4' HOUR;
+    RETURN NEW;
+  END IF;
+
+  RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_updated_at_hard_skills
+BEFORE UPDATE OR DELETE ON hard_skills
+FOR EACH ROW
+EXECUTE FUNCTION updated_at_hard_skills();
+
+CREATE TRIGGER update_updated_at_users_hard_skills
+BEFORE UPDATE OR DELETE ON users_hard_skills
+FOR EACH ROW
+EXECUTE FUNCTION updated_at_hard_skills();
+
+-- --------------------
+
+CREATE FUNCTION updated_at_personal_hard_skills ()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE users_cvs
+  SET name = name
+  WHERE cv_id IN (
+    SELECT ucv.cv_id
+    FROM users_cvs AS ucv
+    INNER JOIN cv_personal_hard_skills AS cvphs ON
+      ucv.user_id = cvphs.user_id AND
+      ucv.cv_id = cvphs.cv_id
+    WHERE
+      ucv.user_id = OLD.user_id AND
+      cvphs.phard_skill_id = OLD.phard_skill_id
+  );
+
+  INSERT INTO cv_queue (user_id, cv_id)
+  SELECT 
+      ucv.user_id,
+      ucv.cv_id
+  FROM users_cvs AS ucv
+  INNER JOIN cv_personal_hard_skills AS cvphs ON
+      ucv.user_id = cvphs.user_id AND
+      ucv.cv_id = cvphs.cv_id
+  WHERE
+      ucv.user_id = OLD.user_id AND
+      cvphs.phard_skill_id = OLD.phard_skill_id;
+
+  IF TG_OP = 'UPDATE' THEN
+    NEW.updated_at = CURRENT_TIMESTAMP - INTERVAL '4' HOUR;
+    RETURN NEW;
+  END IF;
+
+  RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_updated_at_personal_hard_skills
+BEFORE UPDATE ON personal_hard_skills
+FOR EACH ROW
+EXECUTE FUNCTION updated_at_personal_hard_skills();
+
+-- --------------------
+
+CREATE FUNCTION updated_at_soft_skills ()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE users_cvs
+  SET name = name
+  WHERE cv_id IN (
+    SELECT ucv.cv_id
+    FROM users_cvs AS ucv
+    INNER JOIN cv_soft_skills AS cvss ON
+      ucv.user_id = cvss.user_id AND
+      ucv.cv_id = cvss.cv_id
+    WHERE
+      ucv.user_id = OLD.user_id AND
+      cvss.soft_skill_id = OLD.soft_skill_id
+  );
+
+  INSERT INTO cv_queue (user_id, cv_id)
+  SELECT 
+      ucv.user_id,
+      ucv.cv_id
+  FROM users_cvs AS ucv
+  INNER JOIN cv_soft_skills AS cvss ON
+      ucv.user_id = cvss.user_id AND
+      ucv.cv_id = cvss.cv_id
+  WHERE
+      ucv.user_id = OLD.user_id AND
+      cvss.soft_skill_id = OLD.soft_skill_id;
+
+  IF TG_OP = 'UPDATE' THEN
+    NEW.updated_at = CURRENT_TIMESTAMP - INTERVAL '4' HOUR;
+    RETURN NEW;
+  END IF;
+
+  RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_updated_at_soft_skills
+BEFORE UPDATE OR DELETE ON soft_skills
+FOR EACH ROW
+EXECUTE FUNCTION updated_at_soft_skills();
+
+CREATE TRIGGER update_updated_at_users_soft_skills
+BEFORE UPDATE OR DELETE ON users_soft_skills
+FOR EACH ROW
+EXECUTE FUNCTION updated_at_soft_skills();
+
+-- --------------------
+
+CREATE FUNCTION updated_at_personal_soft_skills ()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE users_cvs
+  SET name = name
+  WHERE cv_id IN (
+    SELECT ucv.cv_id
+    FROM users_cvs AS ucv
+    INNER JOIN cv_personal_soft_skills AS cvpss ON
+      ucv.user_id = cvpss.user_id AND
+      ucv.cv_id = cvpss.cv_id
+    WHERE
+      ucv.user_id = OLD.user_id AND
+      cvpss.psoft_skill_id = OLD.psoft_skill_id
+  );
+
+  INSERT INTO cv_queue (user_id, cv_id)
+  SELECT 
+    ucv.user_id,
+    ucv.cv_id
+  FROM users_cvs AS ucv
+  INNER JOIN cv_personal_soft_skills AS cvpss ON
+    ucv.user_id = cvpss.user_id AND
+    ucv.cv_id = cvpss.cv_id
+  WHERE
+    ucv.user_id = OLD.user_id AND
+    cvpss.psoft_skill_id = OLD.psoft_skill_id;
+
+  IF TG_OP = 'UPDATE' THEN
+    NEW.updated_at = CURRENT_TIMESTAMP - INTERVAL '4' HOUR;
+    RETURN NEW;
+  END IF;
+
+  RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_updated_at_personal_soft_skills
+BEFORE UPDATE OR DELETE ON personal_soft_skills
+FOR EACH ROW
+EXECUTE FUNCTION updated_at_personal_soft_skills();
+
+-- --------------------
 
 COMMIT;

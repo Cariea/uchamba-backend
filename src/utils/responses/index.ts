@@ -44,3 +44,21 @@ export const paginatedItemsResponse = <T>(
     items
   })
 }
+
+export const paginatedItemsResponseWithSuggestions = <T>(
+  res: Response,
+  status: number,
+  paginate: PaginateSettings,
+  suggestions: any,
+  items: T[]
+): Response => {
+  const pages = numberOfPages(paginate.total, paginate.perPage)
+  return res.status(status).json({
+    paginate: {
+      ...paginate,
+      pages
+    },
+    suggestions,
+    items
+  })
+}

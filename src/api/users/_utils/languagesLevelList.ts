@@ -1,4 +1,6 @@
-const languagesLevelsMap: { [name: string]: { name: string, value: number } } = {
+const languagesLevelsMap: {
+  [name: string]: { name: string, value: number }
+} = {
   A1: { name: 'A1', value: 1 },
   A2: { name: 'A2', value: 2 },
   B1: { name: 'B1', value: 3 },
@@ -7,6 +9,7 @@ const languagesLevelsMap: { [name: string]: { name: string, value: number } } = 
   C2: { name: 'C2', value: 6 },
   Native: { name: 'Native', value: 7 }
 }
+
 const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native']
 
 export const languagesLevelList = (languageLevel: string | undefined): string => {
