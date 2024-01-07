@@ -7,7 +7,7 @@ export async function getSoftSkillsSuggestions (
   validFilters: Array<{ [key: string]: string }>
 ): Promise<any[]> {
   try {
-    const carry = queryConstructor(req, validFilters, 'hskills')
+    const carry = queryConstructor(req, validFilters, 'sskills')
 
     const { rows: softSkillsSuggestions } = await pool.query({
       text: `

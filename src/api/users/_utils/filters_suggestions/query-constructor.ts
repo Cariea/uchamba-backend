@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Request } from 'express'
 import { createHashMap } from '../generateLanguageLevelPair'
 import { languagesLevelList } from '../languagesLevelList'
@@ -8,7 +9,9 @@ export function queryConstructor (
   exceptionTable: string | undefined
 ): string {
   try {
-    const andAttachment = ' AND '
+    // const andAttachment = ' AND '
+
+    let nameFilter = ''
 
     let countryFilter = ''
     let stateFilter = ''
@@ -22,9 +25,20 @@ export function queryConstructor (
 
     let hardSkillsJoinAttachment = ''
     let hardSkillsActiveFilters = ''
+    let inclusiveHardAttachment = ''
 
     let softSkillsJoinAttachment = ''
     let softSkillsActiveFilters = ''
+    let inclusiveSoftAttachment = ''
+
+    const havingAttachment = `
+      GROUP BY u.user_id
+      HAVING
+    `
+
+    if (req.query.name !== undefined) {
+      nameFilter += `u.name LIKE '%${String(req.query.name)}%'`
+    }
 
     if (validFilters.length > 0) {
       if (validFilters[0].country !== undefined) {
@@ -45,52 +59,49 @@ export function queryConstructor (
         }
         if (exceptionTable !== 'languages' && Object.keys(filter)[0] === 'languages') {
           const pairs = createHashMap(filter[Object.keys(filter)[0]])
-          const keys = Object.keys(pairs)
-          const ultimaClave = keys[keys.length - 1]
           for (const languageId in pairs) {
             const levels = languagesLevelList(pairs[languageId])
-            if (pairs[languageId] === pairs[ultimaClave]) {
-              languagesActiveFilters +=
-                `ul.language_id = ${languageId} AND proficient_level IN (${levels})`
+            if (req.query.inclusiveLang === 'true') {
+              languagesActiveFilters += `
+                EXISTS(
+                  SELECT 1
+                  FROM users_languages
+                  WHERE
+                    users_languages.user_id = u.user_id AND
+                    users_languages.language_id = ${languageId} AND 
+                    users_languages.proficient_level IN (${levels})
+                ) AND 
+              `
             } else {
               languagesActiveFilters +=
-                `ul.language_id = ${languageId} AND proficient_level IN (${levels}) OR `
+              `ul.language_id = ${languageId} AND ul.proficient_level IN (${levels}) OR `
             }
           }
+          if (req.query.inclusiveLang === 'true') {
+            languagesActiveFilters = languagesActiveFilters.replace(/\s+/g, ' ').trim()
+          }
+          languagesActiveFilters = languagesActiveFilters.slice(0,
+            languagesActiveFilters.length - 4)
           languagesJoinAttachment =
             'INNER JOIN users_languages AS ul ON u.user_id = ul.user_id'
         }
         if (exceptionTable !== 'hskills' && Object.keys(filter)[0] === 'hskills') {
           if (req.query.inclusiveH === 'true') {
             const ids = filter[Object.keys(filter)[0]].split(',')
-            for (let index = 0; index < ids.length; index++) {
-              if (index === ids.length - 1) {
-                hardSkillsActiveFilters += `uhs.hard_skill_id = ${ids[index]}`
-              } else {
-                hardSkillsActiveFilters += `uhs.hard_skill_id = ${ids[index]} AND `
-              }
-            }
-          } else {
-            hardSkillsActiveFilters +=
-            `uhs.hard_skill_id IN (${filter[Object.keys(filter)[0]]})`
+            inclusiveHardAttachment += ` COUNT(DISTINCT uhs.hard_skill_id) = ${ids.length}`
           }
+          hardSkillsActiveFilters +=
+            `uhs.hard_skill_id IN (${filter[Object.keys(filter)[0]]})`
           hardSkillsJoinAttachment =
             'INNER JOIN users_hard_skills AS uhs ON u.user_id = uhs.user_id'
         }
         if (exceptionTable !== 'sskills' && Object.keys(filter)[0] === 'sskills') {
           if (req.query.inclusiveS === 'true') {
             const ids = filter[Object.keys(filter)[0]].split(',')
-            for (let index = 0; index < ids.length; index++) {
-              if (index === ids.length - 1) {
-                softSkillsActiveFilters += `uss.soft_skill_id = ${ids[index]}`
-              } else {
-                softSkillsActiveFilters += `uss.soft_skill_id = ${ids[index]} AND `
-              }
-            }
-          } else {
-            softSkillsActiveFilters +=
-              `uss.soft_skill_id IN (${filter[Object.keys(filter)[0]]})`
+            inclusiveSoftAttachment += ` COUNT(DISTINCT uss.soft_skill_id) = ${ids.length}`
           }
+          softSkillsActiveFilters +=
+            `uss.soft_skill_id IN (${filter[Object.keys(filter)[0]]})`
           softSkillsJoinAttachment =
             'INNER JOIN users_soft_skills AS uss ON u.user_id = uss.user_id'
         }
@@ -105,32 +116,46 @@ export function queryConstructor (
       WHERE users.is_active = TRUE
     `
 
+    const arr = [
+      nameFilter,
+      countryFilter,
+      stateFilter,
+      cityFilter,
+      careersActiveFilters,
+      languagesActiveFilters,
+      hardSkillsActiveFilters,
+      softSkillsActiveFilters
+    ]
+
+    const resultantFilters = arr.reduce((acc, current) => {
+      if (current !== '') {
+        return `${acc} AND ${current}`
+      }
+      return acc
+    }, '')
+
+    const resultantInclusiveSkillAttachment =
+      inclusiveHardAttachment && inclusiveSoftAttachment
+        ? `${inclusiveHardAttachment} AND ${inclusiveSoftAttachment}`
+        : inclusiveHardAttachment || inclusiveSoftAttachment
+
     let resultedQuery = `
-      SELECT u.user_id
+      SELECT DISTINCT u.user_id
       FROM users AS u
       ${careersJoinAttachment}
       ${languagesJoinAttachment}
       ${hardSkillsJoinAttachment}
       ${softSkillsJoinAttachment}
       WHERE u.user_id IN (${defaultValidation})
-      ${countryFilter !== '' ? andAttachment : ''}
-      ${countryFilter}
-      ${stateFilter !== '' ? andAttachment : ''}
-      ${stateFilter}
-      ${cityFilter !== '' ? andAttachment : ''}
-      ${cityFilter}
-      ${careersActiveFilters !== '' ? andAttachment : ''}
-      ${careersActiveFilters}
-      ${languagesActiveFilters !== '' ? andAttachment : ''}
-      ${languagesActiveFilters}
-      ${hardSkillsActiveFilters !== '' ? andAttachment : ''}
-      ${hardSkillsActiveFilters}
-      ${softSkillsActiveFilters !== '' ? andAttachment : ''}
-      ${softSkillsActiveFilters}
+      ${resultantFilters}
+      ${inclusiveHardAttachment !== '' || inclusiveSoftAttachment !== '' ? havingAttachment : ''}
+      ${resultantInclusiveSkillAttachment}
       ORDER BY u.user_id
     `
 
     resultedQuery = resultedQuery.replace(/\s+/g, ' ').trim()
+
+    console.log(resultedQuery)
 
     return resultedQuery
   } catch (error) {
