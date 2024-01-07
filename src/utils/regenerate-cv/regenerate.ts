@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import { getCVPath } from '../../api/users-cvs/_utils/get-cv-path'
 import { pool } from '../../database'
 import { generateCv } from './generate-cv'
@@ -18,6 +19,12 @@ export async function regenerate (): Promise<void> {
       const pdf = await generateCv(cv.user_id, cv.cv_id)
       if (pdf !== null) {
         uploadCV(getCVPath(cv.user_id, cv.cv_id), pdf)
+        pool.query({
+          text: `
+            DELETE FROM cv_queries
+            WHERE cv_id = ${String(cv.cv_id)}
+          `
+        })
       }
     }
   } catch (error) {
