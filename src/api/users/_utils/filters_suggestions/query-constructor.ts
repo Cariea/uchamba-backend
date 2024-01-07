@@ -134,11 +134,16 @@ export function queryConstructor (
   const resultantInclusiveAttachment = [
     inclusiveHardAttachment,
     inclusiveSoftAttachment
-  ].reduce((acc, current) => {
+  ].reduce((acc, current, index, array) => {
     if (current !== '') {
-      return `${acc} ${current} AND `
+      acc += `${current} AND `
     }
-    return acc.slice(0, acc.length - 5)
+
+    if (index === array.length - 1) {
+      acc = acc.slice(0, acc.length - 5)
+    }
+
+    return acc
   }, '')
 
   let resultantQuery = `

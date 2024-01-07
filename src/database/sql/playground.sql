@@ -105,7 +105,30 @@ CASE al.level
   WHEN 'A1' THEN 7
 END;
 
-
+SELECT DISTINCT u.user_id 
+FROM users AS u 
+INNER JOIN users_ustudies AS uc ON 
+  u.user_id = uc.user_id 
+INNER JOIN users_hard_skills AS uhs ON 
+  u.user_id = uhs.user_id 
+INNER JOIN users_soft_skills AS uss ON 
+  u.user_id = uss.user_id 
+WHERE 
+  u.user_id IN ( 
+    SELECT users.user_id 
+    FROM users 
+    INNER JOIN users_cvs ON 
+      users.user_id = users_cvs.user_id 
+    WHERE users.is_active = TRUE 
+  ) AND 
+  u.country LIKE '%Vene%' AND 
+  u.state LIKE '%Bol%' AND 
+  u.city LIKE '%Ciudad%' AND 
+  uc.ucareer_id IN (8,9) AND 
+  uhs.hard_skill_id IN (7,8) AND 
+  uss.soft_skill_id IN (7,8) 
+GROUP BY u.user_id 
+HAVING COUNT(DISTINCT uhs.hard_skill_id) = 2 AND COUNT(DISTINCT uss.soft_skill_id) = 2 AND ORDER BY u.user_id
 
 SELECT
   hard_skill_id,
