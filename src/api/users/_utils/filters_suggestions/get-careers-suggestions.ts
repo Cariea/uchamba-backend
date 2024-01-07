@@ -26,7 +26,6 @@ export async function getCareersSuggestions (
 
     return careersSuggestions
   } catch (error) {
-    console.log(error)
     return []
   }
 }

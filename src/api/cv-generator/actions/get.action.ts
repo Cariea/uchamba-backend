@@ -33,7 +33,6 @@ export const cvGenerator = async (
 
     return res.set({ 'Content-Type': 'application/pdf' }).status(STATUS.OK).send(pdf)
   } catch (error: unknown) {
-    console.log(error)
     return handleControllerError(error, res)
   }
 }

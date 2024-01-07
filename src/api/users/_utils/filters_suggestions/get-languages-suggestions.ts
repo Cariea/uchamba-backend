@@ -57,7 +57,6 @@ export async function getLanguagesSuggestions (
 
     return languagesSuggestions
   } catch (error) {
-    console.log(error)
     return []
   }
 }

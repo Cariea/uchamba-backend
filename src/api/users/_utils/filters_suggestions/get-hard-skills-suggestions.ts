@@ -26,7 +26,6 @@ export async function getHardSkillsSuggestions (
 
     return hardSkillsSuggestions
   } catch (error) {
-    console.log(error)
     return []
   }
 }

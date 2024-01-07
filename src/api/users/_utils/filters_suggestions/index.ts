@@ -26,7 +26,6 @@ export async function getFiltersSuggestion (
 
     return suggestions
   } catch (error: unknown) {
-    console.log(error)
     return {}
   }
 }

@@ -26,7 +26,6 @@ export async function getSoftSkillsSuggestions (
 
     return softSkillsSuggestions
   } catch (error) {
-    console.log(error)
     return []
   }
 }

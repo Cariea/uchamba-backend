@@ -34,8 +34,6 @@ export async function generateCv (
 
     const responseData = await response.json()
     if (responseData.FileUrl !== undefined) {
-      console.log(responseData)
-
       const pdf = await fetch(responseData.FileUrl, {
         method: 'GET'
       })
