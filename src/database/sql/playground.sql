@@ -1,3 +1,6 @@
+SELECT DISTINCT cv_id
+FROM cv_queue
+
 SELECT
   uus.ucareer_id,
   uc.name,

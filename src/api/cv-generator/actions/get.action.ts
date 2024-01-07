@@ -1,11 +1,9 @@
+import { pool } from '../../../database'
 import { Response, Request } from 'express'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { STATUS } from '../../../utils/constants'
-import fs from 'fs'
-import { generateCv } from '../../../utils/generate-cv'
 import { StatusError } from '../../../utils/responses/status-error'
-import { getCVPath } from '../../users-cvs/_utils/get-cv-path'
-import { pool } from '../../../database'
+import { getCv } from '../../../utils/regenerate-cv/get-cv'
 
 export const cvGenerator = async (
   req: Request, res: Response
@@ -31,42 +29,11 @@ export const cvGenerator = async (
       })
     }
 
-    const cvPath = getCVPath(userId, cvId)
-
-    let pdf: Buffer
-    if (!fs.existsSync(cvPath) || (pdf = fs.readFileSync(cvPath)).length === 0) {
-      let isCreated: boolean
-      let attempts = 0
-      do {
-        if (attempts > 3) {
-          throw new StatusError({
-            message: 'Ha ocurrido un error al generar el CV, intente de nuevo más tarde',
-            statusCode: STATUS.INTERNAL_SERVER_ERROR
-          })
-        }
-
-        const timeoutId = setTimeout(function () {
-          try {
-            throw new StatusError({
-              message: 'Tiempo de espera agotado al generar CV',
-              statusCode: STATUS.INTERNAL_SERVER_ERROR
-            })
-          } catch (error: unknown) {
-            return handleControllerError(error, res)
-          }
-        }, 40000)
-
-        isCreated = await generateCv(userId, cvId)
-
-        clearTimeout(timeoutId)
-
-        pdf = fs.readFileSync(cvPath)
-        attempts++
-      } while (!isCreated && fs.readFileSync(cvPath).length === 0)
-    }
+    const pdf = await getCv(userId, cvId)
 
     return res.set({ 'Content-Type': 'application/pdf' }).status(STATUS.OK).send(pdf)
   } catch (error: unknown) {
+    console.log(error)
     return handleControllerError(error, res)
   }
 }

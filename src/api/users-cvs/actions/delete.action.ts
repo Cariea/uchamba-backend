@@ -5,7 +5,7 @@ import { STATUS } from '../../../utils/constants'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { StatusError } from '../../../utils/responses/status-error'
 import { getCVPath } from '../_utils/get-cv-path'
-import { deleteCv } from '../_utils/delete-cv'
+import { deleteCv } from '../../../utils/regenerate-cv/delete-cv'
 
 export const deleteUserCV = async (
   req: ExtendedRequest, res: Response

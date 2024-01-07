@@ -17,6 +17,7 @@ export const DATABASE_URL = process.env.DATABASE_URL
 
 // Microservices
 export const HTML_PDF_URL = process.env.HTML_PDF_URL
+export const HTML_PDF_TOKEN = process.env.HTML_PDF_TOKEN
 
 // Cloud
 export const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME
