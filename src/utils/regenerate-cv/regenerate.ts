@@ -21,7 +21,7 @@ export async function regenerate (): Promise<void> {
         uploadCV(getCVPath(cv.user_id, cv.cv_id), pdf)
         pool.query({
           text: `
-            DELETE FROM cv_queries
+            DELETE FROM cv_queue
             WHERE cv_id = ${String(cv.cv_id)}
           `
         })

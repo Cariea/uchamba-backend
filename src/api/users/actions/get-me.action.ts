@@ -45,6 +45,7 @@ export const getMe = async (
       appCareers: camelizeObject(careersResponse)
     })
   } catch (error: unknown) {
+    console.log(error)
     return handleControllerError(error, res)
   }
 }
