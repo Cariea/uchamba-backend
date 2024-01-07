@@ -97,6 +97,10 @@ small {
   justify-content: space-evenly;
 }
 
+.cv-header__important-container {
+  max-width: 60%;
+}
+
 .cv-header__important-text {
   text-transform: uppercase;
   font-weight: 700;
@@ -117,6 +121,7 @@ small {
 }
 
 .cv-header__additional-container {
+  max-width: 40%;
   margin-left: auto;
   display: flex;
   flex-direction: column;
