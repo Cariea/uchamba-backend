@@ -162,6 +162,7 @@ CREATE TABLE work_experiences (
   departure_date DATE DEFAULT NULL,
   description TEXT DEFAULT NULL,
   created_at dom_created_at,
+  updated_at dom_created_at,
   CONSTRAINT pk_user_work_xp_id PRIMARY KEY (user_id, work_exp_id),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE
@@ -545,7 +546,7 @@ BEGIN
       ucv.user_id = OLD.user_id AND
       cvl.language_id = OLD.language_id;
 
-  IF TG_OP = 'update' THEN
+  IF TG_OP = 'UPDATE' THEN
     NEW.updated_at = CURRENT_TIMESTAMP - INTERVAL '4' HOUR;
     RETURN NEW;
   END IF;
@@ -589,7 +590,7 @@ BEGIN
       ucv.user_id = OLD.user_id AND
       cvwe.work_exp_id = OLD.work_exp_id;
 
-  IF TG_OP = 'update' THEN
+  IF TG_OP = 'UPDATE' THEN
     NEW.updated_at = CURRENT_TIMESTAMP - INTERVAL '4' HOUR;
     RETURN NEW;
   END IF;
@@ -623,17 +624,17 @@ BEGIN
 
   INSERT INTO cv_queue (user_id, cv_id)
   SELECT 
-      ucv.user_id,
-      ucv.cv_id
+    ucv.user_id,
+    ucv.cv_id
   FROM users_cvs AS ucv
   INNER JOIN cv_foreign_studies AS cvfs ON
-      ucv.user_id = cvfs.user_id AND
-      ucv.cv_id = cvfs.cv_id
+    ucv.user_id = cvfs.user_id AND
+    ucv.cv_id = cvfs.cv_id
   WHERE
-      ucv.user_id = OLD.user_id AND
-      cvfs.foreign_study_id = OLD.foreign_study_id;
+    ucv.user_id = OLD.user_id AND
+    cvfs.foreign_study_id = OLD.foreign_study_id;
 
-  IF TG_OP = 'update' THEN
+  IF TG_OP = 'UPDATE' THEN
     NEW.updated_at = CURRENT_TIMESTAMP - INTERVAL '4' HOUR;
     RETURN NEW;
   END IF;
@@ -677,7 +678,7 @@ BEGIN
       ucv.user_id = OLD.user_id AND
       cvhs.hard_skill_id = OLD.hard_skill_id;
 
-  IF TG_OP = 'update' THEN
+  IF TG_OP = 'UPDATE' THEN
     NEW.updated_at = CURRENT_TIMESTAMP - INTERVAL '4' HOUR;
     RETURN NEW;
   END IF;
@@ -726,7 +727,7 @@ BEGIN
       ucv.user_id = OLD.user_id AND
       cvphs.phard_skill_id = OLD.phard_skill_id;
 
-  IF TG_OP = 'update' THEN
+  IF TG_OP = 'UPDATE' THEN
     NEW.updated_at = CURRENT_TIMESTAMP - INTERVAL '4' HOUR;
     RETURN NEW;
   END IF;
@@ -770,7 +771,7 @@ BEGIN
       ucv.user_id = OLD.user_id AND
       cvss.soft_skill_id = OLD.soft_skill_id;
 
-  IF TG_OP = 'update' THEN
+  IF TG_OP = 'UPDATE' THEN
     NEW.updated_at = CURRENT_TIMESTAMP - INTERVAL '4' HOUR;
     RETURN NEW;
   END IF;
@@ -809,17 +810,17 @@ BEGIN
 
   INSERT INTO cv_queue (user_id, cv_id)
   SELECT 
-      ucv.user_id,
-      ucv.cv_id
+    ucv.user_id,
+    ucv.cv_id
   FROM users_cvs AS ucv
   INNER JOIN cv_personal_soft_skills AS cvpss ON
-      ucv.user_id = cvpss.user_id AND
-      ucv.cv_id = cvpss.cv_id
+    ucv.user_id = cvpss.user_id AND
+    ucv.cv_id = cvpss.cv_id
   WHERE
-      ucv.user_id = OLD.user_id AND
-      cvpss.psoft_skill_id = OLD.psoft_skill_id;
+    ucv.user_id = OLD.user_id AND
+    cvpss.psoft_skill_id = OLD.psoft_skill_id;
 
-  IF TG_OP = 'update' THEN
+  IF TG_OP = 'UPDATE' THEN
     NEW.updated_at = CURRENT_TIMESTAMP - INTERVAL '4' HOUR;
     RETURN NEW;
   END IF;

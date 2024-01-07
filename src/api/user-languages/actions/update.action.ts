@@ -15,9 +15,24 @@ export const updateUserLanguage = async (
   try {
     const { languageId } = req.params
     const { proficientLevel } = req.body
+
+    const userId: Number = req.user.id
+
+    await pool.query({
+      text: `
+        UPDATE users_languages
+        SET 
+          proficient_level = $1
+        WHERE
+          user_id = $2 AND
+          language_id = $3
+      `,
+      values: [proficientLevel, userId, languageId]
+    })
+
     let certificateImageResponse: any = null
 
-    if ((req.files?.certificateImage) != null) {
+    if ((req.files?.certificateImage) !== undefined) {
       const certificateImages = Array.isArray(req.files.certificateImage) ? req.files.certificateImage : [req.files.certificateImage]
       const imageFileName = certificateImages[0].name
       if (!isValidImageFormat(imageFileName)) {
@@ -25,7 +40,7 @@ export const updateUserLanguage = async (
       }
     }
 
-    if (req.files?.certificateImage != null) {
+    if (req.files?.certificateImage !== undefined) {
       const { rows } = await pool.query({
         text: `
           SELECT
@@ -35,26 +50,27 @@ export const updateUserLanguage = async (
             user_id = $1 AND
             language_id = $2
         `,
-        values: [req.user.id, languageId]
+        values: [userId, languageId]
       })
       if (rows[0].certificate_image_id != null) {
         await deleteImage(rows[0].certificate_image_id)
       }
       certificateImageResponse = await uploadImage(req.files.certificateImage)
     }
+
     const response = await pool.query({
       text: `
         UPDATE users_languages
         SET 
-          proficient_level = $1,
-          certificate_image_id = $4,
-          certificate_image_url = $5
+          certificate_image_id = $1,
+          certificate_image_url = $2
         WHERE
-          user_id = $2 AND
-          language_id = $3
+          user_id = $3 AND
+          language_id = $4
       `,
-      values: [proficientLevel, req.user.id, languageId, certificateImageResponse?.public_id, certificateImageResponse?.url]
+      values: [certificateImageResponse?.public_id, certificateImageResponse?.url, userId, languageId]
     })
+
     if (response.rowCount === 0) {
       throw new StatusError({
         message: `No se encontro el idioma de id: ${languageId} del usuario: ${req.user.id as number}`,
