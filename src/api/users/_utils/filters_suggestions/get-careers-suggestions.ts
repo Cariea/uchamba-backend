@@ -1,13 +1,12 @@
-import { Request } from 'express'
 import { pool } from '../../../../database'
+import { Filters } from './Filters'
 import { queryConstructor } from './query-constructor'
 
 export async function getCareersSuggestions (
-  req: Request,
-  validFilters: Array<{ [key: string]: string }>
+  filters: Filters
 ): Promise<any[]> {
   try {
-    const carry = queryConstructor(req, validFilters, 'careers')
+    const carry = queryConstructor(filters, 'careers')
 
     const { rows: careersSuggestions } = await pool.query({
       text: `

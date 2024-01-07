@@ -1,13 +1,12 @@
-import { Request } from 'express'
 import { pool } from '../../../../database'
+import { Filters } from './Filters'
 import { queryConstructor } from './query-constructor'
 
 export async function getLanguagesSuggestions (
-  req: Request,
-  validFilters: Array<{ [key: string]: string }>
+  filters: Filters
 ): Promise<any[]> {
   try {
-    const carry = queryConstructor(req, validFilters, 'languages')
+    const carry = queryConstructor(filters, 'languages')
 
     const languageQuery = `
       WITH AllLevels AS (

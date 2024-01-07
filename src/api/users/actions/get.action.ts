@@ -1,11 +1,14 @@
 import { Request, Response } from 'express'
 import { pool } from '../../../database'
 import { DEFAULT_PAGE, STATUS } from '../../../utils/constants'
-import { PaginateSettings, paginatedItemsResponseWithSuggestions } from '../../../utils/responses'
+import {
+  PaginateSettings,
+  paginatedItemsResponseWithSuggestions
+} from '../../../utils/responses'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
 import { getDailyRandomSeed } from '../_utils/get-daily-random-seed'
 import { getUserCatalogueInfo } from '../_utils/get-user-catalogue-info'
-import { validateFilters } from '../_utils/validateFilters'
+import { getRequestedFilters } from '../_utils/filters_suggestions/get-requested-filters'
 import { getFiltersSuggestion } from '../_utils/filters_suggestions'
 import camelizeObject from '../../../utils/camelizeObject'
 import { queryConstructor } from '../_utils/filters_suggestions/query-constructor'
@@ -16,7 +19,7 @@ export const getUsers = async (
 ): Promise<Response> => {
   const { page = DEFAULT_PAGE.page, size = DEFAULT_PAGE.size } = req.query
 
-  const validFilters = validateFilters(req.query)
+  const filters = getRequestedFilters(req)
 
   try {
     let offset = (Number(page) - 1) * Number(size)
@@ -25,7 +28,7 @@ export const getUsers = async (
       offset = 0
     }
 
-    const filteredQuery = queryConstructor(req, validFilters, undefined)
+    const filteredQuery = queryConstructor(filters, undefined)
     console.log(filteredQuery)
 
     const { rows } = await pool.query({
@@ -49,7 +52,7 @@ export const getUsers = async (
       values: [size, offset]
     })
 
-    const suggestions = await getFiltersSuggestion(req, validFilters)
+    const suggestions = await getFiltersSuggestion(filters)
 
     const finalItemsResponse = await Promise.all(
       response.map(async user => await getUserCatalogueInfo(user.user_id))
