@@ -8,6 +8,7 @@ export function getRequestedFilters (req: Request): Filters {
     state,
     city,
     careers,
+    searchInCV,
     languages,
     inclusiveLang,
     hskills,
@@ -22,6 +23,7 @@ export function getRequestedFilters (req: Request): Filters {
     state: (state === '' || state === undefined) ? null : String(state),
     city: (city === '' || city === undefined) ? null : String(city),
     careers: (careers === '' || careers === undefined) ? null : String(careers),
+    searchInCV: (searchInCV === '' || searchInCV === undefined) ? null : String(searchInCV),
     languages:
       (languages === '' || languages === undefined) ? null : String(languages),
     inclusiveLang:

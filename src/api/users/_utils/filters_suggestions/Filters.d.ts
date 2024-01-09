@@ -4,6 +4,7 @@ export interface Filters {
   state: string | null
   city: string | null
   careers: string | null
+  searchInCV: string | null
   languages: string | null
   inclusiveLang: string | null
   hskills: string | null

@@ -33,24 +33,29 @@ export function queryConstructor (
   let needsHaving = false
 
   if (filters.name !== null) {
-    nameFilter += `u.name LIKE '%${String(filters.name)}%'`
+    nameFilter += `u.name ILIKE '%${String(filters.name)}%'`
   }
 
   if (filters.country !== null) {
-    countryFilter += `u.country LIKE '%${filters.country}%'`
+    countryFilter += `u.country ILIKE '%${filters.country}%'`
   }
 
   if (filters.state !== null) {
-    stateFilter += `u.state LIKE '%${filters.state}%'`
+    stateFilter += `u.state ILIKE '%${filters.state}%'`
   }
 
   if (filters.city !== null) {
-    cityFilter += `u.city LIKE '%${filters.city}%'`
+    cityFilter += `u.city ILIKE '%${filters.city}%'`
   }
 
   if (exceptionTable !== 'careers' && filters.careers !== null) {
-    careersActiveFilters = `uc.ucareer_id IN (${filters.careers})`
-    careersJoinAttachment = 'INNER JOIN users_ustudies AS uc ON u.user_id = uc.user_id'
+    if (filters.searchInCV === 'true') {
+      careersActiveFilters = `ucv.ucareer_id IN (${filters.careers})`
+      careersJoinAttachment = 'INNER JOIN users_cvs AS ucv ON u.user_id = ucv.user_id'
+    } else {
+      careersActiveFilters = `uc.ucareer_id IN (${filters.careers})`
+      careersJoinAttachment = 'INNER JOIN users_ustudies AS uc ON u.user_id = uc.user_id'
+    }
   }
 
   if (exceptionTable !== 'languages' && filters.languages !== null) {
@@ -98,8 +103,7 @@ export function queryConstructor (
       const ids = filters.sskills.split(',')
       inclusiveSoftAttachment += ` COUNT(DISTINCT uss.soft_skill_id) = ${ids.length}`
     }
-    softSkillsActiveFilters +=
-      `uss.soft_skill_id IN (${filters.sskills})`
+    softSkillsActiveFilters += `uss.soft_skill_id IN (${filters.sskills})`
     softSkillsJoinAttachment = 'INNER JOIN users_soft_skills AS uss ON u.user_id = uss.user_id'
   }
 
@@ -153,7 +157,6 @@ export function queryConstructor (
     ${resultantFilters}
     ${needsHaving ? havingAttachment : ''}
     ${resultantInclusiveAttachment}
-    ORDER BY u.user_id
   `
 
   resultantQuery = resultantQuery.replace(/\s+/g, ' ').trim()

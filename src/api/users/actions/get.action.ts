@@ -6,12 +6,12 @@ import {
   paginatedItemsResponseWithSuggestions
 } from '../../../utils/responses'
 import { handleControllerError } from '../../../utils/responses/handleControllerError'
-import { getDailyRandomSeed } from '../_utils/get-daily-random-seed'
 import { getUserCatalogueInfo } from '../_utils/get-user-catalogue-info'
 import { getRequestedFilters } from '../_utils/filters_suggestions/get-requested-filters'
 import { getFiltersSuggestion } from '../_utils/filters_suggestions'
 import camelizeObject from '../../../utils/camelizeObject'
 import { queryConstructor } from '../_utils/filters_suggestions/query-constructor'
+import { randomizeArray } from '../_utils/randomize-array'
 
 export const getUsers = async (
   req: Request,
@@ -29,7 +29,6 @@ export const getUsers = async (
     }
 
     const filteredQuery = queryConstructor(filters, undefined)
-    console.log(filteredQuery)
 
     const { rows } = await pool.query({
       text: `
@@ -39,11 +38,6 @@ export const getUsers = async (
       `
     })
 
-    await pool.query({
-      text: 'SELECT SETSEED($1)',
-      values: [getDailyRandomSeed()]
-    })
-
     const { rows: response } = await pool.query({
       text: `
         ${filteredQuery}
@@ -51,6 +45,9 @@ export const getUsers = async (
       `,
       values: [size, offset]
     })
+
+    console.log(response.map((item) => item.user_id))
+    console.log(randomizeArray(response.map((item) => item.user_id)))
 
     const suggestions = await getFiltersSuggestion(filters)
 
@@ -74,6 +71,7 @@ export const getUsers = async (
       finalItemsResponse
     )
   } catch (error: unknown) {
+    console.log(error)
     return handleControllerError(error, res)
   }
 }
