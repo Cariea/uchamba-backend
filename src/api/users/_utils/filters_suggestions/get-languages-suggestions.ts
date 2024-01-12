@@ -21,7 +21,7 @@ export async function getLanguagesSuggestions (
         ) AS levels
       )
       SELECT
-        al.language_id,
+        al.language_id AS id,
         languages.name,
         al.level AS proficient_level,
         COALESCE(SUM(COUNT(ul.user_id)) OVER (

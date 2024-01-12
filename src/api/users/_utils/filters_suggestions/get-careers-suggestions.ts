@@ -23,18 +23,19 @@ export async function getCareersSuggestions (
 
     if (filters.searchInCV === 'true') {
       suggestionsQuery = `
-        SELECT
-          users_cvs.ucareer_id,
+        SELECT 
+          DISTINCT ON (users_cvs.ucareer_id) users_cvs.ucareer_id AS id,
           ucareers.name,
-          COUNT(*) AS total
+          COUNT(*)
         FROM users_cvs
         INNER JOIN ucareers ON
           users_cvs.ucareer_id = ucareers.ucareer_id
-        WHERE users_ustudies.user_id IN (${carry})
-        GROUP BY users_ustudies.ucareer_id, ucareers.name
-        ORDER BY users_ustudies.ucareer_id ASC
+        WHERE users_cvs.user_id IN (${carry})
+        GROUP BY users_cvs.user_id, users_cvs.ucareer_id, ucareers.name
       `
     }
+
+    console.log(suggestionsQuery)
 
     const { rows: careersSuggestions } = await pool.query({
       text: suggestionsQuery
