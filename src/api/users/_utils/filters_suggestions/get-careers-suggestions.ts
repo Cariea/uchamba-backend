@@ -26,7 +26,7 @@ export async function getCareersSuggestions (
         SELECT 
           DISTINCT ON (users_cvs.ucareer_id) users_cvs.ucareer_id AS id,
           ucareers.name,
-          COUNT(*)
+          COUNT(*) AS total
         FROM users_cvs
         INNER JOIN ucareers ON
           users_cvs.ucareer_id = ucareers.ucareer_id
