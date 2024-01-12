@@ -38,6 +38,7 @@ router.post('/test', testEP)
 router.use('/auth', authRouter)
 router.use('/users', userRouter)
 router.use('/generar-cv', cvGeneratorRoutes)
+router.use('/app-info', appInfoRouter)
 
 // Middlewares for token validation
 router.use(tokenGuard(), verifyToken())
@@ -56,4 +57,3 @@ router.use('/projects', projectRouter)
 router.use('/user-languages', userLanguagesRouter)
 router.use('/user-studies', userStudiesRouter)
 router.use('/user-cvs', userCvsRouter)
-router.use('/app-info', appInfoRouter)
