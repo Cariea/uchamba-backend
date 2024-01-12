@@ -61,12 +61,92 @@ WHERE
     )
   )
 
-SELECT DISTINCT u.user_id FROM users AS u INNER JOIN users_ustudies AS uc ON u.user_id = uc.user_id INNER JOIN users_languages AS ul ON u.user_id = ul.user_id INNER JOIN users_soft_skills AS uss ON u.user_id = uss.user_id WHERE u.user_id IN ( SELECT users.user_id FROM users INNER JOIN users_cvs ON users.user_id = users_cvs.user_id WHERE users.is_active = TRUE ) AND u.country LIKE '%Vene%' AND u.state LIKE '%Bol%' AND u.city LIKE '%Ciudad%' AND uc.ucareer_id IN (8,9) AND EXISTS( SELECT 1 FROM users_languages WHERE users_languages.user_id = u.user_id AND users_languages.language_id = 1 AND users_languages.proficient_level IN ('C1','C2','Native') ) AND EXISTS( SELECT 1 FROM users_languages WHERE users_languages.user_id = u.user_id AND users_languages.language_id = 2 AND users_languages.proficient_level IN ('A2','B1','B2','C1','C2','Native') ) AND EXISTS( SELECT 1 FROM users_languages WHERE users_languages.user_id = u.user_id AND users_languages.language_id = 3 AND users_languages.proficient_level IN ('B1','B2','C1','C2','Native') ) AND EXISTS( SELECT 1 FROM users_languages WHERE users_languages.user_id = u.user_id AND users_languages.language_id = 4 AND users_languages.proficient_level IN ('A1','A2','B1','B2','C1','C2','Native') ) AND EXISTS( SELECT 1 FROM users_languages WHERE users_languages.user_id = u.user_id AND users_languages.language_id = 5 AND users_languages.proficient_level IN ('A2','B1','B2','C1','C2','Native') ) AND EXISTS( SELECT 1 FROM users_languages WHERE users_languages.user_id = u.user_id AND users_languages.language_id = 6 AND users_languages.proficient_level IN ('C1','C2','Native') ) AND uss.soft_skill_id IN (7,8) 
-GROUP BY u.user_id HAVING COUNT(DISTINCT uss.soft_skill_id) = 2 
-ORDER BY u.user_id;
+WITH AllLevels AS (
+  SELECT
+    language_id,
+    level
+  FROM (
+    SELECT DISTINCT
+      language_id,
+      unnest(ARRAY['Native', 'C2', 'C1', 'B2', 'B1', 'A2', 'A1']::dom_proficiency_level[]) AS level
+    FROM users_languages
+  ) AS levels
+)
+SELECT
+  al.language_id,
+  languages.name,
+  al.level AS proficient_level,
+  COALESCE(SUM(COUNT(ul.user_id)) OVER (
+    PARTITION BY al.language_id
+    ORDER BY al.level DESC ROWS BETWEEN UNBOUNDED PRECEDING AND
+    CURRENT ROW
+  ), 0) AS total_occurrences
+FROM AllLevels al
+LEFT JOIN users_languages ul ON
+  al.language_id = ul.language_id AND
+  al.level::text = ul.proficient_level::text
+LEFT JOIN languages ON
+  al.language_id = languages.language_id
+WHERE ul.user_id IN (SELECT DISTINCT u.user_id FROM users AS u WHERE u.user_id IN ( SELECT DISTINCT users.user_id FROM users INNER JOIN users_cvs ON users.user_id = users_cvs.user_id WHERE users.is_active = TRUE ))
+GROUP BY al.language_id, languages.name, al.level
+ORDER BY al.language_id,
+CASE al.level
+  WHEN 'Native' THEN 1
+  WHEN 'C2' THEN 2
+  WHEN 'C1' THEN 3
+  WHEN 'B2' THEN 4
+  WHEN 'B1' THEN 5
+  WHEN 'A2' THEN 6
+  WHEN 'A1' THEN 7
+END;
 
-SELECT DISTINCT u.user_id FROM users AS u INNER JOIN users_languages AS ul ON u.user_id = ul.user_id WHERE u.user_id IN ( SELECT users.user_id FROM users INNER JOIN users_cvs ON users.user_id = users_cvs.user_id WHERE users.is_active = TRUE ) AND EXISTS( SELECT 1 FROM users_languages WHERE users_languages.user_id = u.user_id AND users_languages.language_id = 1 AND users_languages.proficient_level IN ('B1','B2','C1','C2','Native') ) AND EXISTS( SELECT 1 FROM users_languages WHERE users_languages.user_id = u.user_id AND users_languages.language_id = 2 AND users_languages.proficient_level IN ('B2','C1','C2','Native') ) ORDER BY u.user_id
-
+WITH AllLevels AS (
+  SELECT
+    language_id,
+    level
+  FROM (
+    SELECT DISTINCT
+      language_id,
+      unnest(ARRAY['Native', 'C2', 'C1', 'B2', 'B1', 'A2', 'A1']::dom_proficiency_level[]) AS level
+    FROM users_languages
+  ) AS levels
+)
+SELECT
+  al.language_id,
+  languages.name,
+  al.level AS proficient_level,
+  COALESCE(SUM(COUNT(ul.user_id)) OVER (
+    PARTITION BY al.language_id
+    ORDER BY al.level DESC ROWS BETWEEN UNBOUNDED PRECEDING AND
+    CURRENT ROW
+  ), 0) AS total_occurrences
+FROM AllLevels al
+LEFT JOIN users_languages ul ON
+  al.language_id = ul.language_id AND
+  al.level::text = ul.proficient_level::text AND
+  ul.user_id IN (
+    SELECT DISTINCT u.user_id 
+    FROM users AS u 
+    WHERE u.user_id IN (
+      SELECT DISTINCT users.user_id 
+      FROM users 
+      INNER JOIN users_cvs ON users.user_id = users_cvs.user_id 
+      WHERE users.is_active = TRUE
+    )
+  )
+LEFT JOIN languages ON
+  al.language_id = languages.language_id
+GROUP BY al.language_id, languages.name, al.level
+ORDER BY al.language_id,
+CASE al.level
+  WHEN 'Native' THEN 1
+  WHEN 'C2' THEN 2
+  WHEN 'C1' THEN 3
+  WHEN 'B2' THEN 4
+  WHEN 'B1' THEN 5
+  WHEN 'A2' THEN 6
+  WHEN 'A1' THEN 7
+END;
 
 
 SELECT DISTINCT u.user_id 

@@ -29,7 +29,6 @@ export const getUsers = async (
     }
 
     const filteredQuery = queryConstructor(filters, undefined)
-    console.log(filteredQuery)
 
     const { rows } = await pool.query({
       text: `
