@@ -60,6 +60,7 @@ export function queryConstructor (
 
   if (exceptionTable !== 'languages' && filters.languages !== null) {
     const pairs = createHashMap(filters.languages)
+    languagesActiveFilters += '('
     for (const languageId in pairs) {
       const levels = languagesLevelList(pairs[languageId])
       if (filters.inclusiveLang === 'true') {
@@ -75,7 +76,7 @@ export function queryConstructor (
         `
       } else {
         languagesActiveFilters +=
-          `ul.language_id = ${languageId} AND ul.proficient_level IN (${levels}) OR `
+          `(ul.language_id = ${languageId} AND ul.proficient_level IN (${levels})) OR `
       }
     }
     if (filters.inclusiveLang === 'true') {
@@ -84,6 +85,7 @@ export function queryConstructor (
     languagesActiveFilters = languagesActiveFilters.slice(
       0, languagesActiveFilters.length - 4
     )
+    languagesActiveFilters += ')'
     languagesJoinAttachment = 'INNER JOIN users_languages AS ul ON u.user_id = ul.user_id'
   }
 
@@ -108,7 +110,7 @@ export function queryConstructor (
   }
 
   const defaultValidation = `
-    SELECT users.user_id
+    SELECT DISTINCT users.user_id
     FROM users
     INNER JOIN users_cvs ON
       users.user_id = users_cvs.user_id

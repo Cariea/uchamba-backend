@@ -11,7 +11,7 @@ import { getRequestedFilters } from '../_utils/filters_suggestions/get-requested
 import { getFiltersSuggestion } from '../_utils/filters_suggestions'
 import camelizeObject from '../../../utils/camelizeObject'
 import { queryConstructor } from '../_utils/filters_suggestions/query-constructor'
-import { randomizeArray } from '../_utils/randomize-array'
+import { getDailyRandomSeed } from '../_utils/randomize-array'
 
 export const getUsers = async (
   req: Request,
@@ -29,6 +29,7 @@ export const getUsers = async (
     }
 
     const filteredQuery = queryConstructor(filters, undefined)
+    console.log(filteredQuery)
 
     const { rows } = await pool.query({
       text: `
@@ -38,16 +39,20 @@ export const getUsers = async (
       `
     })
 
+    await pool.query({
+      text: 'SELECT SETSEED($1)',
+      values: [getDailyRandomSeed()]
+    })
+
     const { rows: response } = await pool.query({
       text: `
-        ${filteredQuery}
+        SELECT filters.user_id
+        FROM (${filteredQuery}) AS filters
+        ORDER BY random()
         LIMIT $1 OFFSET $2
       `,
       values: [size, offset]
     })
-
-    console.log(response.map((item) => item.user_id))
-    console.log(randomizeArray(response.map((item) => item.user_id)))
 
     const suggestions = await getFiltersSuggestion(filters)
 

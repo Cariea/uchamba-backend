@@ -14,6 +14,53 @@ WHERE
   ) 
   AND uc.ucareer_id IN (8)
 
+SELECT DISTINCT u.user_id 
+FROM users AS u 
+INNER JOIN users_languages AS ul ON 
+  u.user_id = ul.user_id 
+WHERE 
+  u.user_id IN ( 
+    SELECT DISTINCT users.user_id 
+    FROM users 
+    INNER JOIN users_cvs ON 
+      users.user_id = users_cvs.user_id 
+    WHERE users.is_active = TRUE 
+  ) AND 
+  ((ul.language_id = 1 AND ul.proficient_level IN ('Native')) OR 
+  (ul.language_id = 2 AND ul.proficient_level IN ('B2','C1','C2','Native')))
+
+
+
+SELECT DISTINCT u.user_id 
+FROM users AS u 
+INNER JOIN users_languages AS ul 
+  ON u.user_id = ul.user_id 
+WHERE 
+  u.user_id IN ( 
+    SELECT DISTINCT users.user_id 
+    FROM users 
+    INNER JOIN users_cvs ON 
+      users.user_id = users_cvs.user_id 
+    WHERE users.is_active = TRUE 
+  ) AND ( 
+    EXISTS( 
+      SELECT 1 
+      FROM users_languages 
+      WHERE
+        users_languages.user_id = u.user_id AND 
+        users_languages.language_id = 1 AND 
+        users_languages.proficient_level IN ('Native') 
+    ) AND 
+    EXISTS( 
+      SELECT 1 
+      FROM users_languages 
+      WHERE 
+        users_languages.user_id = u.user_id AND 
+        users_languages.language_id = 2 AND 
+        users_languages.proficient_level IN ('B2','C1','C2','Native') 
+    )
+  )
+
 SELECT DISTINCT u.user_id FROM users AS u INNER JOIN users_ustudies AS uc ON u.user_id = uc.user_id INNER JOIN users_languages AS ul ON u.user_id = ul.user_id INNER JOIN users_soft_skills AS uss ON u.user_id = uss.user_id WHERE u.user_id IN ( SELECT users.user_id FROM users INNER JOIN users_cvs ON users.user_id = users_cvs.user_id WHERE users.is_active = TRUE ) AND u.country LIKE '%Vene%' AND u.state LIKE '%Bol%' AND u.city LIKE '%Ciudad%' AND uc.ucareer_id IN (8,9) AND EXISTS( SELECT 1 FROM users_languages WHERE users_languages.user_id = u.user_id AND users_languages.language_id = 1 AND users_languages.proficient_level IN ('C1','C2','Native') ) AND EXISTS( SELECT 1 FROM users_languages WHERE users_languages.user_id = u.user_id AND users_languages.language_id = 2 AND users_languages.proficient_level IN ('A2','B1','B2','C1','C2','Native') ) AND EXISTS( SELECT 1 FROM users_languages WHERE users_languages.user_id = u.user_id AND users_languages.language_id = 3 AND users_languages.proficient_level IN ('B1','B2','C1','C2','Native') ) AND EXISTS( SELECT 1 FROM users_languages WHERE users_languages.user_id = u.user_id AND users_languages.language_id = 4 AND users_languages.proficient_level IN ('A1','A2','B1','B2','C1','C2','Native') ) AND EXISTS( SELECT 1 FROM users_languages WHERE users_languages.user_id = u.user_id AND users_languages.language_id = 5 AND users_languages.proficient_level IN ('A2','B1','B2','C1','C2','Native') ) AND EXISTS( SELECT 1 FROM users_languages WHERE users_languages.user_id = u.user_id AND users_languages.language_id = 6 AND users_languages.proficient_level IN ('C1','C2','Native') ) AND uss.soft_skill_id IN (7,8) 
 GROUP BY u.user_id HAVING COUNT(DISTINCT uss.soft_skill_id) = 2 
 ORDER BY u.user_id;

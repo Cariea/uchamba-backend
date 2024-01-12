@@ -15,7 +15,7 @@ export function randomizeArray<T> (arr: T[]): T[] {
   return shuffledArray
 }
 
-function getDailyRandomSeed (): number {
+export function getDailyRandomSeed (): number {
   const today = new Date()
 
   const startOfYear = new Date(today.getFullYear(), 0, 0)
