@@ -187,6 +187,29 @@ INNER JOIN ucareers ON
   users_cvs.ucareer_id = ucareers.ucareer_id
 GROUP BY users_cvs.user_id, users_cvs.ucareer_id, ucareers.name;
 
+SELECT
+  DISTINCT ON (users_cvs.ucareer_id) users_cvs.ucareer_id AS id,
+  ucareers.name,
+  COUNT(*) AS total
+FROM users_cvs
+INNER JOIN ucareers ON
+  users_cvs.ucareer_id = ucareers.ucareer_id
+WHERE 
+  users_cvs.user_id IN (
+    SELECT DISTINCT u.user_id 
+    FROM users AS u 
+    INNER JOIN users_languages AS ul ON 
+      u.user_id = ul.user_id 
+      WHERE 
+        u.user_id IN ( 
+          SELECT DISTINCT users.user_id 
+          FROM users 
+          INNER JOIN users_cvs ON 
+            users.user_id = users_cvs.user_id 
+          WHERE users.is_active = TRUE 
+        ))
+GROUP BY users_cvs.user_id, users_cvs.ucareer_id, ucareers.name
+ AND u.country ILIKE '%v%' AND ((ul.language_id = 1 AND ul.proficient_level IN ('Native'))))
 SELECT DISTINCT u.user_id 
 FROM users AS u 
 INNER JOIN users_languages AS ul ON 
