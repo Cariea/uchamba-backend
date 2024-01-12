@@ -148,6 +148,12 @@ CASE al.level
   WHEN 'A1' THEN 7
 END;
 
+SELECT
+  users_cvs.ucareer_id,
+  ucareers.name
+FROM users_cvs
+INNER JOIN ucareers ON
+  users_cvs.ucareer_id = ucareers.ucareer_id
 
 SELECT DISTINCT u.user_id 
 FROM users AS u 
