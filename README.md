@@ -25,19 +25,19 @@
     - [Languages](#languages-1)
       - [**GET** All /languages/all](#get-all-languagesall)
       - [**GET** Paginated /languages](#get-paginated-languages)
-      - [**GET** By id/languages/\<LanguageID\>](#get-by-idlanguageslanguageid)
+      - [**GET** By id /languages/\<LanguageID\>](#get-by-id-languageslanguageid)
     - [Careers](#careers-1)
       - [**GET** All /careers/all](#get-all-careersall)
       - [**GET** Paginated /careers](#get-paginated-careers)
       - [**GET**  By id /careers/\<CareerID\>](#get--by-id-careerscareerid)
     - [Hard Skills](#hard-skills-1)
-      - [**GET** All /hskills/all](#get-all-hskillsall)
-      - [**GET** Paginated /hskills](#get-paginated-hskills)
-      - [**GET**  By id /hskills/\<HardSkillID\>](#get--by-id-hskillshardskillid)
+      - [**GET** All /hard-skills/all](#get-all-hard-skillsall)
+      - [**GET** Paginated /hard-skills](#get-paginated-hard-skills)
+      - [**GET**  By id /hard-skills/\<HardSkillID\>](#get--by-id-hard-skillshardskillid)
     - [Soft Skills](#soft-skills-1)
-      - [**GET** All /sskills/all](#get-all-sskillsall)
-      - [**GET** Paginated /sskills](#get-paginated-sskills)
-      - [**GET**  By id /sskills/\<SoftSkillID\>](#get--by-id-sskillssoftskillid)
+      - [**GET** All /soft-skills/all](#get-all-soft-skillsall)
+      - [**GET** Paginated /soft-skills](#get-paginated-soft-skills)
+      - [**GET**  By id /soft-skills/\<SoftSkillID\>](#get--by-id-soft-skillssoftskillid)
   - [User Token for Updating Profile](#user-token-for-updating-profile)
       - [**GET** App Info /app-info](#get-app-info-app-info)
     - [Users Personal Info](#users-personal-info)
@@ -85,9 +85,9 @@
     - [Users](#users-1)
       - [**GET** All /users/all](#get-all-usersall)
       - [**GET** Paginated /users?page=\<number\>\&size=\<number\>](#get-paginated-userspagenumbersizenumber)
-      - [**GET** Detailed /users/\<id\>](#get-detailed-usersid)
+      - [**GET** By ID /users/\<id\>](#get-by-id-usersid)
     - [Projects](#projects-1)
-      - [**GET Detailed** /projects/user/\<user-id\>/project/\<project-id\>](#get-detailed-projectsuseruser-idprojectproject-id)
+      - [**GET By User and Project ID** /projects/user/\<user-id\>/project/\<project-id\>](#get-by-user-and-project-id-projectsuseruser-idprojectproject-id)
 
 ---
 
@@ -468,7 +468,7 @@
     ]
   }
   ```
-#### <span id='user-priviledges-languages-get-by-id' style='color:#23A559'>**GET** By id/languages/\<LanguageID></span>
+#### <span id='user-priviledges-languages-get-by-id' style='color:#23A559'>**GET** By id /languages/\<LanguageID></span>
 - <span style='color:#753A9A'>Responses</span>
 
   - <span style="color:#23A559">**200** - Success</span>
@@ -546,7 +546,7 @@
   ```
 
 ### Hard Skills
-#### <span id='user-priviledges-hskills-get-all' style='color:#23A559'>**GET** All /hskills/all</span>
+#### <span id='user-priviledges-hskills-get-all' style='color:#23A559'>**GET** All /hard-skills/all</span>
 - <span style='color:#753A9A'>Responses</span>
   - <span style="color:#23A559">**200** - Success</span>
   ```json
@@ -566,7 +566,7 @@
     }
   ]
   ```
-#### <span id='user-priviledges-hskills-get-paginated' style='color:#23A559'>**GET** Paginated /hskills</span>
+#### <span id='user-priviledges-hskills-get-paginated' style='color:#23A559'>**GET** Paginated /hard-skills</span>
 - <span style='color:#753A9A'>Responses</span>
   - <span style="color:#23A559">**200** - Success</span>
   ```json
@@ -597,7 +597,7 @@
     ]
   }
   ```
-#### <span id='user-priviledges-hskills-get-by-id' style='color:#23A559'>**GET**  By id /hskills/\<HardSkillID></span>
+#### <span id='user-priviledges-hskills-get-by-id' style='color:#23A559'>**GET**  By id /hard-skills/\<HardSkillID></span>
 - <span style='color:#753A9A'>Responses</span>
   - <span style="color:#23A559">**200** - Success</span>
   ```json
@@ -609,7 +609,7 @@
   ```
 
 ### Soft Skills
-#### <span id='user-priviledges-sskills-get-all' style='color:#23A559'>**GET** All /sskills/all</span>
+#### <span id='user-priviledges-sskills-get-all' style='color:#23A559'>**GET** All /soft-skills/all</span>
 - <span style='color:#753A9A'>Responses</span>
   - <span style="color:#23A559">**200** - Success</span>
   ```json
@@ -629,7 +629,7 @@
     }
   ]
   ```
-#### <span id='user-priviledges-sskills-get-paginated' style='color:#23A559'>**GET** Paginated /sskills</span>
+#### <span id='user-priviledges-sskills-get-paginated' style='color:#23A559'>**GET** Paginated /soft-skills</span>
 - <span style='color:#753A9A'>Responses</span>
   - <span style="color:#23A559">**200** - Success</span>
   ```json
@@ -660,7 +660,7 @@
     ]
   }
   ```
-#### <span id='user-priviledges-sskills-get-by-id' style='color:#23A559'>**GET**  By id /sskills/\<SoftSkillID></span>
+#### <span id='user-priviledges-sskills-get-by-id' style='color:#23A559'>**GET**  By id /soft-skills/\<SoftSkillID></span>
 - <span style='color:#753A9A'>Responses</span>
   - <span style="color:#23A559">**200** - Success</span>
   ```json
@@ -740,7 +740,182 @@
   - <span style="color:#23A559">**200** - Success</span>
   ```json
   {
-
+    "userId": 1,
+    "name": "José Andrés Rodríguez Seminario",
+    "email": "jarodriguez.21@est.ucab.edu.ve",
+    "aboutMe": "Soy Chopper",
+    "country": "Venezuela",
+    "state": "Bolívar",
+    "city": "Ciudad Guayana",
+    "residenceAddress": "Moreno De Mendoza",
+    "role": "admin",
+    "isActive": true,
+    "languages": [
+      {
+        "languageId": 1,
+        "name": "Español",
+        "proficientLevel": "Native",
+        "certificateImageId": null,
+        "certificateImageUrl": null
+      }
+    ],
+    "personalLinks": [],
+    "skills": {
+      "hard": [
+        "Java",
+        "Python",
+        "Angular"
+      ],
+      "soft": [
+        "Comunicación"
+      ]
+    },
+    "education": [
+      {
+        "id": 1,
+        "name": "Administración de Empresas",
+        "degree": "pregrado",
+        "graduationYear": "2022"
+      },
+      {
+        "id": 2,
+        "name": "Comunicación Social",
+        "degree": "pregrado",
+        "graduationYear": "2022"
+      },
+      {
+        "id": 4,
+        "name": "Ingeniería Mecánica",
+        "universityName": "UNEXPO",
+        "degree": "pregrado",
+        "graduationYear": "2017"
+      }
+    ],
+    "workExperiences": [
+      {
+        "workExpId": 16,
+        "organizationName": "Lusitanos",
+        "jobTitle": "Auxiliar de equipo",
+        "freelancer": false,
+        "country": "Venezuela",
+        "state": "Bolívar",
+        "city": "Ciudad Guayana",
+        "address": "Moreno De Mendoza",
+        "description": "Una recarga de agua ",
+        "entryDate": "2024-01-10",
+        "departureDate": null
+      }
+    ],
+    "projects": [
+      {
+        "projectId": 4,
+        "name": "offside",
+        "description": "offside",
+        "projectUrl": "https://ayudamedios.com",
+        "coverImageId": "replit/f5eeabz3jgrjkniqoerh",
+        "coverImageUrl": "http://res.cloudinary.com/dypukp3t0/image/upload/v1705169913/replit/f5eeabz3jgrjkniqoerh.jpg",
+        "images": [
+          {
+            "imageCloudId": "replit/ue47ftqkqp1ae3pmxf8z",
+            "imageUrl": "http://res.cloudinary.com/dypukp3t0/image/upload/v1705169916/replit/ue47ftqkqp1ae3pmxf8z.jpg"
+          }
+        ]
+      }
+    ],
+    "cvs": [
+      {
+        "cvId": 16,
+        "careerId": 8,
+        "careerName": "Ingeniería Informática",
+        "name": "Yo",
+        "updatedAt": "13/01/2024",
+        "entries": {
+          "languages": [
+            1
+          ],
+          "skills": {
+            "hard": [
+              "Java",
+              "Python",
+              "Angular"
+            ],
+            "soft": [
+              "Comunicación"
+            ]
+          },
+          "experiences": [
+            16
+          ],
+          "education": {
+            "featured": [],
+            "personal": [
+              4
+            ]
+          }
+        }
+      },
+      {
+        "cvId": 17,
+        "careerId": 1,
+        "careerName": "Administración de Empresas",
+        "name": "CV de Pruebas",
+        "updatedAt": "13/01/2024",
+        "entries": {
+          "languages": [
+            1
+          ],
+          "skills": {
+            "hard": [],
+            "soft": []
+          },
+          "experiences": [],
+          "education": {
+            "featured": [],
+            "personal": [
+              4
+            ]
+          }
+        }
+      }
+    ],
+    "appCareers": [
+      {
+        "careerId": 1,
+        "name": "Administración de Empresas"
+      },
+      {
+        "careerId": 2,
+        "name": "Comunicación Social"
+      },
+      {
+        "careerId": 3,
+        "name": "Contaduría Pública"
+      },
+      {
+        "careerId": 4,
+        "name": "Derecho"
+      },
+      {
+        "careerId": 5,
+        "name": "Educación"
+      },
+      {
+        "careerId": 6,
+        "name": "Ingeniería Civil"
+      },
+      {
+        "careerId": 7,
+        "name": "Ingeniería Industrial"
+      },
+      {
+        "careerId": 8,
+        "name": "Ingeniería Informática"
+      },
+      {
+        "careerId": 9,
+        "name": "Relaciones Industriales"
+      }
+    ]
   }
   ```
 
@@ -1079,10 +1254,12 @@
   - <span style="color:#23A559">**200** - Success</span>
   ```json
   {
-    "userId": 5,
-    "languageId": 16,
-    "proficientLevel": "B1",
-    "createdAt": "28/12/2023 - 10:23 AM"
+    "userId": 1,
+    "languageId": 2,
+    "proficientLevel": "Native",
+    "certificateImageId": "replit/kmdus4howhrejj3d31pl",
+    "certificateImageUrl": "https://res.cloudinary.com/dypukp3t0/image/upload/v1705165811/replit/kmdus4howhrejj3d31pl.jpg",
+    "createdAt": "13/01/2024 - 01:10 PM"
   }
   ```
 
@@ -1137,11 +1314,13 @@
   ```json
   [
     {
-      "userId": 5,
-      "languageId": 16,
-      "proficientLevel": "A1",
-      "createdAt": "28/12/2023 - 10:23 AM"
-    }
+      "userId": 1,
+      "languageId": 2,
+      "proficientLevel": "C2",
+      "certificateImageId": null,
+      "certificateImageUrl": null,
+      "createdAt": "13/01/2024 - 01:10 PM"
+    } 
   ]
   ```
   - <span style="color:red">**404** - Not Found</span>
@@ -1185,18 +1364,17 @@
   - <span style="color:#23A559">**200** - Success</span>
   ```json
   {
-    "user_id": 5,
-    "link_id": 12,
-    "name": "Instagram",
+    "user_id": 1,
+    "link_id": 3,
     "url": "https://github.com/",
-    "created_at": "28/12/2023 - 10:39 AM",
-    "updated_at": "28/12/2023 - 10:39 AM"
+    "created_at": "13/01/2024 - 01:19 PM",
+    "updated_at": "13/01/2024 - 01:19 PM"
   }
   ```
-  - <span style="color:red">**500** - Internal Server Error</span>
+  - <span style="color:red">**400** - Bad Request</span>
   ```json
   {
-    "message": "Ya existe la llave (name)=(Instagram)."
+    "message": "Mensaje de Error Personalizado para usuario"
   }
   ```
 
@@ -1205,8 +1383,8 @@
 - <span style="color:#9992F4">Body</span>
 ```json
 {
-  "name":"Instagram",
-  "url":"https://img.freepik.com/premium-vector/betty-boop-cowboys_690789-538.jpg"
+  "name":"Facebook",
+  "url":"https://hoppscotch.io/"
 }
 ```
 
@@ -1233,12 +1411,11 @@
   ```json
   [
     {
-      "userId": 5,
-      "linkId": 12,
-      "name": "Instagram",
-      "url": "https://img.freepik.com/premium-vector/betty-boop-cowboys_690789-538.jpg",
-      "createdAt": "28/12/2023 - 10:39 AM",
-      "updatedAt": "28/12/2023 - 10:42 AM"
+      "userId": 1,
+      "linkId": 3,
+      "url": "https://hoppscotch.io/",
+      "createdAt": "13/01/2024 - 01:19 PM",
+      "updatedAt": "13/01/2024 - 01:22 PM"
     }
   ]
   ```
@@ -1295,6 +1472,7 @@
     "workExpId": 3,
     "organizationName": "Lusitanos",
     "jobTitle": "Auxiliar de equipo",
+    "freelancer": false,
     "country": "Venezuela",
     "state": "",
     "city": "",
@@ -1352,17 +1530,17 @@
   - <span style="color:#23A559">**200** - Success</span>
   ```json
   {
-    "organizationName": "Lusitanoaasdfsdfdsfasdfaadsfasdffasdfasss",
+    "organizationName": "Lusitanos",
     "jobTitle": "Auxiliar de equipo",
-    "country": "asdfdasf",
-    "state": "",
-    "city": "",
-    "address": "",
+    "country": "Venezuela",
+    "state": "Bolivar",
+    "city": "Ciudad Guayana",
+    "address": "Urbanización Moreno de Mendoza",
     "freelancer": false,
     "entryDate": "2016-04-03",
-    "departureDate": null,
-    "description": "Descripcion",
-    "createdAt": "03/01/2024 - 04:43 PM"
+    "departureDate": "2020-04-03",
+    "description": "Una recarga de agua al lado de una panadería",
+    "createdAt": "13/01/2024 - 01:32 PM"
   }
   ```
    - <span style="color:red">**404** - Not Found</span>
@@ -1403,11 +1581,11 @@
       "featured": [8,9],
       "personal": [5]
     },
-    "experience": [1, 4],
+    "experience": [1],
     "languages": [6, 3],
     "skills": {
-      "soft": ["Creatividad en producto", "cualquier verga", "Empatia"],
-      "hard": ["React", "Godot", "Generador de seeds"]
+      "soft": ["Comunicación"],
+      "hard": ["Java", "Python", "Angular"]
     }
   }
 }
@@ -1462,7 +1640,7 @@
 ```json
 {
   "email": "ajrosas.19@est.ucab.edu.ve",
-  "password": "a"
+  "password": "OnePiece123"
 }
 ```
 
@@ -1572,7 +1750,7 @@ Gets active users
   }
   ```
 
-#### <span id='public-users-get-detailed' style='color:#23A559'>**GET** Detailed /users/\<id></span>
+#### <span id='public-users-get-detailed' style='color:#23A559'>**GET** By ID /users/\<id></span>
 
 - <span style='color:#753A9A'>Responses</span>
 
@@ -1581,121 +1759,101 @@ Gets active users
   ```json
   {
     "userId": 1,
-    "name": "Jose Andres",
+    "name": "José Andrés Rodríguez Seminario",
     "email": "jarodriguez.21@est.ucab.edu.ve",
-    "aboutMe": "Soy luffy",
-    "phoneNumber": "04147664397",
+    "aboutMe": "Soy Chopper",
     "country": "Venezuela",
-    "state": "Bolivar",
+    "state": "Bolívar",
     "city": "Ciudad Guayana",
-    "residenceAddress": "Direccion 1",
+    "residenceAddress": "Moreno De Mendoza",
     "role": "admin",
+    "isActive": true,
     "languages": [
       {
         "languageId": 1,
-        "name": "Espanol",
+        "name": "Español",
         "proficientLevel": "Native",
-        "certificateImageId": "certificateImageId",
-        "certificateImageUrl": "certificateImageUrl"
-      },
-      {
-        "languageId": 2,
-        "name": "Ingles",
-        "proficientLevel": "B1",
-        "certificateImageId": "certificateImageId",
-        "certificateImageUrl": "certificateImageUrl"
+        "certificateImageId": null,
+        "certificateImageUrl": null
       }
     ],
-    "personalLinks": [
+    "personalLinks": [],
+    "skills": {
+      "hard": [
+        "Java",
+        "Python",
+        "Angular"
+      ],
+      "soft": [
+        "Comunicación"
+      ]
+    },
+    "education": [
       {
-        "linkId": 1,
-        "name": "LinkedIn",
-        "url": "url"
+        "id": 1,
+        "name": "Administración de Empresas",
+        "degree": "pregrado",
+        "graduationYear": "2022"
       },
       {
-        "linkId": 9,
-        "name": "Medium",
-        "url": "url"
+        "id": 2,
+        "name": "Comunicación Social",
+        "degree": "pregrado",
+        "graduationYear": "2022"
+      },
+      {
+        "id": 4,
+        "name": "Ingeniería Mecánica",
+        "universityName": "UNEXPO",
+        "degree": "pregrado",
+        "graduationYear": "2017"
       }
     ],
-    "hardSkills": {
-      "featured": [
-        {
-          "name": "Java"
-        },
-        {
-          "name": "Python"
-        }
-      ],
-      "personal": [
-        {
-          "name": "Programming"
-        },
-        {
-          "name": "Cloud Computing"
-        }
-      ]
-    },
-    "softSkills": {
-      "featured": [
-        {
-          "name": "Communication"
-        },
-        {
-          "name": "Teamwork"
-        }
-      ],
-      "personal": [
-        {
-          "name": "Effective Communication"
-        },
-        {
-          "name": "Conflict Resolution"
-        }
-      ]
-    },
-    "education": {
-      "featured": [
-        {
-          "ucareerId": 1,
-          "name": "Ingenieria Informatica",
-          "degree": "pregrado",
-          "graduationYear": "2022"
-        },
-        {
-          "ucareerId": 2,
-          "name": "Ingenieria Civil",
-          "degree": "pregrado",
-          "graduationYear": "2022"
-        }
-      ],
-      "personal": [
-        {
-          "studyId": 1,
-          "name": "Study Abroad 1",
-          "universityName": "Foreign University 1",
-          "degree": "pregrado",
-          "graduationYear": "2023"
-        },
-        {
-          "studyId": 9,
-          "name": "Study Abroad 9",
-          "universityName": "Foreign University 9",
-          "degree": "maestria",
-          "graduationYear": "2025"
-        }
-      ]
-    },
-    "workExperiences": [],
+    "workExperiences": [
+      {
+        "workExpId": 16,
+        "organizationName": "Lusitanos",
+        "jobTitle": "Auxiliar de equipo",
+        "freelancer": false,
+        "country": "Venezuela",
+        "state": "Bolívar",
+        "city": "Ciudad Guayana",
+        "address": "Moreno De Mendoza",
+        "description": "Una recarga de agua ",
+        "entryDate": "2024-01-10",
+        "departureDate": null
+      }
+    ],
     "projects": [
       {
-        "projectId": 1,
-        "name": "Proyecto de Base de Datos",
-        "description": "Llevar el registro de los autos que llegan a un concesionario",
-        "projectUrl": null,
-        "coverImageId": "coverImageId",
-        "coverImageUrl": "coverImageUrl",
-        "images": []
+        "projectId": 4,
+        "name": "offside",
+        "description": "offside",
+        "projectUrl": "https://ayudamedios.com",
+        "coverImageId": "replit/f5eeabz3jgrjkniqoerh",
+        "coverImageUrl": "http://res.cloudinary.com/dypukp3t0/image/upload/v1705169913/replit/f5eeabz3jgrjkniqoerh.jpg",
+        "images": [
+          {
+            "imageCloudId": "replit/ue47ftqkqp1ae3pmxf8z",
+            "imageUrl": "http://res.cloudinary.com/dypukp3t0/image/upload/v1705169916/replit/ue47ftqkqp1ae3pmxf8z.jpg"
+          }
+        ]
+      }
+    ],
+    "cvs": [
+      {
+        "cvId": 16,
+        "careerId": 8,
+        "careerName": "Ingeniería Informática",
+        "name": "Yo",
+        "updatedAt": "13/01/2024"
+      },
+      {
+        "cvId": 17,
+        "careerId": 1,
+        "careerName": "Administración de Empresas",
+        "name": "CV de Pruebas",
+        "updatedAt": "13/01/2024"
       }
     ]
   }
@@ -1703,7 +1861,7 @@ Gets active users
 
 ### Projects
 
-#### <span id='public-users-get-all' style='color:#23A559'>**GET Detailed** /projects/user/\<user-id>/project/\<project-id></span>
+#### <span id='public-users-get-all' style='color:#23A559'>**GET By User and Project ID** /projects/user/\<user-id>/project/\<project-id></span>
 
 - <span style='color:#753A9A'>Responses</span>
 
@@ -1711,25 +1869,17 @@ Gets active users
 
   ```json
   {
-    "userId": 4,
-    "projectId": 12,
-    "projectName": "Prueba  2 add project",
-    "projectDescription": "Yo necesito ....Ayudaaaa ....ya no aguanto mas!",
-    "projectUrl": "https://unaurl.com",
-    "coverImageId": "coverImageId",
-    "coverImageUrl": "coverImageUrl",
+    "userId": 1,
+    "projectId": 4,
+    "projectName": "offside",
+    "projectDescription": "offside",
+    "projectUrl": "https://ayudamedios.com",
+    "coverImageId": "replit/f5eeabz3jgrjkniqoerh",
+    "coverImageUrl": "http://res.cloudinary.com/dypukp3t0/image/upload/v1705169913/replit/f5eeabz3jgrjkniqoerh.jpg",
     "images": [
       {
-        "imageCloudId": "coverImageId",
-        "imageUrl": "imageUrl"
-      },
-      {
-        "imageCloudId": "coverImageId",
-        "imageUrl": "imageUrl"
-      },
-      {
-        "imageCloudId": "coverImageId",
-        "imageUrl": "imageUrl"
+        "imageCloudId": "replit/ue47ftqkqp1ae3pmxf8z",
+        "imageUrl": "http://res.cloudinary.com/dypukp3t0/image/upload/v1705169916/replit/ue47ftqkqp1ae3pmxf8z.jpg"
       }
     ]
   }
