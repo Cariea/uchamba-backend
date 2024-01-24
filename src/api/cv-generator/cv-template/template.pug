@@ -36,9 +36,9 @@ html(lang='es')
               article.cv-article.cv-article--work-experiences
                 h4.cv-article__title #{workExp.jobTitle}
                 if workExp.departureDate
-                  strong.cv-article__important-text #{workExp.organizationName} • Entrada #{workExp.entryDate} - Salida #{workExp.departureDate}
+                  strong.cv-article__important-text #{workExp.organizationName} • #{workExp.entryDate} - #{workExp.departureDate}
                 else
-                  strong.cv-article__important-text #{workExp.organizationName} • Entrada #{workExp.entryDate} - Actualidad
+                  strong.cv-article__important-text #{workExp.organizationName} • #{workExp.entryDate} - Actualidad
                 if workExp.freelancer
                   strong.cv-article__important-text Trabajador autónomo
                 else
