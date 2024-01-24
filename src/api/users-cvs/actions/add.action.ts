@@ -67,6 +67,7 @@ export const addUserCV = async (
 
     return res.status(STATUS.CREATED).json({ message: 'Curriculum Vitae creado correctamente' })
   } catch (error: any) {
+    console.log(error)
     return handleControllerError(error, res)
   }
 }
