@@ -5,7 +5,6 @@ INSERT INTO ellucian (
   password
 ) VALUES
   ('jarodriguez.21@est.ucab.edu.ve', '$2a$12$zuQYtQN7UmCwnQ7jiWW2gOHtzw.iD4Uw3kGRjrpyb0xAvU0muGPWO'),
-  ('mpforero.21@est.ucab.edu.ve', '$2a$12$zuQYtQN7UmCwnQ7jiWW2gOHtzw.iD4Uw3kGRjrpyb0xAvU0muGPWO'),
   ('ejarzolay.21@est.ucab.edu.ve', '$2a$12$zuQYtQN7UmCwnQ7jiWW2gOHtzw.iD4Uw3kGRjrpyb0xAvU0muGPWO'),
   ('ajrosas.19@est.ucab.edu.ve', '$2a$12$zuQYtQN7UmCwnQ7jiWW2gOHtzw.iD4Uw3kGRjrpyb0xAvU0muGPWO'),
   ('ejsucre.19@est.ucab.edu.ve', '$2a$12$zuQYtQN7UmCwnQ7jiWW2gOHtzw.iD4Uw3kGRjrpyb0xAvU0muGPWO'),
@@ -77,9 +76,9 @@ INSERT INTO banner (
   degree,
   graduation_year
 ) VALUES
-  ('001', 'Oriana Marisela Renaud Pascual', 'omrenaud.11@est.ucab.edu.ve', '04148818626', 'Ingenier├¡a Inform├ítica', 'Dirección de Banner', 'Guayana', 'pregrado', '2014-01-01')
-  ('002', 'Jannelly Carolina Bello Chirino', 'jcbello.24@est.ucab.edu.ve', 'Telegram', 'Ingenier├¡a Inform├ítica', 'Dirección de Banner', 'Guayana', 'pregrado', '1990-01-01')
-  ('007', 'Juan Aldemaro Madrid Rodr├¡guez', 'jamadrid.24@est.ucab.edu.ve', '04249149305', 'Ingenier├¡a Inform├ítica', 'Dirección de Banner', 'Guayana', 'pregrado', '1985-01-01')
+  ('001', 'Oriana Marisela Renaud Pascual', 'omrenaud.11@est.ucab.edu.ve', '04148818626', 'Ingenier├¡a Inform├ítica', 'Dirección de Banner', 'Guayana', 'pregrado', '2014-01-01'),
+  ('002', 'Jannelly Carolina Bello Chirino', 'jcbello.24@est.ucab.edu.ve', 'Telegram', 'Ingenier├¡a Inform├ítica', 'Dirección de Banner', 'Guayana', 'pregrado', '1990-01-01'),
+  ('007', 'Juan Aldemaro Madrid Rodr├¡guez', 'jamadrid.24@est.ucab.edu.ve', '04249149305', 'Ingenier├¡a Inform├ítica', 'Dirección de Banner', 'Guayana', 'pregrado', '1985-01-01'),
   ('00000001', 'Juan Sebastian Smith', 'jssmith.11@est.ucab.edu.ve', '4120000000', 'Ingenier├¡a Inform├ítica', 'Calle Orinoco 123, Alta Vista', 'Guayana','pregrado', '2011-01-01'),
   ('00000002', 'Mar├¡a Thompson', 'mthompson.12@est.ucab.edu.ve', '4120000001', 'Ingenier├¡a Civil', 'Res. Parque Central', 'Caracas','pregrado', '2012-01-01'),
   ('00000003', 'Fernando Rodrigo Jones', 'frjones.13@est.ucab.edu.ve', '4120000002', 'Ingenier├¡a Industrial', 'Avenida Caroni 456, Puerto Ordaz', 'Guayana','pregrado', '2013-01-01'),
